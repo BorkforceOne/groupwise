@@ -1,0 +1,9 @@
+<div *ngFor="let user of users" class="row">
+  <div class="col-xs-12 placeholder">
+    <div class="well well-lg">
+        <img src="{{user.picture.large}}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>{{user.name.first}} {{user.name.last}}</h4>
+        <span class="text-muted">{{user.location.street}}</span>
+    </div>
+  </div>
+</div>
