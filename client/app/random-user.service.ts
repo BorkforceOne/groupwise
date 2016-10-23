@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 @Injectable()
 export class RandomUserService {
   private headers = new Headers({'Content-Type': 'application/json'});
-  private randomUsersUrl = 'app/random-users.json';  // URL to web api
+  private randomUsersUrl = '/api/v1/users';  // URL to web api
 
   constructor(private http: Http) { }
 

@@ -1,4 +1,8 @@
-{
+var express = require('express');
+var router = express.Router();
+
+
+var users = {
   "data": [
     {
       "gender": "male",
@@ -377,4 +381,11 @@
     "page": 1,
     "version": "1.1"
   }
-}
+};
+
+/* GET users listing. */
+router.get('/api/v1/users', function(req, res, next) {
+  res.send(JSON.stringify(users));
+});
+
+module.exports = router;
