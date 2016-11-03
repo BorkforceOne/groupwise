@@ -1,3 +1,46 @@
-<p>
-  Matt is working on this this week!
-</p>
+<html>
+  <head>
+    <title>
+      <p>Contact FlagFriends!</p>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </title>
+  </head>
+  <body>
+    <div class="cover">
+      <div class="cover-image"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center cover-box">
+
+            <form action="contact.php" method="post" name="myForm" onsubmit="return(validate());">
+              <p><b>Your Name:</b> <input type="text" name="yourname" /><br />
+                <b>Subject:</b> <input type="text" name="subject" /><br />
+                <b>E-mail:</b> <input type="text" name="email" /><br />
+                Website: <input type="text" name="website"></p>
+
+              <p>Type:
+                <input type="radio" name="type" value="Question" checked="checked" /> Question
+                <input type="radio" name="type" value="Comment" /> Comment
+                <input type="radio" name="type" value="Urgent" /> Urgent</p>
+
+              <p>How did you find us?
+                <select name="how">
+                  <option value=""> -- Please select -- </option>
+                  <option>Search</option>
+                  <option>Link</option>
+                  <option>IRL</option>
+                  <option>NAU</option>
+                  <option>Other</option>
+                </select>
+              </p>
+              <p><b>Your comments:</b><br />
+                <textarea name="comments" rows="10" cols="40"></textarea></p>
+
+              <p><input type="submit" value="Submit"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
