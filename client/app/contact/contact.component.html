@@ -6,41 +6,49 @@
     </title>
   </head>
   <body>
-    <div class="cover">
-      <div class="cover-image"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-center cover-box">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="well well-sm">
+          <form class="form-horizontal" action="" method="post">
+            <fieldset>
+              <legend class="text-center">Contact us</legend>
 
-            <form action="contact.php" method="post" name="myForm" onsubmit="return(validate());">
-              <p><b>Your Name:</b> <input type="text" name="yourname" /><br />
-                <b>Subject:</b> <input type="text" name="subject" /><br />
-                <b>E-mail:</b> <input type="text" name="email" /><br />
-                Website: <input type="text" name="website"></p>
+              <!-- Name input-->
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="name">Name</label>
+                <div class="col-md-9">
+                  <input id="name" name="name" type="text" placeholder="Your name" class="form-control">
+                </div>
+              </div>
 
-              <p>Type:
-                <input type="radio" name="type" value="Question" checked="checked" /> Question
-                <input type="radio" name="type" value="Comment" /> Comment
-                <input type="radio" name="type" value="Urgent" /> Urgent</p>
+              <!-- Email input-->
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="email">Your E-mail</label>
+                <div class="col-md-9">
+                  <input id="email" name="email" type="text" placeholder="Your email" class="form-control">
+                </div>
+              </div>
 
-              <p>How did you find us?
-                <select name="how">
-                  <option value=""> -- Please select -- </option>
-                  <option>Search</option>
-                  <option>Link</option>
-                  <option>IRL</option>
-                  <option>NAU</option>
-                  <option>Other</option>
-                </select>
-              </p>
-              <p><b>Your comments:</b><br />
-                <textarea name="comments" rows="10" cols="40"></textarea></p>
+              <!-- Message body -->
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="message">Your message</label>
+                <div class="col-md-9">
+                  <textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>
+                </div>
+              </div>
 
-              <p><input type="submit" value="Submit"></p>
-            </form>
-          </div>
+              <!-- Form actions -->
+              <div class="form-group">
+                <div class="col-md-12 text-right">
+                  <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
         </div>
       </div>
     </div>
+  </div>
   </body>
 </html>
