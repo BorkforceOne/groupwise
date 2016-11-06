@@ -1,13 +1,13 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var users = require('./routes/users');
+const users = require('./routes/users');
 
-var app = express();
+const app = express();
 
 app.use(users);
 
@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -44,6 +44,20 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.send(err.message);
+});
+
+const nodemailer = require('nodemailer');
+const config = require('./config');
+
+
+const transporter = nodemailer.createTransport(config.mailer.accounts[config.mailer.default].connectionString);
+
+const sendPwdReset = transporter.templateSender({
+  subject: 'Password reset for {{username}}!',
+  text: 'Hello, {{username}}, Please go here to reset your password: {{ reset }}',
+  html: '<b>Hello, <strong>{{username}}</strong>, Please <a href="{{ reset }}">go here to reset your password</a>: {{ reset }}</p>'
+}, {
+  from: config.mailer.accounts[config.mailer.default].from,
 });
 
 

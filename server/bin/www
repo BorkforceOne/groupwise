@@ -5,8 +5,7 @@ process.env['DEBUG'] = '*';
 /**
  * Module dependencies.
  */
-
-var app = require('../app');
+const app = require('../app');
 var debug = require('debug')('groupwise:server');
 var http = require('http');
 
