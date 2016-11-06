@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "client",
-      "outDir": "dist",
+      "outDir": "server/public",
       "assets": "assets",
       "index": "index.html",
       "main": "main.ts",
