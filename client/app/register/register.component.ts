@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '../services/user/user.service';
-import { User } from '../services/user/user';
 import {UserRegister} from "../services/user/user-register";
 
 @Component({
@@ -26,6 +25,9 @@ export class RegisterComponent implements OnInit {
       .then(user => {
         console.log(user);
         this.registrationComplete = true;
+      })
+      .catch(error => {
+        console.log(error);
       });
   }
 

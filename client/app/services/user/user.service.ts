@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { User } from "./user";
+import { UserRegister } from "./user-register";
+import { RestError } from '../rest-error';
 import {Headers, Http, Response} from '@angular/http';
 
 import '../../rxjs-operators';
-import {Observable} from "rxjs";
-import {UserRegister} from "./user-register";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class UserService {
@@ -29,8 +30,11 @@ export class UserService {
 
   private extractData(res: Response) {
     let body = res.json();
-    return body;
-    //return body.data || { };
+    if (Array.isArray(body.Errors) && body.Errors.length > 0)
+      throw new RestError(body.Errors);
+    if (body.Payload === undefined)
+      throw new RestError(["Invalid response"]);
+    return body.Payload;
   }
 
   private handleError(error: any): Promise<any> {
