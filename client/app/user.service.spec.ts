@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { RandomUserService } from './random-user.service';
+import { UserService } from './user.service';
 
-describe('Service: RandomUser', () => {
+describe('Service: User', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RandomUserService]
+      providers: [UserService]
     });
   });
 
-  it('should ...', inject([RandomUserService], (service: RandomUserService) => {
+  it('should ...', inject([UserService], (service: UserService) => {
     expect(service).toBeTruthy();
   }));
 });
