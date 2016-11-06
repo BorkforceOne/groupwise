@@ -1,0 +1,16 @@
+<div class="section">
+  <div class="container" *ngIf="!registrationComplete">
+    <form class="form-register" >
+      <h2 class="form-register-heading">Register</h2>
+      <input [(ngModel)]="editingUser.Email" [ngModelOptions]="{standalone: true}" type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+      <input [(ngModel)]="editingUser.Password" [ngModelOptions]="{standalone: true}" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+      <input [(ngModel)]="editingUser.PasswordVerify" [ngModelOptions]="{standalone: true}" type="password" id="inputPasswordVerify" class="form-control" placeholder="Verify password" required="">
+      <input [(ngModel)]="editingUser.Firstname" [ngModelOptions]="{standalone: true}" id="inputFirstname" class="form-control" placeholder="Firstname" required="" autofocus="">
+      <input [(ngModel)]="editingUser.Lastname" [ngModelOptions]="{standalone: true}" id="inputLastname" class="form-control" placeholder="Lastname" required="" autofocus="">
+      <button (click)="onRegister(editingUser)" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    </form>
+  </div>
+  <div class="container" *ngIf="registrationComplete">
+    <p>Thank you, please check your email to complete registration!</p>
+  </div>
+</div>

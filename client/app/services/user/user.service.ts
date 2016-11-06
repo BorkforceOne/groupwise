@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { User } from "./user";
 import {Headers, Http, Response} from '@angular/http';
 
-import './rxjs-operators';
+import '../../rxjs-operators';
 import {Observable} from "rxjs";
+import {UserRegister} from "./user-register";
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  create(user: User): Promise<User> {
+  create(user: UserRegister): Promise<User> {
     return this.http
       .post(this.usersUrl, JSON.stringify(user), {headers: this.headers})
       .map(this.extractData)

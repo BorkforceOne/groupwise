@@ -13,6 +13,8 @@ import { ContactComponent } from './contact/contact.component';
 import { HeroCoverComponent } from './home/hero-cover/hero-cover.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { HomeComponent } from './home/home.component';
     ContactComponent,
     HeroCoverComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +35,7 @@ import { HomeComponent } from './home/home.component';
     HttpModule,
     RouterModule.forRoot([
       { path: 'contact', component: ContactComponent },
+      { path: 'register', component: RegisterComponent },
       { path: '', component: HomeComponent},
     ]),
     AlertModule

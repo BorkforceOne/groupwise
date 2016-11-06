@@ -1,2 +1,2 @@
-export * from "hero-cover/hero-cover.component.ts"
-export * from "dashboard/dashboard.component.ts"
+export * from "./hero-cover/hero-cover.component"
+export * from "./dashboard/dashboard.component"
