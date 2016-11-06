@@ -4,22 +4,27 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
-const users = require('./routes/users');
-
 const app = express();
 
+/**
+ * Set up the routes
+ */
+const users = require('./routes/users');
 app.use(users);
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+/**
+ * Finish setting express settings
+ */
 
-// uncomment after placing your favicon in /public
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('*', function(request, response, next) {
+  response.sendfile(__dirname + '/public/index.html');
+});
 app.use(favicon(path.join(__dirname, 'assets', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -28,7 +33,9 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
+/**
+ * Error Handlers
+ */
 
 // development error handler
 // will print stacktrace
@@ -45,20 +52,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.send(err.message);
 });
-
-const nodemailer = require('nodemailer');
-const config = require('./config');
-
-
-const transporter = nodemailer.createTransport(config.mailer.accounts[config.mailer.default].connectionString);
-
-const sendPwdReset = transporter.templateSender({
-  subject: 'Password reset for {{username}}!',
-  text: 'Hello, {{username}}, Please go here to reset your password: {{ reset }}',
-  html: '<b>Hello, <strong>{{username}}</strong>, Please <a href="{{ reset }}">go here to reset your password</a>: {{ reset }}</p>'
-}, {
-  from: config.mailer.accounts[config.mailer.default].from,
-});
-
 
 module.exports = app;
