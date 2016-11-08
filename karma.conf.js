@@ -27,6 +27,13 @@ module.exports = function (config) {
       config: './angular-cli.json',
       environment: 'dev'
     },
+    customLaunchers: {
+      // chrome setup for travis CI using chromium
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: [' -- no-sandbox']
+      }
+    },
     reporters: ['progress', 'karma-remap-istanbul'],
     port: 9876,
     colors: true,
