@@ -3,8 +3,8 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const session = require('express-session');
+const bb = require('express-busboy');
 const database = require('./user_modules/database');
 const config = require('./config');
 
@@ -16,10 +16,11 @@ database.initDatabase();
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // Set up Express settings
+bb.extend(app, {
+  upload: true
+});
 app.use(favicon(path.join(__dirname, 'assets', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
   secret: config.session.secret,
