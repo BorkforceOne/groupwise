@@ -5,6 +5,8 @@ const Sequelize = require('sequelize');
 const database = require('../user_modules/database');
 const encryption = require('../user_modules/encryption');
 
+const Attachment = require('./attachment');
+
 module.exports = {};
 
 /**
@@ -52,6 +54,13 @@ const User = database.sequelize.define('user', {
       }.bind(this));
     }
   },
+});
+
+User.hasMany(Attachment, {
+  foreignKey: {
+    name: 'UserId',
+    allowNull: false
+  }
 });
 
 /**
