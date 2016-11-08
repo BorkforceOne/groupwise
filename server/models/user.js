@@ -3,6 +3,7 @@
  */
 const Sequelize = require('sequelize');
 const database = require('../user_modules/database');
+const encryption = require('../user_modules/encryption');
 
 module.exports = {};
 
@@ -27,11 +28,28 @@ const User = database.sequelize.define('user', {
   Password: {
     allowNull: false,
     type: Sequelize.STRING
+  },
+  Salt: {
+    allowNull: false,
+    type: Sequelize.STRING
   }
 },{
   instanceMethods: {
     getSerializableFields: function() {
       return User.getSerializableFields();
+    },
+    changePassword: function(password) {
+      return new Promise(function (resolve, reject) {
+        encryption.generateSalt()
+          .then(function (salt) {
+            this['Salt'] = salt;
+            encryption.generateHash(password, salt)
+              .then(function (hash) {
+                this['Password'] = hash;
+                resolve(true);
+              }.bind(this));
+          }.bind(this));
+      }.bind(this));
     }
   },
 });
