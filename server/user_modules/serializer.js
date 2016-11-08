@@ -11,16 +11,16 @@ module.exports = {};
  */
 const serializeModel = function(model) {
   let data = model.get({plain: true});
+  let serializedData = {};
   let serializableFields = model.getSerializableFields();
   for (let key in data) {
     if (data.hasOwnProperty(key)) {
       if (serializableFields.indexOf(key) >= 0)
-        continue;
-      delete data[key];
+        serializedData[key] = data[key];
     }
   }
 
-  return data;
+  return serializedData;
 };
 module.exports.serializeModel = serializeModel;
 
@@ -30,14 +30,14 @@ module.exports.serializeModel = serializeModel;
  * @returns {Array}
  */
 const serializeModels = function(models) {
-  let data = [];
+  let serializedData = [];
   for (let i = 0; i < models.length; i++) {
     let model = models[i];
     let entry = serializeModel(model);
     if (Object.keys(entry).length > 0)
-      data.push(entry);
+      serializedData.push(entry);
   }
 
-  return data;
+  return serializedData;
 };
 module.exports.serializeModels = serializeModels;
