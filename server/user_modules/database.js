@@ -12,14 +12,15 @@ const sequalizeInstance = new Sequelize(
   config.database.password,
   {
     host: config.database.host,
-    dialect: 'mysql',
+    dialect: config.database.dialect,
 
     pool: {
       max: config.database.pool.max,
       min: config.database.pool.min,
       idle: config.database.pool.idle
     },
-    logging: config.database.logging
+    logging: config.database.logging,
+    storage: config.database.storage
   }
 );
 module.exports.sequelize = sequalizeInstance;
