@@ -38,6 +38,7 @@ router.get(routeName + '/:id', function(req, res, next) {
       }
     }).then(function(entry) {
       res.setHeader("Content-Type", entry.get('MimeType'));
+      res.setHeader("Content-Disposition", `inline; filename=${entry.get('Filename')}`);
       res.send(entry.get('Data'));
     })
       .catch(error => restUtils.catchErrors(error, req, res));
