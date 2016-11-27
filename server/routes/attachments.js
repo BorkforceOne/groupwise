@@ -17,56 +17,53 @@ router.get(routeName, function(req, res, next) {
     .catch(error => restUtils.catchErrors(error, req, res));
 });
 
-router.get(routeName + '/:id/file', function(req, res, next) {
-
-  Attachment.findOne({
-    where: {
-      id: req.params.id
-    }
-  }).then(function(entry) {
-      res.setHeader("Content-Type", mime.lookup(entry.get('Filename')));
+router.get(routeName + '/:id', function(req, res, next) {
+  // Send a JSON response if one is requested
+  if (req.headers.accept === 'application/json') {
+    Attachment.findOne({
+      where: {
+        Id: req.params.id
+      }
+    })
+      .then(serializer.serializeModel)
+      .then(restUtils.prepareResponse)
+      .then(payload => restUtils.sendResponse(payload, req, res))
+      .catch(error => restUtils.catchErrors(error, req, res));
+  }
+  // Otherwise we send the file itself
+  else {
+    Attachment.findOne({
+      where: {
+        Id: req.params.id
+      }
+    }).then(function(entry) {
+      res.setHeader("Content-Type", entry.get('MimeType'));
       res.send(entry.get('Data'));
     })
-    .catch(error => restUtils.catchErrors(error, req, res));
+      .catch(error => restUtils.catchErrors(error, req, res));
+  }
 });
 
 /* Add a new entity */
 router.post(routeName, function(req, res, next) {
-  let data = {
-    'Filename': req.body.Filename,
-    'UserId': req.session.userId
-  };
+  restUtils.authenticate(req)
+    .then(user => {
+      let data = {
+        'Data': fs.readFileSync(req.files.File.file),
+        'Filename': req.files.File.filename,
+        'MimeType': req.files.File.mimetype,
+        'UserId': user.Id
+      };
 
-  let newEntity = Attachment.build();
+      let newEntity = Attachment.build();
 
-  newEntity['Filename'] = data.Filename;
-  newEntity['UserId'] = data.UserId;
+      newEntity['Filename'] = data.Filename;
+      newEntity['UserId'] = data.UserId;
+      newEntity['MimeType'] = data.MimeType;
+      newEntity['Data'] = data.Data;
 
-  newEntity.save()
-    .then(serializer.serializeModel)
-    .then(restUtils.prepareResponse)
-    .then(payload => restUtils.sendResponse(payload, req, res))
-    .catch(error => restUtils.catchErrors(error, req, res))
-});
-
-/* Add a new entity */
-router.put(routeName + '/:id/file', function(req, res, next) {
-  let data = {
-    'Data': fs.readFileSync(req.files.File.file)
-  };
-
-  Attachment.findOne({
-    where: {
-      id: req.params.id
-    }
-  }).then(entity => {
-    if (entity === null)
-      throw "Entity does not exist";
-
-    entity['Data'] = data.Data;
-
-    return entity;
-  })
+      return newEntity;
+    })
     .then(entity => entity.save())
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)

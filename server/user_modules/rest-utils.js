@@ -2,6 +2,8 @@
  * Created by Brandon Garling on 11/6/2016.
  */
 
+const User = require('../models/user');
+
 module.exports = {};
 
 /**
@@ -44,3 +46,28 @@ const sendResponse = function(json, req, res) {
   })
 };
 module.exports.sendResponse = sendResponse;
+
+const authenticate = function(req) {
+  return new Promise((resolve, reject) => {
+    if (req.session.userId !== undefined && req.session.userId !== null) {
+      let userId = req.session.userId;
+
+      // Try to lookup the user, and return them
+      User.findOne({
+        where: {
+          Id: userId
+        }
+      })
+        .then(entity => {
+          if (entity === null)
+            reject("Authentication failure");
+
+          resolve(entity);
+        })
+    }
+    else {
+      reject("Authentication failure");
+    }
+  })
+};
+module.exports.authenticate = authenticate;

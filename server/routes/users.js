@@ -17,13 +17,22 @@ router.get(routeName, function(req, res, next) {
 
 /* Add a new user */
 router.post(routeName, function(req, res, next) {
-  let newEntity = User.build();
+  new Promise((resolve, reject) => {
+    let data = {
+      'Firstname': req.body.Firstname,
+      'Lastname': req.body.Lastname,
+      'Email': req.body.Email
+    };
 
-  newEntity['Firstname'] = req.body.Firstname;
-  newEntity['Lastname'] = req.body.Lastname;
-  newEntity['Email'] = req.body.Email;
+    let newEntity = User.build();
 
-  newEntity.changePassword(req.body.Password)
+    newEntity['Firstname'] = data.Firstname;
+    newEntity['Lastname'] = data.Lastname;
+    newEntity['Email'] = data.Email;
+
+    resolve (newEntity);
+  })
+    .then(entity => entity.changePassword(req.body.Password))
     .then(entity => entity.save())
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)

@@ -18,6 +18,10 @@ const Attachment = database.sequelize.define('attachment', {
     allowNull: false,
     type: Sequelize.STRING
   },
+  MimeType: {
+    allowNull: false,
+    type: Sequelize.STRING
+  },
   Id: {
     type: Sequelize.INTEGER,
     allowNull: false,
