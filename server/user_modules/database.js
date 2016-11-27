@@ -38,8 +38,7 @@ const initDatabase = function() {
     });
 
   // Require all needed models
-  require('../models/user');
-  require('../models/attachment');
+  require('../models');
 };
 module.exports.initDatabase = initDatabase;
 

@@ -37,17 +37,15 @@ database.syncDatabase(true);
 /**
  * Set up the routes
  */
-const users = require('./routes/users');
-const attachments = require('./routes/attachments');
-app.use(users);
-app.use(attachments);
+const routes = require('./routes');
+app.use('/api/v1/', routes);
 
 /**
  * Finish setting express settings
  */
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('*', function(request, response, next) {
+app.use('^(?!.*\/api\/v1\/).*$', function(request, response, next) {
   response.sendfile(__dirname + '/public/index.html');
 });
 

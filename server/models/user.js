@@ -34,6 +34,12 @@ const User = database.sequelize.define('user', {
   Salt: {
     allowNull: false,
     type: Sequelize.STRING
+  },
+  Id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
   }
 },{
   instanceMethods: {
@@ -41,17 +47,20 @@ const User = database.sequelize.define('user', {
       return User.getSerializableFields();
     },
     changePassword: function(password) {
-      return new Promise(function (resolve, reject) {
+      return new Promise((resolve, reject) => {
         encryption.generateSalt()
-          .then(function (salt) {
+          .then(salt => {
             this['Salt'] = salt;
-            encryption.generateHash(password, salt)
-              .then(function (hash) {
-                this['Password'] = hash;
-                resolve(true);
-              }.bind(this));
-          }.bind(this));
-      }.bind(this));
+          })
+          .then(() => {
+            return encryption.generateHash(password, this['Salt']);
+          })
+          .then(hash => {
+            this['Password'] = hash;
+            resolve(this);
+          })
+          .catch(reject);
+      });
     }
   },
 });
@@ -68,7 +77,8 @@ User.hasMany(Attachment, {
  * @returns {[string]}
  */
 User.getSerializableFields = function () {
-  return ['id', 'Firstname', 'Lastname', 'Email', 'createdAt', 'updatedAt'];
+  return ['Id', 'Firstname', 'Lastname', 'Email', 'createdAt', 'updatedAt'];
 };
 
 module.exports = User;
+

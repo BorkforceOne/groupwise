@@ -18,6 +18,12 @@ const Attachment = database.sequelize.define('attachment', {
     allowNull: false,
     type: Sequelize.STRING
   },
+  Id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  }
 },{
   instanceMethods: {
     getSerializableFields: function() {
@@ -31,7 +37,7 @@ const Attachment = database.sequelize.define('attachment', {
  * @returns {[string]}
  */
 Attachment.getSerializableFields = function () {
-  return ['id', 'Filename', 'UserId', 'createdAt', 'updatedAt'];
+  return ['Id', 'Filename', 'UserId', 'createdAt', 'updatedAt'];
 };
 
 module.exports = Attachment;

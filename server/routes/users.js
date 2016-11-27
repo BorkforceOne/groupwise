@@ -4,48 +4,31 @@ const User = require('../models/user');
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 
+const routeName = '/users';
+
 /* GET users listing. */
-router.get('/api/v1/users', function(req, res, next) {
-  res.type('json');
+router.get(routeName, function(req, res, next) {
   User.findAll()
-    .then(function(users) {
-      let serialized = serializer.serializeModels(users, User);
-      let response = restUtils.prepareResponse(serialized);
-      res.send(JSON.stringify(response));
-    }).catch(function (err) {
-      console.log("Error: ", err);
-      let response = restUtils.prepareResponse({}, ["There was an error processing the request"]);
-      res.send(JSON.stringify(response));
-    });
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
 });
 
 /* Add a new user */
-router.post('/api/v1/users', function(req, res, next) {
-  res.type('json');
-  let workingUser = User.build();
+router.post(routeName, function(req, res, next) {
+  let newEntity = User.build();
 
-  workingUser['Firstname'] = req.body.Firstname;
-  workingUser['Lastname'] = req.body.Lastname;
-  workingUser['Email'] = req.body.Email;
-  workingUser.changePassword(req.body.Password)
-    .then(function () {
-      workingUser.save()
-        .then(function (user) {
-          let serialized = serializer.serializeModel(user);
-          let response = restUtils.prepareResponse(serialized);
-          res.send(JSON.stringify(response));
-        })
-        .catch(function (err) {
-          console.log("Error: ", err);
-          let response = restUtils.prepareResponse({}, ["There was an error processing the request"]);
-          res.send(JSON.stringify(response));
-        });
-    })
-    .catch(function (err) {
-      console.log("Error: ", err);
-      let response = restUtils.prepareResponse({}, ["There was an error processing the request"]);
-      res.send(JSON.stringify(response));
-    });
+  newEntity['Firstname'] = req.body.Firstname;
+  newEntity['Lastname'] = req.body.Lastname;
+  newEntity['Email'] = req.body.Email;
+
+  newEntity.changePassword(req.body.Password)
+    .then(entity => entity.save())
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
 });
 
 module.exports = router;
