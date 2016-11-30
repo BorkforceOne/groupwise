@@ -34,7 +34,7 @@ const generateHash = function (string, salt) {
   return new Promise(function (resolve, reject) {
     bcrypt.hash(string, salt, function (err, stringHash) {
       if (err)
-        throw err;
+        reject(err);
       resolve(stringHash);
     })
   });
@@ -48,7 +48,7 @@ const generateSalt = function () {
   return new Promise(function (resolve, reject) {
       bcrypt.genSalt(10, function (err, salt) {
         if (err)
-          throw err;
+          reject(err);
         resolve(salt);
       })
     });

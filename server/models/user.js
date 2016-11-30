@@ -35,6 +35,10 @@ const User = database.sequelize.define('user', {
     allowNull: false,
     type: Sequelize.STRING
   },
+  Type: {
+    allowNull: false,
+    type: Sequelize.ENUM('HOST', 'STUDENT', 'ADMINISTRATOR')
+  },
   Id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -77,7 +81,7 @@ User.hasMany(Attachment, {
  * @returns {[string]}
  */
 User.getSerializableFields = function () {
-  return ['Id', 'Firstname', 'Lastname', 'Email', 'createdAt', 'updatedAt'];
+  return ['Id', 'Firstname', 'Lastname', 'Type', 'Email', 'createdAt', 'updatedAt'];
 };
 
 module.exports = User;

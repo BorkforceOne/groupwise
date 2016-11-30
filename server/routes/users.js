@@ -21,7 +21,8 @@ router.post(routeName, function(req, res, next) {
     let data = {
       'Firstname': req.body.Firstname,
       'Lastname': req.body.Lastname,
-      'Email': req.body.Email
+      'Email': req.body.Email,
+      'Type': req.body.Type
     };
 
     let newEntity = User.build();
@@ -29,6 +30,7 @@ router.post(routeName, function(req, res, next) {
     newEntity['Firstname'] = data.Firstname;
     newEntity['Lastname'] = data.Lastname;
     newEntity['Email'] = data.Email;
+    newEntity['Type'] = data.Type;
 
     resolve (newEntity);
   })

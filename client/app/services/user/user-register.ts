@@ -3,5 +3,6 @@ export class UserRegister {
   "Lastname": string;
   "Email": string;
   "Password": string;
+  "Type": string;
   "PasswordVerify": string;
 }
