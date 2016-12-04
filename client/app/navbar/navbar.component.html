@@ -20,11 +20,14 @@
         <li [class.active]="isActiveRoute('/contact')">
           <a routerLink="/contact">Contact</a>
         </li>
-        <li>
+        <li [class.active]="isActiveRoute('/register')">
           <a routerLink="/register">Register</a>
         </li>
-        <li>
-          <a href="#">Login</a>
+        <li [class.active]="isActiveRoute('/login')" *ngIf="!isLoggedIn()">
+          <a routerLink="/login">Login</a>
+        </li>
+        <li *ngIf="isLoggedIn()">
+          Loggedin
         </li>
       </ul>
     </div>

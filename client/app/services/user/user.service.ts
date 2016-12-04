@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from "./user";
 import { UserRegister } from "./user-register";
+import { UserLogin } from "./user-login";
 import { RestError } from '../rest-error';
 import {Headers, Http, Response} from '@angular/http';
 
@@ -11,8 +12,12 @@ import { Observable } from "rxjs";
 export class UserService {
   private headers = new Headers({'Content-Type': 'application/json'});
   private usersUrl = '/api/v1/users';  // URL to web api
+  private authUrl = '/api/v1/auth';  // URL to web api
+  private loggedInUser : User;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.loggedInUser = null;
+  }
 
   getUsers(): Observable<User[]> {
     return this.http.get(this.usersUrl)
@@ -26,6 +31,22 @@ export class UserService {
       .map(this.extractData)
       .toPromise()
       .catch(this.handleError);
+  }
+
+  login(user: UserLogin): Promise<User> {
+    return this.http
+      .post(`${this.authUrl}/login`, JSON.stringify(user), {headers: this.headers})
+      .map(this.extractData)
+      .map((user) => {
+        this.loggedInUser = user;
+        return user;
+      })
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  getLoggedInUser(): User {
+    return this.loggedInUser;
   }
 
   private extractData(res: Response) {
