@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "start-client": "ng serve --proxy-config proxy.conf.json",
-    "start-server": "node $NODE_DEBUG_OPTION ./server/bin/www",
+    "start-server": "node ./server/bin/www",
     "lint": "tslint \"client/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
