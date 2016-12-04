@@ -16,6 +16,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NavLoginComponent } from './navbar/nav-login/nav-login.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NavLoginComponent } from './navbar/nav-login/nav-login.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    NavLoginComponent
+    NavLoginComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,7 @@ import { NavLoginComponent } from './navbar/nav-login/nav-login.component';
     HttpModule,
     RouterModule.forRoot([
       { path: 'contact', component: ContactComponent },
+      { path: 'chat', component: ChatComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
       { path: '', component: HomeComponent},
