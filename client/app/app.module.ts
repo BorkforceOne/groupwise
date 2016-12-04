@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule }   from '@angular/router';
-import { AlertModule } from 'ng2-bootstrap';
+import { AlertModule, DropdownModule } from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -13,6 +13,9 @@ import { ContactComponent } from './contact/contact.component';
 import { HeroCoverComponent } from './home/hero-cover/hero-cover.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { NavLoginComponent } from './navbar/nav-login/nav-login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { HomeComponent } from './home/home.component';
     ContactComponent,
     HeroCoverComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    NavLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +37,12 @@ import { HomeComponent } from './home/home.component';
     HttpModule,
     RouterModule.forRoot([
       { path: 'contact', component: ContactComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: 'login', component: LoginComponent },
       { path: '', component: HomeComponent},
     ]),
-    AlertModule
+    AlertModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
