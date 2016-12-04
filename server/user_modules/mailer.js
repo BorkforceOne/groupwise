@@ -2,7 +2,7 @@
  * Created by Brandon Garling on 11/5/2016.
  */
 const nodemailer = require('nodemailer');
-const config = require('./config');
+const config = require('../config');
 
 module.exports = {};
 
@@ -17,8 +17,11 @@ const transporter = nodemailer.createTransport(config.mailer.accounts[config.mai
  * @param defaults - The default values to use when sending this email
  * @returns {*}
  */
-const generateTemplate = function (subject, text, html, defaults) {
-  return transporter.generateTemplate(subject, text, html, defaults);
+const generateTemplate = function (subject, text, html) {
+  return transporter.templateSender({
+    subject: subject,
+    text: text,
+    html: html
+  }, config.mailer.accounts[config.mailer.default].defaults);
 };
-
 module.exports.generateTemplate = generateTemplate;
