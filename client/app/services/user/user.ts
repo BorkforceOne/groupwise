@@ -1,4 +1,6 @@
-export class User {
+import { Serializable } from "../../shared/serializable";
+
+export class User extends Serializable{
   "Firstname": string;
   "Lastname": string;
   "Email": string;
@@ -6,4 +8,8 @@ export class User {
   "Type": string;
   "updatedAt": string;
   "createdAt": string;
+
+  public getDisplayName () {
+    return this.Firstname + " " + this.Lastname;
+  }
 }

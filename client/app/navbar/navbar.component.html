@@ -20,14 +20,20 @@
         <li [class.active]="isActiveRoute('/contact')">
           <a routerLink="/contact">Contact</a>
         </li>
-        <li [class.active]="isActiveRoute('/register')">
+        <li [class.active]="isActiveRoute('/register')" *ngIf="!isLoggedIn()">
           <a routerLink="/register">Register</a>
         </li>
         <li [class.active]="isActiveRoute('/login')" *ngIf="!isLoggedIn()">
           <a routerLink="/login">Login</a>
         </li>
-        <li *ngIf="isLoggedIn()">
-          Loggedin
+        <li class="btn-group" dropdown *ngIf="isLoggedIn()">
+          <button id="single-button" type="button" class="btn btn-primary" dropdownToggle>
+            <img src="http://placehold.it/32x32" class="profile-image img-circle"> {{getLoggedInUser().getDisplayName()}} <b class="caret"></b>
+          </button>
+          <ul dropdownMenu role="menu" aria-labelledby="single-button">
+            <li role="menuitem"><a class="dropdown-item" href="#">Account</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="#">Sign-out</a></li>
+          </ul>
         </li>
       </ul>
     </div>

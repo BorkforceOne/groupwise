@@ -21,4 +21,8 @@ export class NavbarComponent implements OnInit {
   isLoggedIn() {
     return this.userService.getLoggedInUser() !== null;
   }
+
+  getLoggedInUser() {
+    return this.userService.getLoggedInUser();
+  }
 }

@@ -55,7 +55,7 @@ export class UserService {
       throw new RestError(body.Errors);
     if (body.Payload === undefined)
       throw new RestError(["Invalid response"]);
-    return body.Payload;
+    return new User().fromJSON(body.Payload);
   }
 
   private handleError(error: any): Promise<any> {
