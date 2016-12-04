@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
-import { RandomUserService } from '../random-user.service.ts';
-import { RandomUser } from '../random-user.ts';
+import { UserService } from '../services/user/user.service';
+import { User } from '../services/user/user';
 
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
-  providers: [RandomUserService]
+  providers: [UserService]
 })
 export class ResultComponent implements OnInit {
 
-  constructor(private randomUserService: RandomUserService) { }
+  constructor(private randomUserService: UserService) { }
 
   ngOnInit() {
     this.getUsers();
@@ -24,6 +24,6 @@ export class ResultComponent implements OnInit {
         error =>  this.errorMessage = <any>error);
   }
 
-  private users: RandomUser[];
+  private users: User[];
   private errorMessage: String;
 }
