@@ -15,6 +15,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { NavLoginComponent } from './navbar/nav-login/nav-login.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { RegisterComponent } from './register/register.component';
     FooterComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NavLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,7 @@ import { RegisterComponent } from './register/register.component';
     RouterModule.forRoot([
       { path: 'contact', component: ContactComponent },
       { path: 'register', component: RegisterComponent },
+      { path: 'login', component: LoginComponent },
       { path: '', component: HomeComponent},
     ]),
     AlertModule
