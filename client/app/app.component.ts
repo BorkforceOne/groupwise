@@ -6,7 +6,7 @@ import { SocketService } from "./services/socket/socket.service";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [UserService, SocketService]
+  providers: []
 })
 export class AppComponent {
 

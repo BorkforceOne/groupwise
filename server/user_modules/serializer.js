@@ -13,10 +13,25 @@ const serializeModel = function(model) {
   let data = model.get({plain: true});
   let serializedData = {};
   let serializableFields = model.getSerializableFields();
-  for (let key in data) {
-    if (data.hasOwnProperty(key)) {
-      if (serializableFields.indexOf(key) >= 0)
-        serializedData[key] = data[key];
+  for (let i=0; i<serializableFields.length; i++) {
+    let field = serializableFields[i];
+    let fieldName;
+    let type = null;
+    if (typeof field === "string")
+      fieldName = field;
+    else {
+      fieldName = field.name;
+      type = field.type;
+    }
+
+    if (data.hasOwnProperty(fieldName)) {
+      switch (type) {
+        case 'JSON':
+          serializedData[fieldName] = JSON.parse(data[fieldName]);
+          break;
+        default:
+          serializedData[fieldName] = data[fieldName];
+      }
     }
   }
 
