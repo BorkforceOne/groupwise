@@ -4,6 +4,7 @@
 const Sequelize = require('sequelize');
 const config = require('../config');
 
+
 module.exports = {};
 
 const sequalizeInstance = new Sequelize(
@@ -50,9 +51,42 @@ module.exports.initDatabase = initDatabase;
  * @returns {Promise}
  */
 const syncDatabase = function(force) {
-  if (force === true)
-    return sequalizeInstance.sync({force: true});
-  else
-    return sequalizeInstance.sync();
+  const User = require('../models/user');
+
+  return new Promise((resolve, reject) => {
+    resolve(sequalizeInstance.sync({force: force}));
+  })
+    // Create an admin user if one doesn't exist yet
+    .then(() => User.findOne({
+      where: {
+        Type: 'ADMINISTRATOR'
+      }
+    }))
+    .then(user => {
+      return new Promise((resolve, reject) => {
+        if (user !== null)
+          reject();
+        else {
+          let data = {
+            'Firstname': 'Admin',
+            'Lastname': 'Admin',
+            'Email': 'test@example.com',
+            'Type': 'ADMINISTRATOR'
+          };
+
+          let newEntity = User.build();
+
+          newEntity['Firstname'] = data.Firstname;
+          newEntity['Lastname'] = data.Lastname;
+          newEntity['Email'] = data.Email;
+          newEntity['Type'] = data.Type;
+
+          resolve(newEntity);
+        }
+      })
+        .then(entity => entity.changePassword('1234'))
+        .then(entity => entity.save());
+    })
+    .catch(e => {return;});
 };
 module.exports.syncDatabase = syncDatabase;
