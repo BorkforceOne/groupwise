@@ -50,9 +50,9 @@ router.post(routeName, function(req, res, next) {
   restUtils.authenticate(req)
     .then(user => {
       let data = {
-        'Data': fs.readFileSync(req.files.File.file),
-        'Filename': req.files.File.filename,
-        'MimeType': req.files.File.mimetype,
+        'Data': fs.readFileSync(req.files.file.file),
+        'Filename': req.files.file.filename,
+        'MimeType': req.files.file.mimetype,
         'UserId': user.Id
       };
 

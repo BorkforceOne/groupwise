@@ -29,6 +29,9 @@
         <li [class.active]="isActiveRoute('/chat')" *ngIf="isLoggedIn()">
           <a routerLink="/chat">Chat</a>
         </li>
+        <li [class.active]="isActiveRoute('/admin-manage')" *ngIf="isLoggedIn() && getLoggedInUser().isAdmin()">
+          <a routerLink="/admin-manage">Admin Manage</a>
+        </li>
         <li class="btn-group" dropdown *ngIf="isLoggedIn()">
           <button id="single-button" type="button" class="btn btn-primary" dropdownToggle>
             <img src="http://placehold.it/32x32" class="profile-image img-circle"> {{getLoggedInUser().getDisplayName()}} <b class="caret"></b>

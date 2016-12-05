@@ -17,6 +17,11 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NavLoginComponent } from './navbar/nav-login/nav-login.component';
 import { ChatComponent } from './chat/chat.component';
+import { AdminManageComponent } from './admin-manage/admin-manage.component';
+import { FileUploadModule } from "ng2-file-upload";
+import {SocketService} from "./services/socket/socket.service";
+import {UserService} from "./services/user/user.service";
+import {ConfigService} from "./services/config/config.service";
 
 @NgModule({
   declarations: [
@@ -31,7 +36,8 @@ import { ChatComponent } from './chat/chat.component';
     LoginComponent,
     RegisterComponent,
     NavLoginComponent,
-    ChatComponent
+    ChatComponent,
+    AdminManageComponent
   ],
   imports: [
     BrowserModule,
@@ -42,12 +48,16 @@ import { ChatComponent } from './chat/chat.component';
       { path: 'chat', component: ChatComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'admin-manage', component: AdminManageComponent },
       { path: '', component: HomeComponent},
     ]),
     AlertModule,
-    DropdownModule
+    DropdownModule,
+    FileUploadModule
   ],
-  providers: [],
+  providers: [UserService, SocketService, ConfigService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}
