@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class Angular2DemoPage {
+export class GroupwisePage {
   navigateTo() {
     return browser.get('/');
   }

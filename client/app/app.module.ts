@@ -58,6 +58,4 @@ import {ConfigService} from "./services/config/config.service";
   providers: [UserService, SocketService, ConfigService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-
-}
+export class AppModule { }
