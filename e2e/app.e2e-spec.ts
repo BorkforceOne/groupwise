@@ -1,10 +1,10 @@
-import { Angular2DemoPage } from './app.po';
+import { GroupwisePage } from './app.po';
 
-describe('angular-2-demo App', function() {
-  let page: Angular2DemoPage;
+describe('groupwise App', function() {
+  let page: GroupwisePage;
 
   beforeEach(() => {
-    page = new Angular2DemoPage();
+    page = new GroupwisePage();
   });
 
   it('should display message saying app works', () => {
