@@ -2,7 +2,7 @@
  * Created by Brandon Garling on 11/7/2016.
  */
 const Sequelize = require('sequelize');
-const database = require('../user_modules/database');
+const databaseManager = require('../user_modules/database-manager');
 
 module.exports = {};
 
@@ -10,7 +10,7 @@ module.exports = {};
  * A Attachment model
  * @type {*}
  */
-const Attachment = database.sequelize.define('attachment', {
+const Attachment = databaseManager.context.define('attachment', {
   Data: {
     type: Sequelize.BLOB
   },

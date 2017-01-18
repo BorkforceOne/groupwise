@@ -2,8 +2,8 @@
  * Created by Brandon Garling on 11/5/2016.
  */
 const Sequelize = require('sequelize');
-const database = require('../user_modules/database');
-const encryption = require('../user_modules/encryption');
+const databaseManager = require('../user_modules/database-manager');
+const encryptionManager = require('../user_modules/encryption-manager');
 
 const Attachment = require('./attachment');
 
@@ -13,7 +13,7 @@ module.exports = {};
  * A User model, this holds user information
  * @type {*}
  */
-const User = database.sequelize.define('user', {
+const User = databaseManager.context.define('user', {
   Firstname: {
     allowNull: false,
     type: Sequelize.STRING
@@ -52,12 +52,12 @@ const User = database.sequelize.define('user', {
     },
     changePassword: function(password) {
       return new Promise((resolve, reject) => {
-        encryption.generateSalt()
+        encryptionManager.generateSalt()
           .then(salt => {
             this['Salt'] = salt;
           })
           .then(() => {
-            return encryption.generateHash(password, this['Salt']);
+            return encryptionManager.generateHash(password, this['Salt']);
           })
           .then(hash => {
             this['Password'] = hash;

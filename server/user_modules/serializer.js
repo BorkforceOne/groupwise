@@ -1,6 +1,3 @@
-/**
- * Created by Brandon Garling on 11/5/2016.
- */
 module.exports = {};
 
 /**

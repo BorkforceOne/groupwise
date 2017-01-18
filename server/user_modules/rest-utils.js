@@ -1,7 +1,3 @@
-/**
- * Created by Brandon Garling on 11/6/2016.
- */
-
 const User = require('../models/user');
 
 module.exports = {};

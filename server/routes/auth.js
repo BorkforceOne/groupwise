@@ -6,7 +6,7 @@ const router = express.Router();
 const User = require('../models/user');
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
-const encryption = require('../user_modules/encryption');
+const encryptionManager = require('../user_modules/encryption-manager');
 
 const routeName = '/auth';
 
@@ -24,7 +24,7 @@ router.post(routeName + '/login', function(req, res, next) {
             foundUser = user;
             return user;
         })
-        .then(user => encryption.validiateHash(req.body.Password, user.Salt, user.Password))
+        .then(user => encryptionManager.validiateHash(req.body.Password, user.Salt, user.Password))
         .then(result => {
             if (result === false)
                 throw "Invalid email or password";
