@@ -4,7 +4,7 @@
 const config = {};
 
 // Add a test config for the mailer
-// TODO: Store this in the database during setup
+// TODO: Store this in the databaseManager during setup
 config.mailer = {
   default: 'no-reply',
   accounts: {

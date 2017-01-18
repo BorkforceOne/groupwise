@@ -2,7 +2,7 @@
  * Created by Brandon Garling on 12/4/2016.
  */
 const Sequelize = require('sequelize');
-const database = require('../user_modules/database');
+const databaseManager = require('../user_modules/database-manager');
 
 module.exports = {};
 
@@ -10,7 +10,7 @@ module.exports = {};
  * A Config model, this holds user information
  * @type {*}
  */
-const Config = database.sequelize.define('config', {
+const Config = databaseManager.context.define('config', {
   Key: {
     primaryKey: true,
     allowNull: false,
