@@ -7,6 +7,8 @@ import {Headers, Http, Response} from '@angular/http';
 
 import '../../rxjs-operators';
 import { Observable } from "rxjs";
+import {AlertService} from "../alert/alert.service";
+import {Alert} from "../alert/alert";
 
 @Injectable()
 export class UserService {
@@ -15,7 +17,7 @@ export class UserService {
   private authUrl = '/api/v1/auth';  // URL to web api
   private loggedInUser : User;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private alertService: AlertService) {
     this.loggedInUser = null;
   }
 
@@ -42,7 +44,7 @@ export class UserService {
         return user;
       })
       .toPromise()
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
   }
 
   getLoggedInUser(): User {
@@ -60,6 +62,10 @@ export class UserService {
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
+    const alert = new Alert();
+    alert.Text = error.Errors.concat('\n');
+    alert.Type = "danger"
+    this.alertService.addAlert(alert);
     return Promise.reject(error.message || error);
   }
 

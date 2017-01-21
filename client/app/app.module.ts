@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule }   from '@angular/router';
-import { AlertModule, DropdownModule } from 'ng2-bootstrap';
+import {AlertModule, DropdownModule, CollapseDirective} from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -22,6 +22,8 @@ import { FileUploadModule } from "ng2-file-upload";
 import {SocketService} from "./services/socket/socket.service";
 import {UserService} from "./services/user/user.service";
 import {ConfigService} from "./services/config/config.service";
+import {AlertService} from "./services/alert/alert.service";
+import { AlertsComponent } from './navbar/alerts/alerts.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import {ConfigService} from "./services/config/config.service";
     RegisterComponent,
     NavLoginComponent,
     ChatComponent,
-    AdminManageComponent
+    AdminManageComponent,
+    AlertsComponent,
+    CollapseDirective
   ],
   imports: [
     BrowserModule,
@@ -51,11 +55,11 @@ import {ConfigService} from "./services/config/config.service";
       { path: 'admin-manage', component: AdminManageComponent },
       { path: '', component: HomeComponent},
     ]),
-    AlertModule,
-    DropdownModule,
+    AlertModule.forRoot(),
+    DropdownModule.forRoot(),
     FileUploadModule
   ],
-  providers: [UserService, SocketService, ConfigService],
+  providers: [UserService, SocketService, ConfigService, AlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
