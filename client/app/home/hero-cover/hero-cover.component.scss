@@ -5,3 +5,12 @@
   padding: 20px;
   padding-bottom: 40px;
 }
+
+.cover {
+  align-items: center;
+  display: flex;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

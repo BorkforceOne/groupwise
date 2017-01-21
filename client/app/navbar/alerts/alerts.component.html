@@ -1,0 +1,3 @@
+<div class="row" *ngFor="let alert of alerts">
+  <alert [type]="alert.Type" dismissible="true" (onClosed)="removeAlert(alert)">{{ alert.Text }}</alert>
+</div>
