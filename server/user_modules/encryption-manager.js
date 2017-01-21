@@ -13,9 +13,9 @@ class EncryptionManager {
    * @param hash - The hash to validate against
    */
   validiateHash(string, salt, hash) {
-    return new Promise(function (resolve, reject) {
-      generateHash(string, salt)
-        .then(function (stringHash) {
+    return new Promise((resolve, reject) => {
+      this.generateHash(string, salt)
+        .then((stringHash) => {
           if (hash == stringHash)
             resolve(true);
           else
@@ -30,8 +30,8 @@ class EncryptionManager {
    * @param salt - The salt to hash with
    */
   generateHash(string, salt) {
-    return new Promise(function (resolve, reject) {
-      bcrypt.hash(string, salt, function (err, stringHash) {
+    return new Promise((resolve, reject) => {
+      bcrypt.hash(string, salt, (err, stringHash) => {
         if (err)
           reject(err);
         resolve(stringHash);
@@ -43,8 +43,8 @@ class EncryptionManager {
    * Generates a new salt
    */
   generateSalt() {
-    return new Promise(function (resolve, reject) {
-      bcrypt.genSalt(10, function (err, salt) {
+    return new Promise((resolve, reject) => {
+      bcrypt.genSalt(10, (err, salt) => {
         if (err)
           reject(err);
         resolve(salt);
