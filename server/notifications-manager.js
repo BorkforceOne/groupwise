@@ -1,0 +1,3 @@
+/**
+ * Manager for user notifications.
+ */
