@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { RegisterClientPreferencesComponent } from './register-client-preferences.component';
+import { RegisterStudentAdditionalPreferencesComponent } from './register-student-additional-preferences.component';
 
-describe('RegisterClientPreferencesComponent', () => {
-  let component: RegisterClientPreferencesComponent;
-  let fixture: ComponentFixture<RegisterClientPreferencesComponent>;
+describe('RegisterStudentAdditionalPreferencesComponent', () => {
+  let component: RegisterStudentAdditionalPreferencesComponent;
+  let fixture: ComponentFixture<RegisterStudentAdditionalPreferencesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegisterClientPreferencesComponent ]
+      declarations: [ RegisterStudentAdditionalPreferencesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RegisterClientPreferencesComponent);
+    fixture = TestBed.createComponent(RegisterStudentAdditionalPreferencesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

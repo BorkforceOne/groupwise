@@ -24,7 +24,10 @@ import {UserService} from "./services/user/user.service";
 import {ConfigService} from "./services/config/config.service";
 import {AlertService} from "./services/alert/alert.service";
 import { AlertsComponent } from './navbar/alerts/alerts.component';
-import { RegisterClientPreferencesComponent } from './register-client-preferences/register-client-preferences.component';
+import { RegisterHostAdditionalPersonalInformationComponent } from './register-host-additional-personal-information/register-host-additional-personal-information.component';
+import { RegisterHostAdditionalPreferencesComponent } from './register-host-additional-preferences/register-host-additional-preferences.component';
+import { RegisterStudentAdditionalPersonalInformationComponent } from './register-student-additional-personal-information/register-student-additional-personal-information.component';
+import { RegisterStudentAdditionalPreferencesComponent } from './register-student-additional-preferences/register-student-additional-preferences.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { RegisterClientPreferencesComponent } from './register-client-preference
     AdminManageComponent,
     AlertsComponent,
     CollapseDirective,
-    RegisterClientPreferencesComponent
+    RegisterHostAdditionalPersonalInformationComponent,
+    RegisterHostAdditionalPreferencesComponent,
+    RegisterStudentAdditionalPersonalInformationComponent,
+    RegisterStudentAdditionalPreferencesComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +63,10 @@ import { RegisterClientPreferencesComponent } from './register-client-preference
       { path: 'admin-manage', component: AdminManageComponent },
       { path: '', component: HomeComponent},
       { path: 'register-client', component: RegisterClientPreferencesComponent },
+      { path: 'register-client', component: RegisterClientPreferencesComponent },
+      { path: 'register-client', component: RegisterClientPreferencesComponent },
+      { path: 'register-client', component: RegisterClientPreferencesComponent },
+
 
     ]),
     AlertModule.forRoot(),
