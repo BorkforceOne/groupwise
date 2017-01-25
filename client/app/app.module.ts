@@ -24,6 +24,7 @@ import {UserService} from "./services/user/user.service";
 import {ConfigService} from "./services/config/config.service";
 import {AlertService} from "./services/alert/alert.service";
 import { AlertsComponent } from './navbar/alerts/alerts.component';
+import { RegisterClientPreferencesComponent } from './register-client-preferences/register-client-preferences.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AlertsComponent } from './navbar/alerts/alerts.component';
     ChatComponent,
     AdminManageComponent,
     AlertsComponent,
-    CollapseDirective
+    CollapseDirective,
+    RegisterClientPreferencesComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,8 @@ import { AlertsComponent } from './navbar/alerts/alerts.component';
       { path: 'login', component: LoginComponent },
       { path: 'admin-manage', component: AdminManageComponent },
       { path: '', component: HomeComponent},
+      { path: 'register-client', component: RegisterClientPreferencesComponent },
+
     ]),
     AlertModule.forRoot(),
     DropdownModule.forRoot(),
