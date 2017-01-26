@@ -9,15 +9,15 @@
         </div>
 
         <div class="form-group col-lg-6">
-          <label>What is your phone number??</label>
+          <label>What is your phone number?</label>
           <input [(ngModel)]="editingUser.Phone" [ngModelOptions]="{standalone: true}" type="phone" id="inputPhone" class="form-control" placeholder="Phone" required="">
         </div>
 
         <div class="form-group col-lg-6">
           <label>Do you have any children? If so what are their name, gender, and age? </label>
-          <input [(ngModel)]="editingUser.ChildrenName" [ngModelOptions]="{standalone: true}" type="childrenname" id="inputChildrenName" class="form-control" placeholder="ChildrenName" required="">
-          <input [(ngModel)]="editingUser.ChildrenGender" [ngModelOptions]="{standalone: true}" type="childrengender" id="inputChildrenGender" class="form-control" placeholder="ChildrenGender" required="">
-          <input [(ngModel)]="editingUser.ChildrenAge" [ngModelOptions]="{standalone: true}" type="childrenage" id="inputChildrenAge" class="form-control" placeholder="ChildrenAge" required="">
+          <input [(ngModel)]="editingUser.ChildrenName" [ngModelOptions]="{standalone: true}" type="childrenname" id="inputChildrenName" class="form-control" placeholder="ChildrenName" >
+          <input [(ngModel)]="editingUser.ChildrenGender" [ngModelOptions]="{standalone: true}" type="childrengender" id="inputChildrenGender" class="form-control" placeholder="ChildrenGender" >
+          <input [(ngModel)]="editingUser.ChildrenAge" [ngModelOptions]="{standalone: true}" type="childrenage" id="inputChildrenAge" class="form-control" placeholder="ChildrenAge" >
 
         </div>
 
@@ -35,6 +35,6 @@
     </form>
   </div>
   <div class="container" *ngIf="registrationComplete">
-    <p>Thank you, please check your email to complete registration!</p>
+    <p>Thank you, please continue to preferences!</p>
   </div>
 </div>
