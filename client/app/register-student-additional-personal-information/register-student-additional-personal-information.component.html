@@ -1,3 +1,81 @@
-<p>
-  register-student-additional-personal-information works!
-</p>
+<div class="section">
+  <div class="container" *ngIf="!registrationComplete">
+    <form class="form-register" >
+      <div class="col-md-offset-3 col-md-6">
+        <h2 class="form-register-heading">Personal Information</h2>
+        <div class="form-group col-lg-12">
+          <label>What is your Age?</label>
+          <input [(ngModel)]="editingUser.Age" [ngModelOptions]="{standalone: true}" type="age" id="inputAge" class="form-control" placeholder="Age" required="" autofocus="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>What is your phone number?</label>
+          <input [(ngModel)]="editingUser.Phone" [ngModelOptions]="{standalone: true}" type="phone" id="inputPhone" class="form-control" placeholder="Phone" required="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>Do you have any children? If so what are their name, gender, and age? </label>
+          <input [(ngModel)]="editingUser.ChildrenName" [ngModelOptions]="{standalone: true}" type="childrenname" id="inputChildrenName" class="form-control" placeholder="ChildrenName" required="">
+          <input [(ngModel)]="editingUser.ChildrenGender" [ngModelOptions]="{standalone: true}" type="childrengender" id="inputChildrenGender" class="form-control" placeholder="ChildrenGender" required="">
+          <input [(ngModel)]="editingUser.ChildrenAge" [ngModelOptions]="{standalone: true}" type="childrenage" id="inputChildrenAge" class="form-control" placeholder="ChildrenAge" required="">
+
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>What are your hobbies, interests, or what you like to do for recreation?</label>
+          <input [(ngModel)]="editingUser.Hobbies" [ngModelOptions]="{standalone: true}" id="inputHobbies" class="form-control" placeholder="Hobbies" required="" autofocus="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>What is your country of citizenship?</label>
+          <input [(ngModel)]="editingUser.citizenship" [ngModelOptions]="{standalone: true}" id="inputCitizenship" class="form-control" placeholder="Country" required="" autofocus="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>When did you begin your studies at NAU?</label>
+          <input [(ngModel)]="editingUser.Time_at_NAU" [ngModelOptions]="{standalone: true}" id="inputTime_at_NAU" class="form-control" placeholder="Date" required="" autofocus="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>What is your major at NAU?</label>
+          <input [(ngModel)]="editingUser.Major" [ngModelOptions]="{standalone: true}" id="inputMajor" class="form-control" placeholder="Major" required="" autofocus="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>Language (s) you speak ?</label>
+          <input [(ngModel)]="editingUser.Language" [ngModelOptions]="{standalone: true}" id="inputLanguage" class="form-control" placeholder="Language" required="" autofocus="">
+        </div>
+
+        <p>Are you: </p>
+        <div class="radio">
+          <label><input type="radio" [(ngModel)]="editingUser.Type" name="type" value="PIE">a student in PIE</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" [(ngModel)]="editingUser.Type" name="type" value="Undergraduate">an Undergraduate</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" [(ngModel)]="editingUser.Type" name="type" value="Graduate">a Graduate (M.S., Ph.D, etc.)</label>
+        </div>
+      </div>
+
+
+
+
+      <p>Do you have a vehicle?</p>
+      <div class="radio">
+        <label><input type="radio" [(ngModel)]="editingUser.Type" name="type" value="Yes">Yes</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" [(ngModel)]="editingUser.Type" name="type" value="No">No</label>
+      </div>
+      <p></p>
+      <div class="form-group col-lg-12">
+        <button (click)="onRegister(editingUser)" class="btn btn-lg btn-primary" type="submit">Continue to preferences</button>
+      </div>
+
+    </form>
+  </div>
+  <div class="container" *ngIf="registrationComplete">
+    <p>Thank you, please check your email to complete registration!</p>
+  </div>
+</div>
