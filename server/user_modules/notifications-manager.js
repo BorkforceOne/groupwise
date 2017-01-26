@@ -2,7 +2,7 @@
  * Manager for user notifications.
  */
 
-const mailermanager = require(./mailer-manager);
+const mailermanager = require(./mailer-manager)
 
 /**
  * Authenticates and generates a notification email and sends it to a user
