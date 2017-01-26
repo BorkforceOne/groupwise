@@ -1,3 +1,55 @@
-<p>
-  register-host-additional-personal-information works!
-</p>
+<div class="section">
+  <div class="container" *ngIf="!registrationComplete">
+    <form class="form-register" >
+      <div class="col-md-offset-3 col-md-6">
+        <h2 class="form-register-heading">Personal Information</h2>
+        <div class="form-group col-lg-12">
+          <label>What is your Age?</label>
+          <input [(ngModel)]="editingUser.Age" [ngModelOptions]="{standalone: true}" type="age" id="inputAge" class="form-control" placeholder="Age" required="" autofocus="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>What is your phone number??</label>
+          <input [(ngModel)]="editingUser.Phone" [ngModelOptions]="{standalone: true}" type="phone" id="inputPhone" class="form-control" placeholder="Phone" required="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>Do you have any children? If so what are their name, gender, and age? </label>
+          <input [(ngModel)]="editingUser.ChildrenName" [ngModelOptions]="{standalone: true}" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+          <input [(ngModel)]="editingUser.ChildrenGender" [ngModelOptions]="{standalone: true}" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+          <input [(ngModel)]="editingUser.ChildrenAge" [ngModelOptions]="{standalone: true}" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>Firstname</label>
+          <input [(ngModel)]="editingUser.Firstname" [ngModelOptions]="{standalone: true}" id="inputFirstname" class="form-control" placeholder="Firstname" required="" autofocus="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <label>Lastname</label>
+          <input [(ngModel)]="editingUser.Lastname" [ngModelOptions]="{standalone: true}" id="inputLastname" class="form-control" placeholder="Lastname" required="" autofocus="">
+        </div>
+
+        <div class="form-group col-lg-12">
+          <p>I am a </p>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Type" name="type" value="STUDENT">Student</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Type" name="type" value="HOST">Host</label>
+          </div>
+        </div>
+
+        <div class="form-group col-lg-12">
+          <button (click)="onRegister(editingUser)" class="btn btn-lg btn-primary" type="submit">Register</button>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+  <div class="container" *ngIf="registrationComplete">
+    <p>Thank you, please check your email to complete registration!</p>
+  </div>
+</div>
