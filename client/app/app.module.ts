@@ -62,10 +62,10 @@ import { RegisterStudentAdditionalPreferencesComponent } from './register-studen
       { path: 'login', component: LoginComponent },
       { path: 'admin-manage', component: AdminManageComponent },
       { path: '', component: HomeComponent},
-      { path: 'register-client', component: RegisterClientPreferencesComponent },
-      { path: 'register-client', component: RegisterClientPreferencesComponent },
-      { path: 'register-client', component: RegisterClientPreferencesComponent },
-      { path: 'register-client', component: RegisterClientPreferencesComponent },
+      { path: 'register-host-personal', component: RegisterHostAdditionalPersonalInformationComponent },
+      { path: 'register-host-preferences', component: RegisterHostAdditionalPreferencesComponent },
+      { path: 'register-student-personal', component: RegisterStudentAdditionalPersonalInformationComponent },
+      { path: 'register-student-preferences', component: RegisterStudentAdditionalPreferencesComponent },
 
 
     ]),
