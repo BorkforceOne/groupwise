@@ -9,7 +9,10 @@ class MailerManager {
 
   init() {
     // Generate a nodemailer transporter object that we can use to send emails
-    this.context = nodemailer.createTransport(config.mailer.accounts[config.mailer.default].connectionString);
+    return new Promise((resolve, reject) =>{
+      this.context = nodemailer.createTransport(config.mailer.accounts[config.mailer.default].connectionString);
+      resolve();
+    });
   }
 
   /**
