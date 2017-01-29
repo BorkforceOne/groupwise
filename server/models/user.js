@@ -46,6 +46,21 @@ const User = databaseManager.context.define('user', {
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
+  },
+  RecieveGeneralNotifications: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
+  RecieveNewMatchNotifications: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
+  RecieveMessageNotifications: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 },{
   instanceMethods: {
