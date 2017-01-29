@@ -41,13 +41,13 @@ class NotificationsManager {
 
       switch (type) {
         case this.NotificationTypes.GENERAL:
-          sendNotification = userTo.RecieveGeneralNotifications;
+          sendNotification = userTo.ReceiveGeneralNotifications;
           break;
         case this.NotificationTypes.NEW_MATCH:
-          sendNotification = userTo.RecieveNewMatchNotifications;
+          sendNotification = userTo.ReceiveNewMatchNotifications;
           break;
         case this.NotificationTypes.MESSAGE:
-          sendNotification = userTo.RecieveMessageNotifications;
+          sendNotification = userTo.ReceiveMessageNotifications;
           break;
         default:
           throw "No type specified";

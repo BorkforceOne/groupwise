@@ -47,17 +47,17 @@ const User = databaseManager.context.define('user', {
     primaryKey: true,
     autoIncrement: true
   },
-  RecieveGeneralNotifications: {
+  ReceiveGeneralNotifications: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: true
   },
-  RecieveNewMatchNotifications: {
+  ReceiveNewMatchNotifications: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: true
   },
-  RecieveMessageNotifications: {
+  ReceiveMessageNotifications: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: true
@@ -115,7 +115,7 @@ User.hasMany(Attachment, {
  * @returns {[string]}
  */
 User.getSerializableFields = function () {
-  return ['Id', 'Firstname', 'Lastname', 'Type', 'Email', 'createdAt', 'updatedAt'];
+  return ['Id', 'Firstname', 'Lastname', 'ReceiveGeneralNotifications', 'ReceiveNewMatchNotifications', 'ReceiveMessageNotifications', 'Type', 'Email', 'createdAt', 'updatedAt'];
 };
 
 module.exports = User;
