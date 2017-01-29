@@ -12,6 +12,7 @@ class ExpressManager {
 
   constructor() {
     this.context = null;
+    this.sessionStore = null;
   }
 
   init() {
@@ -23,6 +24,8 @@ class ExpressManager {
       const sessionStore = new SequelizeStore({
         db: database.context
       });
+
+      this.sessionStore = sessionStore;
 
       // Set up Express settings
       bb.extend(this.context, {

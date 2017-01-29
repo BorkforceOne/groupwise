@@ -6,6 +6,7 @@ function bootstrap() {
   const expressManager = require('./user_modules/express-manager');
   const httpManager = require('./user_modules/http-manager');
   const socketManager = require('./user_modules/socket-manager');
+  const mailerManager = require('./user_modules/mailer-manager');
 
   // We use Promises due to dependency issues and possible async calls that may occur in an init function
 
@@ -20,6 +21,8 @@ function bootstrap() {
     .then(httpManager.init.bind(httpManager))
     // Initialize SocketIO
     .then(socketManager.init.bind(socketManager))
+    // Initialize Mailer
+    .then(mailerManager.init.bind(mailerManager))
     .catch(handleError);
 }
 
