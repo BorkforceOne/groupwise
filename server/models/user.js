@@ -4,6 +4,7 @@
 const Sequelize = require('sequelize');
 const databaseManager = require('../user_modules/database-manager');
 const encryptionManager = require('../user_modules/encryption-manager');
+const mailerManager = require('../user_modules/mailer-manager');
 
 const Attachment = require('./attachment');
 
@@ -65,6 +66,23 @@ const User = databaseManager.context.define('user', {
           })
           .catch(reject);
       });
+    },
+    sendWelcomeEmail: function() {
+      return new Promise((resolve, reject) => {
+        let mail = mailerManager.generateTemplate('FlagFriends Account', 'This is to inform you of your new account on FlagFriends!', '<b>Dear {{Firstname}} {{Lastname}},</b><br/><p>This is to inform you of your new account on FlagFriends!</p><br/>');
+
+        let header = {
+          to: this.Email
+        };
+        let params = {
+          Firstname: this.Firstname,
+          Lastname: this.Lastname
+        };
+
+        mailerManager.sendMail(mail, header, params)
+          .then(() => resolve(this))
+          .catch((error) => reject(error));
+      })
     }
   },
 });
