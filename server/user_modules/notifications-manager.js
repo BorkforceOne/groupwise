@@ -17,22 +17,19 @@ class NotificationsManager {
 
   init(){
     return new Promise((resolve, reject) =>{
-      const User = require('./../models/user');
-      let newUser = User.build();
-      newUser.Email = 'mrn24@nau.edu';
-      let mail = mailerManager.generateTemplate('FlagFriends Account', 'This is to inform you of your new account on FlagFriends!', '<b>Dear {{Firstname}} {{Lastname}},</b><br/><p>This is to inform you of your new account on FlagFriends!</p><br/>');
-      this.sendNotification(mail, newUser, null, this.NotificationTypes.GENERAL)
+
       resolve();
     });
 
   }
 
   /**
-   * Authenticates and generates a notification email and sends it to a user
-   * @param user - The text to have in the subject field of the email
-   * @param noteSub - The text subject of the email
-   * @param noteBod - The text body of the email
-   * @returns {*}
+   * Checks notification preferences and generates a notification email and sends it to a user
+   * @param template - Receives a nodemailer template function
+   * @param userTo - User object who is receiving the notification
+   * @param params - Specifics of the user for personalized emails
+   * @param type - Type of notification for preference checking
+   * @returns Promise <void>
    */
 
   sendNotification(template, userTo, params, type) {
