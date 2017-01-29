@@ -51,6 +51,10 @@ export class UserService {
     return this.loggedInUser;
   }
 
+  isLoggedIn(): boolean {
+
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     if (Array.isArray(body.Errors) && body.Errors.length > 0)
