@@ -19,11 +19,22 @@ export class NavbarComponent implements OnInit {
     return this.router.url == route;
   }
 
+  logout() {
+    this.userService.logout()
+      .then(() => {
+        this.router.navigate(['']);
+      })
+  }
+
   isLoggedIn() {
     return this.userService.getLoggedInUser() !== null;
   }
 
-  getLoggedInUser() {
-    return this.userService.getLoggedInUser();
+  isAdmin() {
+    return this.userService.isAdmin(this.userService.getLoggedInUser());
+  }
+
+  getUserDisplayName() {
+    return this.userService.getUserDisplayName(this.userService.getLoggedInUser());
   }
 }

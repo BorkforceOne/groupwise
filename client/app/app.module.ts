@@ -24,6 +24,7 @@ import {UserService} from "./services/user/user.service";
 import {ConfigService} from "./services/config/config.service";
 import {AlertService} from "./services/alert/alert.service";
 import { AlertsComponent } from './navbar/alerts/alerts.component';
+import {CanActivateViaAuthGuard} from "./guards/can-activate-via-auth-guard";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { AlertsComponent } from './navbar/alerts/alerts.component';
     HttpModule,
     RouterModule.forRoot([
       { path: 'contact', component: ContactComponent },
-      { path: 'chat', component: ChatComponent },
+      { path: 'chat', component: ChatComponent, canActivate: [CanActivateViaAuthGuard] },
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
       { path: 'admin-manage', component: AdminManageComponent },
@@ -59,7 +60,7 @@ import { AlertsComponent } from './navbar/alerts/alerts.component';
     DropdownModule.forRoot(),
     FileUploadModule
   ],
-  providers: [UserService, SocketService, ConfigService, AlertService],
+  providers: [UserService, SocketService, ConfigService, AlertService, CanActivateViaAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
