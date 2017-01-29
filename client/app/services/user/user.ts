@@ -8,12 +8,4 @@ export class User extends Serializable{
   "Type": string;
   "updatedAt": string;
   "createdAt": string;
-
-  public getDisplayName () {
-    return this.Firstname + " " + this.Lastname;
-  }
-
-  public isAdmin() {
-    return this.Type === 'ADMINISTRATOR';
-  }
 }

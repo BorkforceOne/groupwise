@@ -35,20 +35,63 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  private _setLoggedInUser(user: User) {
+    this.loggedInUser = user;
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    return user;
+  }
+
+  private _clearLoggedInUser(): void {
+    this._setLoggedInUser(null);
+  }
+
+  private _getLocalLoggedInUser(): User {
+    let user = localStorage.getItem("loggedInUser");
+    if (user != null)
+      return JSON.parse(user);
+    return null;
+  }
+
+  private _loadLocalLoggedInUser(): User {
+    this.loggedInUser = this._getLocalLoggedInUser();
+    return this.loggedInUser;
+  }
+
   login(user: UserLogin): Promise<User> {
     return this.http
       .post(`${this.authUrl}/login`, JSON.stringify(user), {headers: this.headers})
       .map(this.extractData)
-      .map((user) => {
-        this.loggedInUser = user;
-        return user;
-      })
+      .map(this._setLoggedInUser)
+      .toPromise()
+      .catch(this.handleError.bind(this));
+  }
+
+  logout(): Promise<boolean> {
+    return this.http
+      .post(`${this.authUrl}/logout`, null, {headers: this.headers})
+      .map(this.extractData)
+      .map(this._clearLoggedInUser.bind(this))
       .toPromise()
       .catch(this.handleError.bind(this));
   }
 
   getLoggedInUser(): User {
+    if (this.loggedInUser != null)
+      return this.loggedInUser;
+    this._loadLocalLoggedInUser();
     return this.loggedInUser;
+  }
+
+  isLoggedIn(): boolean {
+    return this.getLoggedInUser() != null;
+  }
+
+  isAdmin(user: User): boolean {
+    return user.Type === 'ADMINISTRATOR';
+  }
+
+  getUserDisplayName(user: User): string {
+    return user.Firstname + " " + user.Lastname;
   }
 
   private extractData(res: Response) {
