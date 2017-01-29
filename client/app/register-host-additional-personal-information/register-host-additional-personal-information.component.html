@@ -3,14 +3,73 @@
     <form class="form-register" >
       <div class="col-md-offset-3 col-md-6">
         <h2 class="form-register-heading">Personal Information</h2>
-        <div class="form-group col-lg-12">
+        <div class="form-group col-lg-6">
           <label>What is your Age?</label>
           <input [(ngModel)]="editingUser.Age" [ngModelOptions]="{standalone: true}" type="age" id="inputAge" class="form-control" placeholder="Age" required="" autofocus="">
+        </div>
+        <div class="form-group col-lg-6">
+          <p>What is your gender?: </p>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Gender" name="type" value="Male">Male</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Gender" name="type" value="Female">Female</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Gender" name="type" value="Other">Other</label>
+          </div>
         </div>
 
         <div class="form-group col-lg-6">
           <label>What is your phone number?</label>
           <input [(ngModel)]="editingUser.Phone" [ngModelOptions]="{standalone: true}" type="phone" id="inputPhone" class="form-control" placeholder="Phone" required="">
+        </div>
+
+        <div class="form-group col-lg-6">
+          <p>Are you married?: </p>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Marriage" name="type" value="Yes">Yes</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Marriage" name="type" value="No">No</label>
+          </div>
+        </div>
+
+        <div class="form-group col-lg-6">
+          <p>Do you own a car?: </p>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Car" name="type" value="Yes">Yes</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Car" name="type" value="No">No</label>
+          </div>
+        </div>
+
+        <div class="form-group col-lg-6">
+          <p>Do you smoke? </p>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Smoke" name="type" value="Yes">Yes</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Smoke" name="type" value="No">No</label>
+          </div>
+        </div>
+        <div class="form-group col-lg-6">
+          <label>Do you have any allergies? If so what are they? </label>
+          <input [(ngModel)]="editingUser.Allergies" [ngModelOptions]="{standalone: true}" type="allergies" id="inputAllergies" class="form-control" placeholder="Allergies" >
+        </div>
+        <div class="form-group col-lg-6">
+          <p>Do you drink alcohol?: </p>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Alcohol" name="type" value="Yes">Yes</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Alcohol" name="type" value="No">No</label>
+          </div>
+        </div>
+        <div class="form-group col-lg-6">
+          <label>How far do you live to the university? </label>
+          <input [(ngModel)]="editingUser.Distance" [ngModelOptions]="{standalone: true}" type="distance" id="inputDistance" class="form-control" placeholder="Distance" >
         </div>
 
         <div class="form-group col-lg-6">
@@ -25,6 +84,20 @@
           <label>What are your hobbies, interests, or what you like to do for recreation?</label>
           <input [(ngModel)]="editingUser.Hobbies" [ngModelOptions]="{standalone: true}" id="inputHobbies" class="form-control" placeholder="Hobbies" required="" autofocus="">
         </div>
+        <div class="form-group col-lg-6">
+          <label>Do you have any house rules or regulations?</label>
+          <input [(ngModel)]="editingUser.Rules" [ngModelOptions]="{standalone: true}" id="inputRules" class="form-control" placeholder="Rules" required="" autofocus="">
+        </div>
+        <div class="form-group col-lg-6">
+          <p>Are you already hosting a student?: </p>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Hosting" name="type" value="Yes">Yes</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" [(ngModel)]="editingUser.Hosting" name="type" value="No">No</label>
+          </div>
+        </div>
+
 
         <div class="form-group col-lg-12">
           <button (click)="onRegister(editingUser)" class="btn btn-lg btn-primary" type="submit">Continue to preferences</button>
