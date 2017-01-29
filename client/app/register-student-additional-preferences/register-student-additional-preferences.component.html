@@ -2,7 +2,7 @@
   <div class="container" *ngIf="!registrationComplete">
     <form class="form-register" >
       <div class="col-md-offset-3 col-md-6">
-        <h2 class="form-register-heading">Personal Information</h2>
+        <h2 class="form-register-heading">Preferences</h2>
         <div class="form-group col-lg-12">
         <label>Would you prefer to be paired up with:</label>
 <div class="radio">
@@ -32,8 +32,19 @@
 <div class="radio">
   <label><input type="radio" [(ngModel)]="editingUser.No" name="No" value="No">No</label>
 </div>
+              <div class="form-group col-lg-12">
+                <button (click)="onRegister(editingUser)" class="btn btn-lg btn-primary" type="submit">Complete preferences</button>
+              </div>
 
-<div class="form-group col-lg-12">
-  <button (click)="onRegister(editingUser)" class="btn btn-lg btn-primary" type="submit">Complete preferences</button>
+            </div>
+          </div>
+
+        </div>
+    </div>
+  </form>
+  <div class="container" *ngIf="registrationComplete">
+    <label>Thank you!</label>
+  </div>
+
 </div>
-
+</div>
