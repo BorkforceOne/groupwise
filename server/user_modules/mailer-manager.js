@@ -1,17 +1,41 @@
 const nodemailer = require('nodemailer');
 const config = require('../config');
+const fs = require('fs');
 
 class MailerManager {
 
   constructor() {
     this.context = null;
+    this.templates = {};
   }
 
   init() {
     return new Promise((resolve, reject) => {
       // Generate a nodemailer transporter object that we can use to send emails
       this.context = nodemailer.createTransport(config.mailer.accounts[config.mailer.default].connectionString);
-      resolve();
+
+      // pre-load all templates
+      this.loadTemplate("welcome", "server/templates/welcome.html", "server/templates/welcome.text", "Welcome to FlagFriends!")
+        .then(resolve)
+        .catch((err) => {
+          console.error("[MAILER] Could not load template " + err);
+          reject(err);
+        });
+    });
+  }
+
+  loadTemplate(name, htmlName, textName, subject) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(htmlName, (err, html) => {
+        if (err)
+          return reject(err);
+        fs.readFile(textName, (err, text) => {
+          if (err)
+            return reject(err);
+          this.templates[name] = this.generateTemplate(subject, text, html);
+          return resolve();
+        })
+      })
     });
   }
 

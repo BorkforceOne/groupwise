@@ -40,6 +40,7 @@ const User = databaseManager.context.define('user', {
     allowNull: false,
     type: Sequelize.ENUM('HOST', 'STUDENT', 'ADMINISTRATOR')
   },
+
   Id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -69,7 +70,7 @@ const User = databaseManager.context.define('user', {
     },
     sendWelcomeEmail: function() {
       return new Promise((resolve, reject) => {
-        let mail = mailerManager.generateTemplate('FlagFriends Account', 'This is to inform you of your new account on FlagFriends!', '<b>Dear {{Firstname}} {{Lastname}},</b><br/><p>This is to inform you of your new account on FlagFriends!</p><br/>');
+        let mail = mailerManager.templates.welcome;
 
         let header = {
           to: this.Email

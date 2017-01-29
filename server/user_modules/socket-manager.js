@@ -25,8 +25,9 @@ class SocketManager {
         const socketChat = require('./socket-chat-manager');
         socketChat.init(socket);
 
-        resolve();
       });
+
+      resolve();
     });
   }
 
