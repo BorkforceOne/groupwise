@@ -40,6 +40,7 @@ class DatabaseManager {
 
       // Require all needed models
       require('../models');
+      this.sync(true);
 
       resolve();
     });
