@@ -1,0 +1,63 @@
+<div class="form-group">
+  <label class="col-md-2 control-label">Do you prefer male or female students?</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="PreferredGender" type="radio" value="MALE">Male</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="PreferredGender" type="radio" value="FEMALE">Female</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="PreferredGender" type="radio" value="NO_PREFERENCE">No Preference</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Country you prefer students are from if any:</label>
+  <div class="col-md-9">
+    <input class="form-control" name="PreferredCountry" placeholder="Country" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">If no one is available for the country you have indicated would you still like to be assigned an international student?</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="NoStudentFromCountryStillAssign" type="radio" value="YES">Yes</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="NoStudentFromCountryStillAssign" type="radio" value="NO">No</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Would you consider hosting a married couple?</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="MarriedOk" type="radio" value="Yes">Yes</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="MarriedOk" type="radio" value="No">No</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Would you consider hosting a married couple with children?</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="MarriedWithChildrenOk" type="radio" value="Yes">Yes</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="MarriedWithChildrenOk" type="radio" value="No">No</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-md-offset-2 col-md-10">
+    <button (click)="onRegister(editingUser)" class="btn btn-primary" type="submit">Complete Registration</button>
+  </div>
+</div>

@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@
 
 @Component({
   selector: 'app-register-student-additional-preferences',
-  templateUrl: './register-student-additional-preferences.component.html',
-  styleUrls: ['./register-student-additional-preferences.component.scss'],
+  templateUrl: 'register-student-additional-preferences.component.html',
+  styleUrls: ['register-student-additional-preferences.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.Default
 })
