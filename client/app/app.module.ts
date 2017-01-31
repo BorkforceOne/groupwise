@@ -24,6 +24,7 @@ import {UserService} from "./services/user/user.service";
 import {ConfigService} from "./services/config/config.service";
 import {AlertService} from "./services/alert/alert.service";
 import { AlertsComponent } from './navbar/alerts/alerts.component';
+import {CanActivateViaAuthGuard} from "./guards/can-activate-via-auth-guard";
 import { RegisterHostAdditionalPersonalInformationComponent } from './register-host-additional-personal-information/register-host-additional-personal-information.component';
 import { RegisterHostAdditionalPreferencesComponent } from './register-host-additional-preferences/register-host-additional-preferences.component';
 import { RegisterStudentAdditionalPersonalInformationComponent } from './register-student-additional-personal-information/register-student-additional-personal-information.component';
@@ -57,7 +58,7 @@ import { RegisterStudentAdditionalPreferencesComponent } from './register-studen
     HttpModule,
     RouterModule.forRoot([
       { path: 'contact', component: ContactComponent },
-      { path: 'chat', component: ChatComponent },
+      { path: 'chat', component: ChatComponent, canActivate: [CanActivateViaAuthGuard] },
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
       { path: 'admin-manage', component: AdminManageComponent },
@@ -73,7 +74,7 @@ import { RegisterStudentAdditionalPreferencesComponent } from './register-studen
     DropdownModule.forRoot(),
     FileUploadModule
   ],
-  providers: [UserService, SocketService, ConfigService, AlertService],
+  providers: [UserService, SocketService, ConfigService, AlertService, CanActivateViaAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

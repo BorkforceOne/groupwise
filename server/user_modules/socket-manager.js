@@ -25,8 +25,9 @@ class SocketManager {
         const socketChat = require('./socket-chat-manager');
         socketChat.init(socket);
 
-        resolve();
       });
+
+      resolve();
     });
   }
 
@@ -39,7 +40,7 @@ class SocketManager {
     return new Promise((resolve, reject) => {
       let cookies = cookie.parse(socket.request.headers.cookie);
       let sid = cookieParser.signedCookie(cookies['connect.sid'], config.session.secret);
-      store.get(sid)
+      express.sessionStore.get(sid)
         .then((session) => resolve(session))
         .catch((error) => reject(error));
     });

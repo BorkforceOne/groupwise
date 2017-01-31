@@ -47,5 +47,28 @@ router.post(routeName + '/logout', function(req, res, next) {
         .catch(error => restUtils.catchErrors(error, req, res));
 });
 
+router.get(routeName, function(req, res, next) {
+  if (req.session.userId) {
+    User.findOne({
+      where: {
+        Id: req.session.userId
+      }
+    })
+      .then(user => {
+        if (user === false)
+          throw "Could not find authenticated user"
+
+        return user;
+      })
+      .then(serializer.serializeModel)
+      .then(restUtils.prepareResponse)
+      .then(payload => restUtils.sendResponse(payload, req, res))
+      .catch(error => restUtils.catchErrors(error, req, res));
+  }
+  else {
+    res.sendStatus(403);
+  }
+});
+
 
 module.exports = router;

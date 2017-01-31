@@ -4,6 +4,7 @@
 const Sequelize = require('sequelize');
 const databaseManager = require('../user_modules/database-manager');
 const encryptionManager = require('../user_modules/encryption-manager');
+const mailerManager = require('../user_modules/mailer-manager');
 
 const Attachment = require('./attachment');
 
@@ -39,11 +40,27 @@ const User = databaseManager.context.define('user', {
     allowNull: false,
     type: Sequelize.ENUM('HOST', 'STUDENT', 'ADMINISTRATOR')
   },
+
   Id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
+  },
+  ReceiveGeneralNotifications: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
+  ReceiveNewMatchNotifications: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
+  ReceiveMessageNotifications: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 },{
   instanceMethods: {
@@ -65,6 +82,23 @@ const User = databaseManager.context.define('user', {
           })
           .catch(reject);
       });
+    },
+    sendWelcomeEmail: function() {
+      return new Promise((resolve, reject) => {
+        let mail = mailerManager.templates.welcome;
+
+        let header = {
+          to: this.Email
+        };
+        let params = {
+          Firstname: this.Firstname,
+          Lastname: this.Lastname
+        };
+
+        mailerManager.sendMail(mail, header, params)
+          .then(() => resolve(this))
+          .catch((error) => reject(error));
+      })
     }
   },
 });
@@ -81,7 +115,7 @@ User.hasMany(Attachment, {
  * @returns {[string]}
  */
 User.getSerializableFields = function () {
-  return ['Id', 'Firstname', 'Lastname', 'Type', 'Email', 'createdAt', 'updatedAt'];
+  return ['Id', 'Firstname', 'Lastname', 'ReceiveGeneralNotifications', 'ReceiveNewMatchNotifications', 'ReceiveMessageNotifications', 'Type', 'Email', 'createdAt', 'updatedAt'];
 };
 
 module.exports = User;
