@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule }   from '@angular/router';
+import {RouterModule, Routes}   from '@angular/router';
 import {AlertModule, DropdownModule, CollapseDirective} from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -24,11 +24,15 @@ import {UserService} from "./services/user/user.service";
 import {ConfigService} from "./services/config/config.service";
 import {AlertService} from "./services/alert/alert.service";
 import { AlertsComponent } from './navbar/alerts/alerts.component';
-import {CanActivateViaAuthGuard} from "./guards/can-activate-via-auth-guard";
-import { RegisterHostAdditionalPersonalInformationComponent } from './register-host-additional-personal-information/register-host-additional-personal-information.component';
-import { RegisterHostAdditionalPreferencesComponent } from './register-host-additional-preferences/register-host-additional-preferences.component';
-import { RegisterStudentAdditionalPersonalInformationComponent } from './register-student-additional-personal-information/register-student-additional-personal-information.component';
-import { RegisterStudentAdditionalPreferencesComponent } from './register-student-additional-preferences/register-student-additional-preferences.component';
+import {LoggedinGuard} from "./guards/loggedin-guard";
+import { RegisterHostAdditionalPersonalInformationComponent } from './register/register-host-additional-personal-information/register-host-additional-personal-information.component';
+import { RegisterHostAdditionalPreferencesComponent } from './register/register-host-additional-preferences/register-host-additional-preferences.component';
+import { RegisterStudentAdditionalPersonalInformationComponent } from './register/register-student-additional-personal-information/register-student-additional-personal-information.component';
+import { RegisterStudentAdditionalPreferencesComponent } from './register/register-student-additional-preferences/register-student-additional-preferences.component';
+import {AppRoutes} from "./routes";
+import {NotLoggedinGuard} from "./guards/not-loggedin-guard";
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RegisterGeneralInformationComponent } from './register/register-general-information/register-general-information.component';
 
 @NgModule({
   declarations: [
@@ -51,30 +55,19 @@ import { RegisterStudentAdditionalPreferencesComponent } from './register-studen
     RegisterHostAdditionalPreferencesComponent,
     RegisterStudentAdditionalPersonalInformationComponent,
     RegisterStudentAdditionalPreferencesComponent,
+    PageNotFoundComponent,
+    RegisterGeneralInformationComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot([
-      { path: 'contact', component: ContactComponent },
-      { path: 'chat', component: ChatComponent, canActivate: [CanActivateViaAuthGuard] },
-      { path: 'register', component: RegisterComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'admin-manage', component: AdminManageComponent },
-      { path: '', component: HomeComponent},
-      { path: 'register-host-personal', component: RegisterHostAdditionalPersonalInformationComponent },
-      { path: 'register-host-preferences', component: RegisterHostAdditionalPreferencesComponent },
-      { path: 'register-student-personal', component: RegisterStudentAdditionalPersonalInformationComponent },
-      { path: 'register-student-preferences', component: RegisterStudentAdditionalPreferencesComponent },
-
-
-    ]),
+    RouterModule.forRoot(AppRoutes),
     AlertModule.forRoot(),
     DropdownModule.forRoot(),
     FileUploadModule
   ],
-  providers: [UserService, SocketService, ConfigService, AlertService, CanActivateViaAuthGuard],
+  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
