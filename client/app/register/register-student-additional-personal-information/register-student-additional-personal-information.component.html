@@ -1,0 +1,129 @@
+<div class="form-group">
+  <label class="col-md-2 control-label">What is your age?</label>
+  <div class="col-md-9">
+    <input class="form-control" placeholder="Age" name="Age" type="number" required autofocus>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">What is your gender?</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="Gender" type="radio" value="MALE">Male</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="Gender" type="radio" value="FEMALE">Female</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="Gender" type="radio" value="OTHER">Other</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">What is your phone number?</label>
+  <div class="col-md-9">
+    <input class="form-control" placeholder="Phone" name="Phone" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Do you have any children? If so what are their name, gender, and age?</label>
+  <div class="col-md-9">
+    <input class="form-control" placeholder="ChildrenName" name="ChildrenName" required>
+    <input class="form-control" placeholder="ChildrenGender" name="ChildrenGender" required>
+    <input class="form-control" placeholder="ChildrenAge" name="ChildrenAge" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">What are your hobbies, interests, or what you like to do for recreation?</label>
+  <div class="col-md-9">
+    <textarea class="form-control" placeholder="Hobbies" name="Hobbies" required></textarea>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Do you smoke?</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="Smoke" type="radio" value="YES">Yes</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="Smoke" type="radio" value="NO">No</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Do you drink alcohol?</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="Alcohol" type="radio" value="YES">Yes</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="Alcohol" type="radio" value="NO">No</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Do you own a car?</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="Car" type="radio" value="YES">Yes</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="Car" type="radio" value="NO">No</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">What is your country of citizenship?</label>
+  <div class="col-md-9">
+    <input class="form-control" name="Citizenship" placeholder="Country" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Language(s) you speak ?</label>
+  <div class="col-md-9">
+    <input class="form-control" name="Languages" placeholder="Language" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">When did you begin your studies at NAU?</label>
+  <div class="col-md-9">
+    <input class="form-control" name="NAUStartDate" placeholder="Date" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">What is your major at NAU?</label>
+  <div class="col-md-9">
+    <input class="form-control" name="Major" placeholder="Major" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Are you:</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input name="StudentClassification" type="radio" value="PIE">a student in PIE</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="StudentClassification" type="radio" value="UNDERGRADUATE">an Undergraduate</label>
+    </div>
+    <div class="radio-inline">
+      <label><input name="StudentClassification" type="radio" value="GRADUATE">a Graduate (M.S., Ph.D, etc.)</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-md-offset-2 col-md-10">
+    <button (click)="onRegister(editingUser)" class="btn btn-primary" type="submit">Continue to preferences</button>
+  </div>
+</div>

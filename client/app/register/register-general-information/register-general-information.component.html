@@ -1,0 +1,52 @@
+<div class="form-group">
+  <label class="col-md-2 control-label">Email</label>
+  <div class="col-md-9">
+    <input [(ngModel)]="editingUser.Email" name="Email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Password</label>
+  <div class="col-md-9">
+    <input [(ngModel)]="editingUser.Password" name="Password" type="password" class="form-control" placeholder="Password" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Password Verify</label>
+  <div class="col-md-9">
+    <input [(ngModel)]="editingUser.PasswordVerify" name="PasswordVerify" type="password" class="form-control" placeholder="Password" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Firstname</label>
+  <div class="col-md-9">
+    <input [(ngModel)]="editingUser.Firstname" name="Firstname" class="form-control" placeholder="Firstname" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">Lastname</label>
+  <div class="col-md-9">
+    <input [(ngModel)]="editingUser.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-2 control-label">I am a</label>
+  <div class="col-md-9">
+    <div class="radio-inline">
+      <label><input type="radio" [(ngModel)]="editingUser.Type"  name="Type" value="STUDENT">Student</label>
+    </div>
+    <div class="radio-inline">
+      <label><input type="radio" [(ngModel)]="editingUser.Type" name="Type" value="HOST">Host</label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-md-offset-2 col-md-10">
+    <button (click)="onRegister(editingUser)" class="btn btn-primary" type="submit">Register</button>
+  </div>
+</div>
