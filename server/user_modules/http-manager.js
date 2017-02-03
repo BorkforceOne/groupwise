@@ -6,6 +6,7 @@ class HttpManager {
 
   constructor() {
     this.context = null;
+    this.port = null;
   }
 
   init() {
@@ -13,6 +14,7 @@ class HttpManager {
       // Get port from environment and store in Express.
 
       const port = this._normalizePort(process.env.PORT || '4300');
+      this.port = port;
       express.context.set('port', port);
 
       // Create HTTP server.
@@ -37,9 +39,9 @@ class HttpManager {
       throw error;
     }
 
-    let bind = typeof port === 'string'
-      ? 'Pipe ' + port
-      : 'Port ' + port;
+    let bind = typeof this.port === 'string'
+      ? 'Pipe ' + this.port
+      : 'Port ' + this.port;
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
