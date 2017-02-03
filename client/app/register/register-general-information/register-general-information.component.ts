@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import {UserRegister} from "../../services/user/user-register";
-import {Router} from "@angular/router";
-import {AlertService} from "../../services/alert/alert.service";
-import {UserService} from "../../services/user/user.service";
+import {Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, Input} from '@angular/core';
+import {UserRegistrationService} from "../../services/user/registration-service/user-registration.service";
+import {UserRegistrationModel} from "../../services/user/registration-service/user-registration.model";
 
 @Component({
   selector: 'app-register-general-information',
@@ -12,15 +10,12 @@ import {UserService} from "../../services/user/user.service";
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class RegisterGeneralInformationComponent implements OnInit {
+  userRegistrationModel: UserRegistrationModel;
 
-  editingUser: UserRegister;
-  registrationComplete: Boolean;
-
-  constructor(private userService: UserService, private alertService: AlertService, private router: Router) { }
+  constructor(private userRegistrationService: UserRegistrationService) { }
 
   ngOnInit() {
-    this.editingUser = new UserRegister();
-    this.registrationComplete = false;
+    this.userRegistrationModel = this.userRegistrationService.getUserRegistrationModel();
   }
 
 }
