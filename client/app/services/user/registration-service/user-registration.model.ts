@@ -1,0 +1,36 @@
+export class UserRegistrationModel {
+  "Firstname": string;
+  "Lastname": string;
+  "Email": string;
+  "Password": string;
+  "Type": string;
+  "PasswordVerify": string;
+  "Age": number;
+  "Gender": "MALE" | "FEMALE" | "OTHER";
+  "Smoke": "YES" | "NO";
+  "Alcohol": "YES" | "NO";
+  "Car": "YES" | "NO";
+  "Married": "YES" | "NO";
+  "AlreadyHosting": "YES" | "NO";
+  "Phone": string;
+  "Allergies": string;
+  "Distance": number;
+  "ChildrenName": string;
+  "ChildrenGender": string;
+  "ChildrenAge": string;
+  "Hobbies": string;
+  "Rules": string;
+  "PreferredGender": "MALE" | "FEMALE" | "NO_PREFERENCE";
+  "PreferredCountry": string;
+  "NoStudentFromCountryStillAssign": "YES" | "NO";
+  "MarriedOk": "YES" | "NO";
+  "MarriedWithChildrenOk": "YES" | "NO";
+  "Citizenship": string;
+  "Languages": string;
+  "NAUStartDate": string;
+  "Major": string;
+  "StudentClassification": "PIE" | "UNDERGRADUATE" | "GRADUATE";
+  "PreferredHostType": "FAMILY" | "COUPLE" | "SINGLE";
+  "PreferredHostAlcohol": "YES" | "NO";
+  "PreferredHostSmoke": "YES" | "NO";
+}
