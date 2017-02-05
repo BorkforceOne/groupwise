@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Attachment = require('../models/attachment');
+const Attachment = require('../models/attachment.model');
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 const fs = require('fs');

@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/user.model');
 
 module.exports = {};
 
@@ -67,3 +67,52 @@ const authenticate = function(req) {
   })
 };
 module.exports.authenticate = authenticate;
+
+const mapDataToEntity = function(entity, data) {
+  return new Promise((resolve, reject) => {
+    const map = entity.getMap().inMap;
+
+    for (let property in map) {
+      if (map.hasOwnProperty(property) && data.hasOwnProperty(property)) {
+        let translatedProperty = map[property];
+        if (typeof translatedProperty === 'string')
+          entity[translatedProperty] = data[property];
+      }
+    }
+
+    resolve(entity);
+  });
+};
+module.exports.mapDataToEntity = mapDataToEntity;
+
+const mapDataToEntityByMapAsync = function(map, data) {
+  return new Promise((resolve, reject) => {
+    let entity = {};
+
+    for (let property in map) {
+      if (map.hasOwnProperty(property) && data.hasOwnProperty(property)) {
+        let translatedProperty = map[property];
+        if (typeof translatedProperty === 'string')
+          entity[translatedProperty] = data[property];
+      }
+    }
+
+    resolve(entity);
+  });
+};
+module.exports.mapDataToEntityByMapAsync = mapDataToEntityByMapAsync;
+
+const mapDataToEntityByMap = function(map, data) {
+  let entity = {};
+
+  for (let property in map) {
+    if (map.hasOwnProperty(property) && data.hasOwnProperty(property)) {
+      let translatedProperty = map[property];
+      if (typeof translatedProperty === 'string')
+        entity[translatedProperty] = data[property];
+    }
+  }
+
+  return entity
+};
+module.exports.mapDataToEntityByMap = mapDataToEntityByMap;

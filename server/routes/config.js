@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Config = require('../models/config');
+const Config = require('../models/config.model');
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 

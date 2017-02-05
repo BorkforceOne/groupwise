@@ -54,7 +54,7 @@ class DatabaseManager {
    * @returns {Promise}
    */
   sync(force) {
-      const User = require('../models/user');
+      const User = require('../models/user.model');
 
       return new Promise((resolve, reject) => {
         resolve(this.context.sync({force: force}));
