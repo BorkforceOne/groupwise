@@ -60,6 +60,7 @@ module.exports.outMap = {
   "PreferredHostType": "PreferredHostType",
   "PreferredHostAlcohol": "PreferredHostAlcohol",
   "PreferredHostSmoke": "PreferredHostSmoke",
+  "UserId": "UserId",
   "createdAt": "createdAt",
   "updatedAt": "updatedAt"
 };

@@ -39,6 +39,7 @@ module.exports.outMap = {
   "NoStudentFromCountryStillAssign": "NoStudentFromCountryStillAssign",
   "MarriedOk": "MarriedOk",
   "MarriedWithChildrenOk": "MarriedWithChildrenOk",
+  "UserId": "UserId",
   "createdAt": "createdAt",
   "updatedAt": "updatedAt"
 };
