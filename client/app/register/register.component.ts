@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   userRegistrationModel: UserRegistrationModel;
   registrationComplete: Boolean;
 
-  constructor(private userService: UserService, private alertService: AlertService, private router: Router, private userRegistrationService: UserRegistrationService) { }
+  constructor(private alertService: AlertService, private router: Router, private userRegistrationService: UserRegistrationService) { }
 
   ngOnInit() {
     if (this.router.url != '/register')
@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister(user: UserRegistrationModel) {
-    this.userService.create(user)
+    this.userRegistrationService.register()
       .then(user => {
         console.log(user);
         const alert = new Alert();

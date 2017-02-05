@@ -24,10 +24,10 @@
   <label class="col-md-2 control-label">If no one is available for the country you have indicated would you still like to be assigned an international student?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.NoStudentFromCountryStillAssign" name="NoStudentFromCountryStillAssign" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.NoStudentFromCountryStillAssign" name="NoStudentFromCountryStillAssign" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.NoStudentFromCountryStillAssign" name="NoStudentFromCountryStillAssign" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.NoStudentFromCountryStillAssign" name="NoStudentFromCountryStillAssign" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -36,10 +36,10 @@
   <label class="col-md-2 control-label">Would you consider hosting a married couple?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.MarriedOk" name="MarriedOk" type="radio" value="Yes">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.MarriedOk" name="MarriedOk" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.MarriedOk" name="MarriedOk" type="radio" value="No">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.MarriedOk" name="MarriedOk" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -48,10 +48,10 @@
   <label class="col-md-2 control-label">Would you consider hosting a married couple with children?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.MarriedWithChildrenOk" name="MarriedWithChildrenOk" type="radio" value="Yes">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.MarriedWithChildrenOk" name="MarriedWithChildrenOk" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.MarriedWithChildrenOk" name="MarriedWithChildrenOk" type="radio" value="No">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.MarriedWithChildrenOk" name="MarriedWithChildrenOk" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>

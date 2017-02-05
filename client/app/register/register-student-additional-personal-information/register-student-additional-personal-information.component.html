@@ -47,10 +47,10 @@
   <label class="col-md-2 control-label">Do you smoke?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.Smoke" name="Smoke" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.Smoke" name="Smoke" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.Smoke" name="Smoke" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.Smoke" name="Smoke" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -59,10 +59,10 @@
   <label class="col-md-2 control-label">Do you drink alcohol?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.Alcohol" name="Alcohol" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.Alcohol" name="Alcohol" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.Alcohol" name="Alcohol" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.Alcohol" name="Alcohol" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -71,10 +71,10 @@
   <label class="col-md-2 control-label">Do you own a car?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.Car" name="Car" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.Car" name="Car" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.Car" name="Car" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.Car" name="Car" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>

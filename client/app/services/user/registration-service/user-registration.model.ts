@@ -5,13 +5,14 @@ export class UserRegistrationModel {
   "Password": string;
   "Type": string;
   "PasswordVerify": string;
+
   "Age": number;
   "Gender": "MALE" | "FEMALE" | "OTHER";
-  "Smoke": "YES" | "NO";
-  "Alcohol": "YES" | "NO";
-  "Car": "YES" | "NO";
-  "Married": "YES" | "NO";
-  "AlreadyHosting": "YES" | "NO";
+  "Smoke": boolean;
+  "Alcohol": boolean;
+  "Car": boolean;
+  "Married": boolean;
+  "AlreadyHosting": boolean;
   "Phone": string;
   "Allergies": string;
   "Distance": number;
@@ -22,15 +23,18 @@ export class UserRegistrationModel {
   "Rules": string;
   "PreferredGender": "MALE" | "FEMALE" | "NO_PREFERENCE";
   "PreferredCountry": string;
-  "NoStudentFromCountryStillAssign": "YES" | "NO";
-  "MarriedOk": "YES" | "NO";
-  "MarriedWithChildrenOk": "YES" | "NO";
+  "NoStudentFromCountryStillAssign": boolean;
+  "MarriedOk": boolean;
+  "MarriedWithChildrenOk": boolean;
   "Citizenship": string;
   "Languages": string;
   "NAUStartDate": string;
   "Major": string;
   "StudentClassification": "PIE" | "UNDERGRADUATE" | "GRADUATE";
   "PreferredHostType": "FAMILY" | "COUPLE" | "SINGLE";
-  "PreferredHostAlcohol": "YES" | "NO";
-  "PreferredHostSmoke": "YES" | "NO";
+  "PreferredHostAlcohol": boolean;
+  "PreferredHostSmoke": boolean;
+  "ReceiveGeneralNotifications": boolean;
+  "ReceiveNewMatchNotifications": boolean;
+  "ReceiveMessageNotifications": boolean;
 }

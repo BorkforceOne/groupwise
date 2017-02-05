@@ -17,10 +17,10 @@
   <label class="col-md-2 control-label">Would you prefer a host that drinks alcohol?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.PreferredHostAlcohol" name="PreferredHostAlcohol" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostAlcohol" name="PreferredHostAlcohol" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.PreferredHostAlcohol" name="PreferredHostAlcohol" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostAlcohol" name="PreferredHostAlcohol" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -29,10 +29,10 @@
   <label class="col-md-2 control-label">Would you prefer a host that smokes?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.PreferredHostSmoke" name="PreferredHostSmoke" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostSmoke" name="PreferredHostSmoke" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input [(ngModel)]="userRegistrationModel.PreferredHostSmoke" name="PreferredHostSmoke" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostSmoke" name="PreferredHostSmoke" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
