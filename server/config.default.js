@@ -14,6 +14,10 @@ config.mailer = {
   }
 };
 
+config.general = {
+  baseURL: 'http://localhost:4200'
+};
+
 config.database = {
   host: 'localhost',
   databaseName: 'groupwise',

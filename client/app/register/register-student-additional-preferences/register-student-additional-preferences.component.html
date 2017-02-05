@@ -2,13 +2,13 @@
   <label class="col-md-2 control-label">Would you prefer to be paired up with:</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="PreferredHostType" type="radio" value="FAMILY">A family</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostType" name="PreferredHostType" type="radio" value="FAMILY">A family</label>
     </div>
     <div class="radio-inline">
-      <label><input name="PreferredHostType" type="radio" value="COUPLE">A married couple</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostType" name="PreferredHostType" type="radio" value="COUPLE">A married couple</label>
     </div>
     <div class="radio-inline">
-      <label><input name="PreferredHostType" type="radio" value="SINGLE">A single individual</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostType" name="PreferredHostType" type="radio" value="SINGLE">A single individual</label>
     </div>
   </div>
 </div>
@@ -17,10 +17,10 @@
   <label class="col-md-2 control-label">Would you prefer a host that drinks alcohol?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="PreferredHostAlcohol" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostAlcohol" name="PreferredHostAlcohol" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input name="PreferredHostAlcohol" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostAlcohol" name="PreferredHostAlcohol" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -29,10 +29,10 @@
   <label class="col-md-2 control-label">Would you prefer a host that smokes?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="PreferredHostSmoke" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostSmoke" name="PreferredHostSmoke" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input name="PreferredHostSmoke" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.PreferredHostSmoke" name="PreferredHostSmoke" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>

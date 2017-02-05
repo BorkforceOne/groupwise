@@ -3,7 +3,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
+const User = require('../models/user.model');
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 const encryptionManager = require('../user_modules/encryption-manager');
@@ -16,7 +16,8 @@ router.post(routeName + '/login', function(req, res, next) {
     User.findOne({
         where: {
             Email: req.body.Email
-        }
+        },
+        include: [User.ValidationTokens]
     })
         .then(user => {
             if (user === null)
@@ -28,7 +29,13 @@ router.post(routeName + '/login', function(req, res, next) {
         .then(result => {
             if (result === false)
                 throw "Invalid email or password";
-            req.session.userId = foundUser.Id;
+
+          foundUser.ValidationTokens.map((validationToken) => {
+            if (validationToken.Type === 'REGISTRATION')
+              throw "You must confirm you email address before logging in";
+          });
+
+          req.session.userId = foundUser.Id;
 
             return foundUser;
         })

@@ -8,26 +8,30 @@ module.exports = {};
  */
 const serializeModel = function(model) {
   let data = model.get({plain: true});
+  let dto = model.getMap().outMap;
   let serializedData = {};
-  let serializableFields = model.getSerializableFields();
-  for (let i=0; i<serializableFields.length; i++) {
-    let field = serializableFields[i];
-    let fieldName;
-    let type = null;
-    if (typeof field === "string")
-      fieldName = field;
-    else {
-      fieldName = field.name;
-      type = field.type;
-    }
 
-    if (data.hasOwnProperty(fieldName)) {
-      switch (type) {
-        case 'JSON':
-          serializedData[fieldName] = JSON.parse(data[fieldName]);
-          break;
-        default:
-          serializedData[fieldName] = data[fieldName];
+  for (let property in dto) {
+    if (dto.hasOwnProperty(property)) {
+      let translatedProperty = dto[property];
+      let fieldName;
+      let type;
+
+      if (typeof translatedProperty === "string")
+        fieldName = translatedProperty;
+      else {
+        fieldName = translatedProperty.name;
+        type = translatedProperty.type;
+      }
+
+      if (data.hasOwnProperty(fieldName)) {
+        switch (type) {
+          case 'JSON':
+            serializedData[fieldName] = JSON.parse(data[fieldName]);
+            break;
+          default:
+            serializedData[fieldName] = data[fieldName];
+        }
       }
     }
   }

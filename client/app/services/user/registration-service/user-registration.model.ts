@@ -1,0 +1,40 @@
+export class UserRegistrationModel {
+  "Firstname": string;
+  "Lastname": string;
+  "Email": string;
+  "Password": string;
+  "Type": string;
+  "PasswordVerify": string;
+
+  "Age": number;
+  "Gender": "MALE" | "FEMALE" | "OTHER";
+  "Smoke": boolean;
+  "Alcohol": boolean;
+  "Car": boolean;
+  "Married": boolean;
+  "AlreadyHosting": boolean;
+  "Phone": string;
+  "Allergies": string;
+  "Distance": number;
+  "ChildrenName": string;
+  "ChildrenGender": string;
+  "ChildrenAge": string;
+  "Hobbies": string;
+  "Rules": string;
+  "PreferredGender": "MALE" | "FEMALE" | "NO_PREFERENCE";
+  "PreferredCountry": string;
+  "NoStudentFromCountryStillAssign": boolean;
+  "MarriedOk": boolean;
+  "MarriedWithChildrenOk": boolean;
+  "Citizenship": string;
+  "Languages": string;
+  "NAUStartDate": string;
+  "Major": string;
+  "StudentClassification": "PIE" | "UNDERGRADUATE" | "GRADUATE";
+  "PreferredHostType": "FAMILY" | "COUPLE" | "SINGLE";
+  "PreferredHostAlcohol": boolean;
+  "PreferredHostSmoke": boolean;
+  "ReceiveGeneralNotifications": boolean;
+  "ReceiveNewMatchNotifications": boolean;
+  "ReceiveMessageNotifications": boolean;
+}

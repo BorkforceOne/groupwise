@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { User } from "./user";
-import { UserRegister } from "./user-register";
 import { UserLogin } from "./user-login";
 import { RestError } from '../rest-error';
 import {Headers, Http, Response} from '@angular/http';
@@ -24,14 +23,6 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get(this.usersUrl)
       .map(this.extractData)
-      .catch(this.handleError);
-  }
-
-  create(user: UserRegister): Promise<User> {
-    return this.http
-      .post(this.usersUrl, JSON.stringify(user), {headers: this.headers})
-      .map(this.extractData)
-      .toPromise()
       .catch(this.handleError);
   }
 
