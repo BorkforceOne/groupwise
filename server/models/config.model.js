@@ -3,6 +3,7 @@
  */
 const Sequelize = require('sequelize');
 const databaseManager = require('../user_modules/database-manager');
+const configMap = require('./maps/config.map');
 
 module.exports = {};
 
@@ -22,18 +23,18 @@ const Config = databaseManager.context.define('config', {
   }
 },{
   instanceMethods: {
-    getSerializableFields: function() {
-      return Config.getSerializableFields();
+    getMap: function() {
+      return Config.getMap();
     }
   },
 });
 
 /**
- * The fields that should be serialized and sent to the client
- * @returns {[string]}
+ * Figures out how to serialize and deserialize this model
+ * @returns {Object}
  */
-Config.getSerializableFields = function () {
-  return ['Key', {name: 'Value', type: 'JSON'}, 'createdAt', 'updatedAt'];
+Config.getMap = function () {
+  return configMap;
 };
 
 module.exports = Config;
