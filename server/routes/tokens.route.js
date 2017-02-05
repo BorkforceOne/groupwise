@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 const ValidationToken = require('../models/validation-token.model');
 const restUtils = require('../user_modules/rest-utils');
+const serializer = require('../user_modules/serializer');
 
 const routeName = '/tokens';
 
@@ -12,21 +13,20 @@ const routeName = '/tokens';
 router.post(routeName + '/consume', function(req, res, next) {
   ValidationToken.findOne({
     where: {
-        Code: req.body.Code
+        Token: req.body.Token
     }
   })
-  .then(token => {
-      if (token === null)
-          throw "Invalid tokensRoute code";
-      return token;
-  })
-  .then(token => token.destroy())
-  .then(() => {
-    return {};
-  })
-  .then(restUtils.prepareResponse)
-  .then(payload => restUtils.sendResponse(payload, req, res))
-  .catch(error => restUtils.catchErrors(error, req, res));
+    .then(token => {
+        if (token === null)
+            throw "Invalid token";
+        return token;
+    })
+    .then()
+    .then(token => token.destroy())
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
 });
 
 module.exports = router;

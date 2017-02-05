@@ -2,6 +2,8 @@ const Sequelize = require('sequelize');
 const databaseManager = require('../user_modules/database-manager');
 const crypto = require('crypto');
 
+const validationTokenMap = require('./maps/validation-token.map');
+
 module.exports = {};
 
 /**
@@ -15,7 +17,7 @@ const ValidationToken = databaseManager.context.define('validationToken', {
     primaryKey: true,
     autoIncrement: true
   },
-  Code: {
+  Token: {
     unique: true,
     allowNull: false,
     type: Sequelize.STRING
@@ -26,11 +28,22 @@ const ValidationToken = databaseManager.context.define('validationToken', {
   },
 },{
   instanceMethods: {
+    getMap: function() {
+      return ValidationToken.getMap();
+    },
     generateCode: function() {
       return ValidationToken.generateCode();
     }
   },
 });
+
+/**
+ * Figures out how to serialize and deserialize this model
+ * @returns {Object}
+ */
+ValidationToken.getMap = function () {
+  return validationTokenMap;
+};
 
 ValidationToken.generateCode = function() {
   return new Promise((resolve, reject) => {

@@ -99,10 +99,10 @@ const User = databaseManager.context.define('user', {
       return new Promise((resolve, reject) => {
 
         ValidationToken.generateCode()
-          .then(validationCode => ValidationToken.create({
+          .then(validationToken => ValidationToken.create({
             UserId: this.Id,
             Type: 'REGISTRATION',
-            Code: validationCode
+            Token: validationToken
           }))
           .then((validationToken) => {
             let mail = mailerManager.templates.validateEmail;
