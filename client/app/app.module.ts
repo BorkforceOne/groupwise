@@ -33,6 +33,7 @@ import {AppRoutes} from "./routes";
 import {NotLoggedinGuard} from "./guards/not-loggedin-guard";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterGeneralInformationComponent } from './register/register-general-information/register-general-information.component';
+import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
 import { ConsumeTokenPageComponent } from './consume-token-page/consume-token-page.component';
 
 @NgModule({
@@ -59,6 +60,7 @@ import { ConsumeTokenPageComponent } from './consume-token-page/consume-token-pa
     PageNotFoundComponent,
     RegisterGeneralInformationComponent,
     ConsumeTokenPageComponent,
+    UserProfilePageComponent,
   ],
   imports: [
     BrowserModule,
