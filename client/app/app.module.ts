@@ -34,6 +34,7 @@ import {NotLoggedinGuard} from "./guards/not-loggedin-guard";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterGeneralInformationComponent } from './register/register-general-information/register-general-information.component';
 import { ConsumeTokenPageComponent } from './consume-token-page/consume-token-page.component';
+import { StudentSearchPageComponent } from './student-search-page/student-search-page.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ConsumeTokenPageComponent } from './consume-token-page/consume-token-pa
     PageNotFoundComponent,
     RegisterGeneralInformationComponent,
     ConsumeTokenPageComponent,
+    StudentSearchPageComponent,
   ],
   imports: [
     BrowserModule,
