@@ -29,6 +29,9 @@
         <li [class.active]="isActiveRoute('/chat')" *ngIf="isLoggedIn()">
           <a routerLink="/chat">Chat</a>
         </li>
+        <li [class.active]="isActiveRoute('/student-search')" *ngIf="isLoggedIn()">
+          <a routerLink="/student-search">Student Search</a>
+        </li>
         <li [class.active]="isActiveRoute('/admin-manage')" *ngIf="isLoggedIn() && isAdmin()">
           <a routerLink="/admin-manage">Admin Manage</a>
         </li>

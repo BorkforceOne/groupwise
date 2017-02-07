@@ -15,6 +15,7 @@ import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {RegisterGeneralInformationComponent} from "./register/register-general-information/register-general-information.component";
 import {ConsumeTokenPageComponent} from "./consume-token-page/consume-token-page.component";
 import {UserProfilePageComponent} from "./user-profile-page/user-profile-page.component";
+import {StudentSearchPageComponent} from "./student-search-page/student-search-page.component";
 
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -31,6 +32,7 @@ export const AppRoutes: Routes = [
     ]},
   { path: 'login', component: LoginComponent, canActivate: [NotLoggedinGuard]},
   { path: 'validate', component: ConsumeTokenPageComponent },
+  { path: 'student-search', component: StudentSearchPageComponent, canActivate: [LoggedinGuard] },
   { path: 'admin-manage', component: AdminManageComponent },
   { path: 'home', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent }
