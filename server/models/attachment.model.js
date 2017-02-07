@@ -4,6 +4,8 @@
 const Sequelize = require('sequelize');
 const databaseManager = require('../user_modules/database-manager');
 
+const attachmentMap = require('./maps/attachment.map');
+
 module.exports = {};
 
 /**
@@ -11,6 +13,12 @@ module.exports = {};
  * @type {*}
  */
 const Attachment = databaseManager.context.define('attachment', {
+  Id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
   Data: {
     type: Sequelize.BLOB
   },
@@ -21,27 +29,21 @@ const Attachment = databaseManager.context.define('attachment', {
   MimeType: {
     allowNull: false,
     type: Sequelize.STRING
-  },
-  Id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true
   }
 },{
   instanceMethods: {
-    getSerializableFields: function() {
-      return Attachment.getSerializableFields();
+    getMap: function() {
+      return Attachment.getMap();
     }
   },
 });
 
 /**
- * The fields that should be serialized and sent to the client
- * @returns {[string]}
+ * Figures out how to serialize and deserialize this model
+ * @returns {DTO}
  */
-Attachment.getSerializableFields = function () {
-  return ['Id', 'Filename', 'UserId', 'createdAt', 'updatedAt'];
+Attachment.getMap = function () {
+  return attachmentMap;
 };
 
 module.exports = Attachment;

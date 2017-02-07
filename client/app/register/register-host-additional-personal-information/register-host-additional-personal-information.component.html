@@ -1,7 +1,7 @@
 <div class="form-group">
   <label class="col-md-2 control-label">What is your age?</label>
   <div class="col-md-9">
-    <input class="form-control" placeholder="Age" name="Age" type="number" required autofocus>
+    <input [(ngModel)]="userRegistrationModel.Age" class="form-control" placeholder="Age" name="Age" type="number" required autofocus>
   </div>
 </div>
 
@@ -9,13 +9,13 @@
   <label class="col-md-2 control-label">What is your gender?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="Gender" type="radio" value="MALE">Male</label>
+      <label><input [(ngModel)]="userRegistrationModel.Gender" name="Gender" type="radio" value="MALE">Male</label>
     </div>
     <div class="radio-inline">
-      <label><input name="Gender" type="radio" value="FEMALE">Female</label>
+      <label><input [(ngModel)]="userRegistrationModel.Gender" name="Gender" type="radio" value="FEMALE">Female</label>
     </div>
     <div class="radio-inline">
-      <label><input name="Gender" type="radio" value="OTHER">Other</label>
+      <label><input [(ngModel)]="userRegistrationModel.Gender" name="Gender" type="radio" value="OTHER">Other</label>
     </div>
   </div>
 </div>
@@ -24,10 +24,10 @@
   <label class="col-md-2 control-label">Do you smoke?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="Smoke" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.Smoke" name="Smoke" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input name="Smoke" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.Smoke" name="Smoke" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -36,10 +36,10 @@
   <label class="col-md-2 control-label">Do you drink alcohol?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="Alcohol" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.Alcohol" name="Alcohol" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input name="Alcohol" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.Alcohol" name="Alcohol" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -48,10 +48,10 @@
   <label class="col-md-2 control-label">Do you own a car?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="Car" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.Car" name="Car" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input name="Car" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.Car" name="Car" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -60,10 +60,10 @@
   <label class="col-md-2 control-label">Are you married?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="Married" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.Married" name="Married" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input name="Married" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.Married" name="Married" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -72,10 +72,10 @@
   <label class="col-md-2 control-label">Are you already hosting a student?</label>
   <div class="col-md-9">
     <div class="radio-inline">
-      <label><input name="AlreadyHosting" type="radio" value="YES">Yes</label>
+      <label><input [(ngModel)]="userRegistrationModel.AlreadyHosting" name="AlreadyHosting" type="radio" [value]="true">Yes</label>
     </div>
     <div class="radio-inline">
-      <label><input name="AlreadyHosting" type="radio" value="NO">No</label>
+      <label><input [(ngModel)]="userRegistrationModel.AlreadyHosting" name="AlreadyHosting" type="radio" [value]="false">No</label>
     </div>
   </div>
 </div>
@@ -83,49 +83,43 @@
 <div class="form-group">
   <label class="col-md-2 control-label">What is your phone number?</label>
   <div class="col-md-9">
-    <input class="form-control" placeholder="Phone" name="Phone" required>
+    <input [(ngModel)]="userRegistrationModel.Phone" class="form-control"  placeholder="Phone" name="Phone" required>
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">Do you have any allergies? If so what are they?</label>
   <div class="col-md-9">
-    <textarea class="form-control" placeholder="Allergies" name="Allergies" required></textarea>
+    <textarea [(ngModel)]="userRegistrationModel.Allergies" class="form-control" placeholder="Allergies" name="Allergies" required></textarea>
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">How far do you live to the university?</label>
   <div class="col-md-9">
-    <input class="form-control" placeholder="Distance" name="Distance" type="number" required>
+    <input [(ngModel)]="userRegistrationModel.Distance" class="form-control" placeholder="Distance" name="Distance" type="number" required>
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">Do you have any children? If so what are their name, gender, and age?</label>
   <div class="col-md-9">
-    <input class="form-control" placeholder="ChildrenName" name="ChildrenName" required>
-    <input class="form-control" placeholder="ChildrenGender" name="ChildrenGender" required>
-    <input class="form-control" placeholder="ChildrenAge" name="ChildrenAge" required>
+    <input [(ngModel)]="userRegistrationModel.ChildrenName" class="form-control" placeholder="ChildrenName" name="ChildrenName" required>
+    <input [(ngModel)]="userRegistrationModel.ChildrenGender" class="form-control" placeholder="ChildrenGender" name="ChildrenGender" required>
+    <input [(ngModel)]="userRegistrationModel.ChildrenAge" class="form-control" placeholder="ChildrenAge" name="ChildrenAge" required>
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">What are your hobbies, interests, or what you like to do for recreation?</label>
   <div class="col-md-9">
-    <textarea class="form-control" placeholder="Hobbies" name="Hobbies" required></textarea>
+    <textarea [(ngModel)]="userRegistrationModel.Hobbies" class="form-control" placeholder="Hobbies" name="Hobbies" required></textarea>
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">Do you have any house rules or regulations?</label>
   <div class="col-md-9">
-    <textarea class="form-control" placeholder="Rules" name="Rules" required></textarea>
-  </div>
-</div>
-
-<div class="form-group">
-  <div class="col-md-offset-2 col-md-10">
-    <button (click)="onRegister(editingUser)" class="btn btn-primary" type="submit">Continue to preferences</button>
+    <textarea [(ngModel)]="userRegistrationModel.Rules" class="form-control" placeholder="Rules" name="Rules" required></textarea>
   </div>
 </div>

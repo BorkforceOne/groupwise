@@ -6,7 +6,7 @@ import {RestError} from "../rest-error";
 @Injectable()
 export class ConfigService {
   private headers = new Headers({'Content-Type': 'application/json'});
-  private configUrl = '/api/v1/config';  // URL to web api
+  private configUrl = '/api/v1/configs';  // URL to web api
 
   constructor(private http: Http) { }
 

@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import {UserRegistrationService} from "../../services/user/registration-service/user-registration.service";
+import {UserRegistrationModel} from "../../services/user/registration-service/user-registration.model";
 
 @Component({
   selector: 'app-register-host-additional-preferences',
@@ -8,10 +10,12 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class RegisterHostAdditionalPreferencesComponent implements OnInit {
+  userRegistrationModel: UserRegistrationModel;
 
-  constructor() { }
+  constructor(private userRegistrationService: UserRegistrationService) { }
 
   ngOnInit() {
+    this.userRegistrationModel = this.userRegistrationService.getUserRegistrationModel();
   }
 
 }

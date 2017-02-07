@@ -1,0 +1,32 @@
+
+
+<div class="container">
+  <div class="row">
+    <div class="well">
+
+      <div *ngIf="lastTokenSuccess">
+        <div *ngIf="lastToken.Type === 'REGISTRATION'">
+          <legend class="text-center">Email Validated</legend>
+
+          <p>
+            Your email has been validated! You may now log in.
+          </p>
+        </div>
+        <div *ngIf="lastToken.Type === 'FORGOT_PASSWORD'">
+          <legend class="text-center">Password Reset</legend>
+
+          <p>
+            Your password can be reset here eventually
+          </p>
+        </div>
+      </div>
+
+      <div *ngIf="!lastTokenSuccess">
+        <legend class="text-center">Invalid Token</legend>
+        <p>The token used is either invalid or has already been used!</p>
+        <p>Please try your action again.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
