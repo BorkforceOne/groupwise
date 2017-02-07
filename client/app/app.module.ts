@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes}   from '@angular/router';
-import {AlertModule, DropdownModule, CollapseDirective} from 'ng2-bootstrap';
+import {AlertModule, DropdownModule, CollapseDirective, TabsModule} from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -71,7 +71,8 @@ import { StudentSearchPageComponent } from './student-search-page/student-search
     RouterModule.forRoot(AppRoutes),
     AlertModule.forRoot(),
     DropdownModule.forRoot(),
-    FileUploadModule
+    FileUploadModule,
+    TabsModule.forRoot(),
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard],
   bootstrap: [AppComponent]
