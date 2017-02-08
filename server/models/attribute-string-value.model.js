@@ -14,7 +14,7 @@ const AttributeStringValue = databaseManager.context.define('attributeStringValu
   },
   Value: {
     allowNull: false,
-    type:  Sequelize.STRING
+    type:  Sequelize.TEXT
   },
   AttributeId: {
     type: Sequelize.INTEGER,
