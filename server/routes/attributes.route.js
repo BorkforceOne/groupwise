@@ -8,6 +8,8 @@ const AttributeString = require('../models/attribute-string.model');
 const AttributeStringValue = require('../models/attribute-string-value.model');
 const AttributeDate = require('../models/attribute-date.model');
 const AttributeDateValue = require('../models/attribute-date-value.model');
+const AttributeRange = require('../models/attribute-range.model');
+const AttributeRangeValue = require('../models/attribute-range-value.model');
 
 
 let routeName;
@@ -176,6 +178,93 @@ router.put(`${routeName}/:id`, function(req, res, next) {
   data.Id = req.params.id;
 
   attributesService.updateAttributeDateValue(data)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+module.exports = router;
+
+// Attribute Ranges
+
+routeName = '/attribute-ranges';
+
+/* GET attribute-range listings. */
+router.get(routeName, function(req, res, next) {
+  attributesService.getAllAttributeRanges()
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* POST attribute-range. */
+router.post(routeName, function(req, res, next) {
+  let data = req.body;
+
+  restUtils.mapDataToEntity(AttributeRange, data)
+    .then(entity => attributesService.addAttributeRange(entity))
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* PUT attribute-range. */
+router.put(`${routeName}/:id`, function(req, res, next) {
+  let data = req.body;
+  data.Id = req.params.id;
+
+  attributesService.updateAttributeRange(data)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* DELETE attribute-range. */
+router.delete(`${routeName}/:id`, function(req, res, next) {
+  let id = req.params.id;
+
+  attributesService.deleteAttributeRange(id)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+routeName = '/attribute-range-values';
+
+/* GET attribute-range-value listings. */
+router.get(`${routeName}/:userId`, function(req, res, next) {
+  let userId = req.params.userId;
+
+  attributesService.getAllAttributeRangeValues(userId)
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* POST attribute-range-value. */
+router.post(routeName, function(req, res, next) {
+  let data = req.body;
+
+  restUtils.mapDataToEntity(AttributeRangeValue, data)
+    .then(entity => attributesService.addAttributeRangeValue(entity))
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* PUT attribute-range-value. */
+router.put(`${routeName}/:id`, function(req, res, next) {
+  let data = req.body;
+  data.Id = req.params.id;
+
+  attributesService.updateAttributeRangeValue(data)
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
     .then(payload => restUtils.sendResponse(payload, req, res))

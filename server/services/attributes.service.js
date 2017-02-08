@@ -4,6 +4,8 @@ const AttributeString = require('../models/attribute-string.model');
 const AttributeStringValue = require('../models/attribute-string-value.model');
 const AttributeDate = require('../models/attribute-date.model');
 const AttributeDateValue = require('../models/attribute-date-value.model');
+const AttributeRange = require('../models/attribute-range.model');
+const AttributeRangeValue = require('../models/attribute-range-value.model');
 
 const userService = require('./users.service');
 
@@ -307,7 +309,187 @@ class AttributeService {
             throw "Value is below allowed minimum";
 
           if (attribute.MaxDate != null && entity.Value.getTime() > attribute.MaxDate.getTime())
-            throw "Value is below above maxmimum";
+            throw "Value is below allowed maxmimum";
+        })
+        .then(() => userService.getById(entity.UserId))
+        .then((_user) => {
+          user = _user;
+
+          if (user == null)
+            throw "User does not exist";
+
+          if (user.Type != attribute.ForType)
+            throw "Attribute does not belong to this user type";
+        })
+        .then(() => resolve(entity))
+        .catch(reject)
+    });
+  }
+
+  // AttributeRanges
+  getAllAttributeRanges() {
+    return new Promise((resolve, reject) => {
+      AttributeRange.findAll()
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getAttributeRange(id) {
+    return new Promise((resolve, reject) => {
+      AttributeRange.findOne({
+        where: {
+          Id: id
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  addAttributeRange(entity) {
+    return new Promise((resolve, reject) => {
+      this.validateAttributeRange(entity)
+        .then(() => entity.save())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  updateAttributeRange(data) {
+    return new Promise((resolve, reject) => {
+
+      this.getAttributeRange(data.Id)
+        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(this.validateAttributeRange.bind(this))
+        .then(entity => entity.save())
+        .then(entity => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  deleteAttributeRange(id) {
+    return new Promise((resolve, reject) => {
+      let entity;
+
+      this.getAttributeRange(id)
+        .then(_entity => {
+          entity = _entity;
+
+          return entity;
+        })
+        .then(() => entity.destroy())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  validateAttributeRange(entity) {
+    return new Promise((resolve, reject) => {
+      // Do validation here
+
+      let minDefined = false;
+      let maxDefined = false;
+
+      if (entity.Min != null) {
+        if (typeof(entity.Min) != "number")
+          throw "Min is invalid";
+        if (entity.isInt == true)
+          if (!Number.isInteger(entity.Min))
+            throw "Min is not an integer";
+
+        minDefined = true;
+      }
+
+      if (entity.Max != null) {
+        if (typeof(entity.Max) != "number")
+          throw "Max is invalid";
+
+        if (entity.isInt == true)
+          if (!Number.isInteger(entity.Max))
+            throw "Max is not an integer";
+
+        maxDefined = true;
+      }
+
+      if (minDefined && maxDefined)
+        if (entity.Min > entity.Max)
+          throw "Min cannot be larger than Max";
+
+      resolve();
+    });
+  }
+
+  // AttributeRangeValues
+  getAllAttributeRangeValues(userId) {
+    return new Promise((resolve, reject) => {
+      AttributeRangeValue.findAll({
+        where: {
+          UserId: userId
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getAttributeRangeValue(id) {
+    return new Promise((resolve, reject) => {
+      AttributeRangeValue.findOne({
+        where: {
+          Id: id
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  addAttributeRangeValue(entity) {
+    return new Promise((resolve, reject) => {
+      this.validateAttributeRangeValue(entity)
+        .then(() => entity.save())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  updateAttributeRangeValue(data) {
+    return new Promise((resolve, reject) => {
+      // Ensure that the value is valid
+
+      this.getAttributeRangeValue(data.Id)
+        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(this.validateAttributeRangeValue.bind(this))
+        .then(entity => entity.save())
+        .then(entity => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  validateAttributeRangeValue(entity) {
+    return new Promise((resolve, reject) => {
+      let attribute, user;
+
+      this.getAttributeRange(entity.AttributeId)
+        .then((_attribute) => {
+          attribute = _attribute;
+
+          if (attribute == null)
+            throw "Attribute does not exist";
+
+          if (entity.Value == null || typeof(entity.Value) != "number")
+            throw "Value cannot be empty or is invalid";
+
+          if (attribute.isInt == true)
+            if (!Number.isInteger(entity.Value))
+              throw "Value must be an integer";
+
+          if (attribute.Min != null && entity.Value < attribute.Min)
+            throw "Value is below allowed minimum";
+
+          if (attribute.Max != null && entity.Value > attribute.Max)
+            throw "Value is below allowed maxmimum";
         })
         .then(() => userService.getById(entity.UserId))
         .then((_user) => {
