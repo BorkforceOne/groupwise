@@ -70,6 +70,8 @@ module.exports.authenticate = authenticate;
 
 const mapDataToEntity = function(entity, data) {
   return new Promise((resolve, reject) => {
+    entity = entity.build();
+
     const map = entity.getMap().inMap;
 
     for (let property in map) {
@@ -84,6 +86,26 @@ const mapDataToEntity = function(entity, data) {
   });
 };
 module.exports.mapDataToEntity = mapDataToEntity;
+
+const mapDataToInstance = function(instance, data) {
+  return new Promise((resolve, reject) => {
+    if (instance == null)
+      reject("Instance cannot be null while mapping");
+
+    const map = instance.getMap().inMap;
+
+    for (let property in map) {
+      if (map.hasOwnProperty(property) && data.hasOwnProperty(property)) {
+        let translatedProperty = map[property];
+        if (typeof translatedProperty === 'string')
+          instance[translatedProperty] = data[property];
+      }
+    }
+
+    resolve(instance);
+  });
+};
+module.exports.mapDataToInstance = mapDataToInstance;
 
 const mapDataToEntityByMapAsync = function(map, data) {
   return new Promise((resolve, reject) => {
@@ -113,6 +135,6 @@ const mapDataToEntityByMap = function(map, data) {
     }
   }
 
-  return entity
+  return entity;
 };
 module.exports.mapDataToEntityByMap = mapDataToEntityByMap;

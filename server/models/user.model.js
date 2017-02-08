@@ -12,6 +12,7 @@ const Attachment = require('./attachment.model');
 const ValidationToken = require('./validation-token.model');
 const StudentProfile = require('./student-profile.model');
 const HostProfile = require('./host-profile.model');
+const AttributeStringValue = require('./attribute-string-value.model');
 
 module.exports = {};
 
@@ -140,6 +141,14 @@ User.ValidationTokens = User.hasMany(ValidationToken, {
     allowNull: false
   },
   as: 'ValidationTokens'
+});
+
+User.AttributeStringValues = User.hasMany(AttributeStringValue, {
+  foreignKey: {
+    name: 'UserId',
+    allowNull: false
+  },
+  as: 'AttributeStringValues'
 });
 
 User.StudentProfile = User.hasOne(StudentProfile, {
