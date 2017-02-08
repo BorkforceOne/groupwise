@@ -149,7 +149,7 @@ class AttributeService {
           if (user == null)
             throw "User does not exist";
 
-          if (user.Type != attribute.ForType)
+          if (attribute.ForType != "BOTH" && user.Type != attribute.ForType)
             throw "Attribute does not belong to this user type";
         })
         .then(() => resolve(entity))
@@ -318,7 +318,7 @@ class AttributeService {
           if (user == null)
             throw "User does not exist";
 
-          if (user.Type != attribute.ForType)
+          if (attribute.ForType != "BOTH" && user.Type != attribute.ForType)
             throw "Attribute does not belong to this user type";
         })
         .then(() => resolve(entity))
@@ -498,7 +498,7 @@ class AttributeService {
           if (user == null)
             throw "User does not exist";
 
-          if (user.Type != attribute.ForType)
+          if (attribute.ForType != "BOTH" && user.Type != attribute.ForType)
             throw "Attribute does not belong to this user type";
         })
         .then(() => resolve(entity))

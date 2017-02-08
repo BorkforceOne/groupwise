@@ -2,6 +2,7 @@ module.exports.inMap = {
   "Email": "Email",
   "Firstname": "Firstname",
   "Lastname": "Lastname",
+  "Password": "Password",
   "Type": "Type",
   "Age": "Age",
   "Gender": "Gender",

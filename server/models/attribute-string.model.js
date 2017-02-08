@@ -25,7 +25,7 @@ const AttributeString = databaseManager.context.define('attributeString', {
   },
   ForType: {
     allowNull: false,
-    type:  Sequelize.ENUM("STUDENT", "HOST")
+    type:  Sequelize.ENUM("STUDENT", "HOST", "BOTH")
   },
   MaxLength: {
     allowNull: true,

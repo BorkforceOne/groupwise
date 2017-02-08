@@ -25,7 +25,7 @@ const AttributeRange = databaseManager.context.define('attributeRange', {
   },
   ForType: {
     allowNull: false,
-    type:  Sequelize.ENUM("STUDENT", "HOST")
+    type:  Sequelize.ENUM("STUDENT", "HOST", "BOTH")
   },
   Min: {
     allowNull: true,

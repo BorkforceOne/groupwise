@@ -25,7 +25,7 @@ const AttributeDate = databaseManager.context.define('attributeDate', {
   },
   ForType: {
     allowNull: false,
-    type:  Sequelize.ENUM("STUDENT", "HOST")
+    type:  Sequelize.ENUM("STUDENT", "HOST", "BOTH")
   },
   MinDate: {
     allowNull: true,

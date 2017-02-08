@@ -3,7 +3,6 @@
  */
 const Sequelize = require('sequelize');
 const databaseManager = require('../user_modules/database-manager');
-const encryptionManager = require('../user_modules/encryption-manager');
 const mailerManager = require('../user_modules/mailer-manager');
 const userMap = require('./maps/user.map');
 const config = require('../config');
@@ -81,22 +80,6 @@ const User = databaseManager.context.define('user', {
     getMap: function() {
       return User.getMap();
     },
-    changePassword: function(password) {
-      return new Promise((resolve, reject) => {
-        encryptionManager.generateSalt()
-          .then(salt => {
-            this['Salt'] = salt;
-          })
-          .then(() => {
-            return encryptionManager.generateHash(password, this['Salt']);
-          })
-          .then(hash => {
-            this['Password'] = hash;
-            resolve(this);
-          })
-          .catch(reject);
-      });
-    },
     validateEmail: function() {
       return new Promise((resolve, reject) => {
 
@@ -160,6 +143,7 @@ User.AttributeDateValues = User.hasMany(AttributeDateValue, {
   as: 'AttributeDateValues'
 });
 
+/*
 User.StudentProfile = User.hasOne(StudentProfile, {
   foreignKey: {
     name: 'UserId',
@@ -175,6 +159,7 @@ User.HostProfile = User.hasOne(HostProfile, {
   },
   as: 'HostProfile'
 });
+*/
 
 /**
  * Figures out how to serialize and deserialize this model
