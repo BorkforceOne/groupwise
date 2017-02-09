@@ -10,6 +10,8 @@ const AttributeDate = require('../models/attribute-date.model');
 const AttributeDateValue = require('../models/attribute-date-value.model');
 const AttributeRange = require('../models/attribute-range.model');
 const AttributeRangeValue = require('../models/attribute-range-value.model');
+const AttributeEnum = require('../models/attribute-enum.model');
+const AttributeEnumValue = require('../models/attribute-enum-value.model');
 
 
 let routeName;
@@ -31,7 +33,7 @@ router.get(routeName, function(req, res, next) {
 router.post(routeName, function(req, res, next) {
   let data = req.body;
 
-  restUtils.mapDataToEntity(AttributeString, data)
+  serializer.mapDataToEntity(AttributeString, data)
     .then(entity => attributesService.addAttributeString(entity))
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
@@ -79,7 +81,7 @@ router.get(`${routeName}/:userId`, function(req, res, next) {
 router.post(routeName, function(req, res, next) {
   let data = req.body;
 
-  restUtils.mapDataToEntity(AttributeStringValue, data)
+  serializer.mapDataToEntity(AttributeStringValue, data)
     .then(entity => attributesService.addAttributeStringValue(entity))
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
@@ -116,7 +118,7 @@ router.get(routeName, function(req, res, next) {
 router.post(routeName, function(req, res, next) {
   let data = req.body;
 
-  restUtils.mapDataToEntity(AttributeDate, data)
+  serializer.mapDataToEntity(AttributeDate, data)
     .then(entity => attributesService.addAttributeDate(entity))
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
@@ -164,7 +166,7 @@ router.get(`${routeName}/:userId`, function(req, res, next) {
 router.post(routeName, function(req, res, next) {
   let data = req.body;
 
-  restUtils.mapDataToEntity(AttributeDateValue, data)
+  serializer.mapDataToEntity(AttributeDateValue, data)
     .then(entity => attributesService.addAttributeDateValue(entity))
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
@@ -184,8 +186,6 @@ router.put(`${routeName}/:id`, function(req, res, next) {
     .catch(error => restUtils.catchErrors(error, req, res));
 });
 
-module.exports = router;
-
 // Attribute Ranges
 
 routeName = '/attribute-ranges';
@@ -203,7 +203,7 @@ router.get(routeName, function(req, res, next) {
 router.post(routeName, function(req, res, next) {
   let data = req.body;
 
-  restUtils.mapDataToEntity(AttributeRange, data)
+  serializer.mapDataToEntity(AttributeRange, data)
     .then(entity => attributesService.addAttributeRange(entity))
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
@@ -251,7 +251,7 @@ router.get(`${routeName}/:userId`, function(req, res, next) {
 router.post(routeName, function(req, res, next) {
   let data = req.body;
 
-  restUtils.mapDataToEntity(AttributeRangeValue, data)
+  serializer.mapDataToEntity(AttributeRangeValue, data)
     .then(entity => attributesService.addAttributeRangeValue(entity))
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
@@ -265,6 +265,91 @@ router.put(`${routeName}/:id`, function(req, res, next) {
   data.Id = req.params.id;
 
   attributesService.updateAttributeRangeValue(data)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+// Attribute Enums
+
+routeName = '/attribute-enums';
+
+/* GET attribute-enum listings. */
+router.get(routeName, function(req, res, next) {
+  attributesService.getAllAttributeEnums()
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* POST attribute-enum. */
+router.post(routeName, function(req, res, next) {
+  let data = req.body;
+
+  serializer.mapDataToEntity(AttributeEnum, data)
+    .then(entity => attributesService.addAttributeEnum(entity))
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* PUT attribute-enum. */
+router.put(`${routeName}/:id`, function(req, res, next) {
+  let data = req.body;
+  data.Id = req.params.id;
+
+  attributesService.updateAttributeEnum(data)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* DELETE attribute-enum. */
+router.delete(`${routeName}/:id`, function(req, res, next) {
+  let id = req.params.id;
+
+  attributesService.deleteAttributeEnum(id)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+routeName = '/attribute-enum-values';
+
+/* GET attribute-enum-value listings. */
+router.get(`${routeName}/:userId`, function(req, res, next) {
+  let userId = req.params.userId;
+
+  attributesService.getAllAttributeEnumValues(userId)
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* POST attribute-enum-value. */
+router.post(routeName, function(req, res, next) {
+  let data = req.body;
+
+  serializer.mapDataToEntity(AttributeEnumValue, data)
+    .then(entity => attributesService.addAttributeEnumValue(entity))
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* PUT attribute-enum-value. */
+router.put(`${routeName}/:id`, function(req, res, next) {
+  let data = req.body;
+  data.Id = req.params.id;
+
+  attributesService.updateAttributeEnumValue(data)
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
     .then(payload => restUtils.sendResponse(payload, req, res))

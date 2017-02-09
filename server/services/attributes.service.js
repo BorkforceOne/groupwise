@@ -1,4 +1,4 @@
-const restUtils = require('../user_modules/rest-utils');
+const serializer = require('../user_modules/serializer');
 
 const AttributeString = require('../models/attribute-string.model');
 const AttributeStringValue = require('../models/attribute-string-value.model');
@@ -6,6 +6,9 @@ const AttributeDate = require('../models/attribute-date.model');
 const AttributeDateValue = require('../models/attribute-date-value.model');
 const AttributeRange = require('../models/attribute-range.model');
 const AttributeRangeValue = require('../models/attribute-range-value.model');
+const AttributeEnum = require('../models/attribute-enum.model');
+const AttributeEnumValue = require('../models/attribute-enum-value.model');
+
 
 const userService = require('./users.service');
 
@@ -49,7 +52,7 @@ class AttributeService {
     return new Promise((resolve, reject) => {
 
       this.getAttributeString(data.Id)
-        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(entity => serializer.mapDataToInstance(entity, data))
         .then(this.validateAttributeString.bind(this))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
@@ -120,7 +123,7 @@ class AttributeService {
       // Ensure that the value is valid
 
       this.getAttributeStringValue(data.Id)
-        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(entity => serializer.mapDataToInstance(entity, data))
         .then(this.validateAttributeStringValue.bind(this))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
@@ -191,7 +194,7 @@ class AttributeService {
     return new Promise((resolve, reject) => {
 
       this.getAttributeDate(data.Id)
-        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(entity => serializer.mapDataToInstance(entity, data))
         .then(this.validateAttributeDate.bind(this))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
@@ -283,7 +286,7 @@ class AttributeService {
       // Ensure that the value is valid
 
       this.getAttributeDateValue(data.Id)
-        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(entity => serializer.mapDataToInstance(entity, data))
         .then(this.validateAttributeDateValue.bind(this))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
@@ -360,7 +363,7 @@ class AttributeService {
     return new Promise((resolve, reject) => {
 
       this.getAttributeRange(data.Id)
-        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(entity => serializer.mapDataToInstance(entity, data))
         .then(this.validateAttributeRange.bind(this))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
@@ -459,7 +462,7 @@ class AttributeService {
       // Ensure that the value is valid
 
       this.getAttributeRangeValue(data.Id)
-        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(entity => serializer.mapDataToInstance(entity, data))
         .then(this.validateAttributeRangeValue.bind(this))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
@@ -490,6 +493,221 @@ class AttributeService {
 
           if (attribute.Max != null && entity.Value > attribute.Max)
             throw "Value is below allowed maxmimum";
+        })
+        .then(() => userService.getById(entity.UserId))
+        .then((_user) => {
+          user = _user;
+
+          if (user == null)
+            throw "User does not exist";
+
+          if (attribute.ForType != "BOTH" && user.Type != attribute.ForType)
+            throw "Attribute does not belong to this user type";
+        })
+        .then(() => resolve(entity))
+        .catch(reject)
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // AttributeEnums
+  getAllAttributeEnums() {
+    return new Promise((resolve, reject) => {
+      AttributeEnum.findAll()
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getAttributeEnum(id) {
+    return new Promise((resolve, reject) => {
+      AttributeEnum.findOne({
+        where: {
+          Id: id
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  addAttributeEnum(entity) {
+    return new Promise((resolve, reject) => {
+      this.validateAttributeEnum(entity)
+        .then(() => entity.save())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  updateAttributeEnum(data) {
+    return new Promise((resolve, reject) => {
+
+      this.getAttributeEnum(data.Id)
+        .then(entity => serializer.mapDataToInstance(entity, data))
+        .then(this.validateAttributeEnum.bind(this))
+        .then(entity => entity.save())
+        .then(entity => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  deleteAttributeEnum(id) {
+    return new Promise((resolve, reject) => {
+      let entity;
+
+      this.getAttributeEnum(id)
+        .then(_entity => {
+          entity = _entity;
+
+          return entity;
+        })
+        .then(() => entity.destroy())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  validateAttributeEnum(entity) {
+    return new Promise((resolve, reject) => {
+      // Do validation here
+
+      let minDefined = false;
+      let maxDefined = false;
+
+      if (entity.MinSelect != null) {
+        if (typeof(entity.MinSelect) != "number" || !Number.isInteger(entity.MinSelect))
+          throw "MinSelect is invalid";
+
+        minDefined = true;
+      }
+
+      if (entity.MaxSelect != null) {
+        if (typeof(entity.MaxSelect) != "number" || !Number.isInteger(entity.MaxSelect))
+          throw "MaxSelect is invalid";
+
+        maxDefined = true;
+      }
+
+      let options = JSON.parse(entity.Options);
+      // TODO: Add better type validation, ensure that the contents of possibleValues is actually well-formed
+
+      /*
+      for (let i = 0; i < possibleValues.length; i ++) {
+        let possibleValue = possibleValues[i];
+      }
+      */
+
+      if (minDefined && options.length < entity.MinSelect)
+        throw "MinSelect cannot be greater than the number of Options";
+
+      if (maxDefined && options.length < entity.MaxSelect)
+        throw "MaxSelect cannot be greater than the number of Options";
+
+      if (minDefined && maxDefined)
+        if (entity.MinSelect > entity.MaxSelect)
+          throw "Min cannot be larger than Max";
+
+      resolve();
+    });
+  }
+
+  // AttributeEnumValues
+  getAllAttributeEnumValues(userId) {
+    return new Promise((resolve, reject) => {
+      AttributeEnumValue.findAll({
+        where: {
+          UserId: userId
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getAttributeEnumValue(id) {
+    return new Promise((resolve, reject) => {
+      AttributeEnumValue.findOne({
+        where: {
+          Id: id
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  addAttributeEnumValue(entity) {
+    return new Promise((resolve, reject) => {
+      this.validateAttributeEnumValue(entity)
+        .then(() => entity.save())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  updateAttributeEnumValue(data) {
+    return new Promise((resolve, reject) => {
+      // Ensure that the value is valid
+
+      this.getAttributeEnumValue(data.Id)
+        .then(entity => serializer.mapDataToInstance(entity, data))
+        .then(this.validateAttributeEnumValue.bind(this))
+        .then(entity => entity.save())
+        .then(entity => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  validateAttributeEnumValue(entity) {
+    return new Promise((resolve, reject) => {
+      let attribute, user;
+
+      this.getAttributeEnum(entity.AttributeId)
+        .then((_attribute) => {
+          attribute = _attribute;
+
+          if (attribute == null)
+            throw "Attribute does not exist";
+
+          if (entity.Value == null || typeof(entity.Value) != "string")
+            throw "Value cannot be empty or is invalid";
+
+          let chosenOptions = JSON.parse(entity.Value);
+          let possibleOptions = JSON.parse(attribute.Options);
+
+          for (let i = 0; i < chosenOptions.length; i ++) {
+            let chosenOption = chosenOptions[i];
+            let found = false;
+            for (let j = 0; j < possibleOptions.length; j ++) {
+              let possibleOption = possibleOptions[j];
+              if (chosenOption == possibleOption.Value) {
+                found = true;
+                break;
+              }
+            }
+            if (!found)
+              throw "One or more values specified is not a valid option";
+          }
+
+          if (attribute.MinSelect != null && chosenOptions.length < attribute.MinSelect)
+            throw "More options must be selected";
+
+          if (attribute.MaxSelect != null && chosenOptions.length > attribute.MaxSelect)
+            throw "Less options must be selected";
+
         })
         .then(() => userService.getById(entity.UserId))
         .then((_user) => {

@@ -1,4 +1,5 @@
 const restUtils = require('./user_modules/rest-utils');
+const serializer = require('./user_modules/serializer');
 
 const AttributeString = require('./models/attribute-string.model');
 const AttributeDate = require('./models/attribute-date.model');
@@ -42,25 +43,25 @@ module.exports.doSeed = () => {
     let datum = attributeSeedData[i];
     switch (datum.Type) {
       case "STRING":
-        restUtils.mapDataToEntity(AttributeString, datum.Data)
+        serializer.mapDataToEntity(AttributeString, datum.Data)
           .then(entity => attributesService.addAttributeString(entity))
           .catch(error => restUtils.catchErrors(error));
         break;
 
       case "DATE":
-        restUtils.mapDataToEntity(AttributeDate, datum.Data)
+        serializer.mapDataToEntity(AttributeDate, datum.Data)
           .then(entity => attributesService.addAttributeDate(entity))
           .catch(error => restUtils.catchErrors(error));
         break;
 
       case "RANGE":
-        restUtils.mapDataToEntity(AttributeRange, datum.Data)
+        serializer.mapDataToEntity(AttributeRange, datum.Data)
           .then(entity => attributesService.addAttributeRange(entity))
           .catch(error => restUtils.catchErrors(error));
         break;
 
       case "USER":
-        restUtils.mapDataToEntity(User, datum.Data)
+        serializer.mapDataToEntity(User, datum.Data)
           .then(entity => usersService.add(entity))
           .catch(error => restUtils.catchErrors(error));
     }

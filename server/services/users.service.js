@@ -1,4 +1,4 @@
-const restUtils = require('../user_modules/rest-utils');
+const serializer = require('../user_modules/serializer');
 const encryptionManager = require('../user_modules/encryption-manager');
 
 const User = require('../models/user.model');
@@ -44,7 +44,7 @@ class UserService {
       // Ensure that the value is valid
 
       this.getById(data.Id)
-        .then(entity => restUtils.mapDataToInstance(entity, data))
+        .then(entity => serializer.mapDataToInstance(entity, data))
         .then(this.validate.bind(this))
         .then(entity => entity.save())
         .then(entity => resolve(entity))

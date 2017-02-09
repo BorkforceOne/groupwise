@@ -23,7 +23,7 @@ router.post(routeName, function(req, res, next) {
 
   let data = req.body;
 
-  restUtils.mapDataToEntity(User, data)
+  serializer.mapDataToEntity(User, data)
     .then(entity => usersService.add(entity))
     .then(entity => entity.validateEmail())
     .then(serializer.serializeModel)
