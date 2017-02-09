@@ -509,19 +509,6 @@ class AttributeService {
     });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   // AttributeEnums
   getAllAttributeEnums() {
     return new Promise((resolve, reject) => {
