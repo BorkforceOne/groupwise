@@ -17,7 +17,10 @@ const attributeSeedData = [
       "Lastname": "Admin",
       "Email": "test@example.com",
       "Type": "ADMINISTRATOR",
-      "Password": "1234"
+      "Password": "1234",
+      "Phone": "555-555-5555",
+      "Gender": "FEMALE",
+      "Birthday": "1995-01-14T00:00:00Z"
     }
   },
   {

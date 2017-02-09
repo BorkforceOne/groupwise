@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { RegisterHostAdditionalPreferencesComponent } from './register-host-additional-preferences.component';
+import { RegisterAttributesComponent } from './register-attributes.component';
 
-describe('RegisterHostAdditionalPreferencesComponent', () => {
-  let component: RegisterHostAdditionalPreferencesComponent;
-  let fixture: ComponentFixture<RegisterHostAdditionalPreferencesComponent>;
+describe('RegisterAttributesComponent', () => {
+  let component: RegisterAttributesComponent;
+  let fixture: ComponentFixture<RegisterAttributesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegisterHostAdditionalPreferencesComponent ]
+      declarations: [ RegisterAttributesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RegisterHostAdditionalPreferencesComponent);
+    fixture = TestBed.createComponent(RegisterAttributesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

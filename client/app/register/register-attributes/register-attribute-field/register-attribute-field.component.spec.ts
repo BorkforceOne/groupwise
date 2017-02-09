@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { RegisterStudentAdditionalPreferencesComponent } from './register-student-additional-preferences.component';
+import { RegisterAttributeFieldComponent } from './register-attribute-field.component';
 
-describe('RegisterStudentAdditionalPreferencesComponent', () => {
-  let component: RegisterStudentAdditionalPreferencesComponent;
-  let fixture: ComponentFixture<RegisterStudentAdditionalPreferencesComponent>;
+describe('RegisterAttributeFieldComponent', () => {
+  let component: RegisterAttributeFieldComponent;
+  let fixture: ComponentFixture<RegisterAttributeFieldComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegisterStudentAdditionalPreferencesComponent ]
+      declarations: [ RegisterAttributeFieldComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RegisterStudentAdditionalPreferencesComponent);
+    fixture = TestBed.createComponent(RegisterAttributeFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

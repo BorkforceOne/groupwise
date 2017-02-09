@@ -9,8 +9,6 @@ const config = require('../config');
 
 const Attachment = require('./attachment.model');
 const ValidationToken = require('./validation-token.model');
-const StudentProfile = require('./student-profile.model');
-const HostProfile = require('./host-profile.model');
 const AttributeStringValue = require('./attribute-string-value.model');
 const AttributeDateValue = require('./attribute-date-value.model');
 
@@ -35,18 +33,22 @@ const User = databaseManager.context.define('user', {
     allowNull: false,
     type: Sequelize.STRING
   },
-  Age: {
-    allowNull: true,
-    type:  Sequelize.INTEGER
+  Birthday: {
+    allowNull: false,
+    type:  Sequelize.DATE
   },
   Gender: {
-    allowNull: true,
+    allowNull: false,
     type: Sequelize.ENUM("MALE", "FEMALE", "OTHER")
   },
   Email: {
     allowNull: false,
     type: Sequelize.STRING,
     unique: true
+  },
+  Phone: {
+    allowNull: false,
+    type: Sequelize.STRING
   },
   Password: {
     allowNull: false,
@@ -142,24 +144,6 @@ User.AttributeDateValues = User.hasMany(AttributeDateValue, {
   },
   as: 'AttributeDateValues'
 });
-
-/*
-User.StudentProfile = User.hasOne(StudentProfile, {
-  foreignKey: {
-    name: 'UserId',
-    allowNull: false
-  },
-  as: 'StudentProfile'
-});
-
-User.HostProfile = User.hasOne(HostProfile, {
-  foreignKey: {
-    name: 'UserId',
-    allowNull: false
-  },
-  as: 'HostProfile'
-});
-*/
 
 /**
  * Figures out how to serialize and deserialize this model

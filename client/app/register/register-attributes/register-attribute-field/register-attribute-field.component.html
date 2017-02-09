@@ -1,0 +1,6 @@
+<div class="form-group" *ngIf="getAttributeType() === 'STRING'">
+  <label class="col-md-2 control-label">{{Attribute.Description}}</label>
+  <div class="col-md-9">
+    <textarea [(ngModel)]="AttributeValue.Value" name="{{Attribute.Name}}" class="form-control" required></textarea>
+  </div>
+</div>

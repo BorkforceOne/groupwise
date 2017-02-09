@@ -1,0 +1,5 @@
+<pre>{{Attributes | json}}</pre>
+
+<div *ngFor="let attribute of Attributes">
+  <app-register-attribute-field [Attribute]="attribute.Type" [AttributeValue]="attribute.Value"></app-register-attribute-field>
+</div>
