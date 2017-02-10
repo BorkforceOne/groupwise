@@ -86,12 +86,15 @@ class AttributeService {
 
   // AttributeStringValues
   getAllAttributeStringValues(userId) {
+    let filter = {};
+    if (userId != undefined) {
+      filter.where = {
+        UserId: userId
+      }
+    }
+
     return new Promise((resolve, reject) => {
-      AttributeStringValue.findAll({
-        where: {
-          UserId: userId
-        }
-      })
+      AttributeStringValue.findAll(filter)
         .then(resolve)
         .catch(reject);
     });
@@ -249,12 +252,15 @@ class AttributeService {
 
   // AttributeDateValues
   getAllAttributeDateValues(userId) {
+    let filter = {};
+    if (userId != undefined) {
+      filter.where = {
+        UserId: userId
+      }
+    }
+
     return new Promise((resolve, reject) => {
-      AttributeDateValue.findAll({
-        where: {
-          UserId: userId
-        }
-      })
+      AttributeDateValue.findAll(filter)
         .then(resolve)
         .catch(reject);
     });
@@ -425,12 +431,15 @@ class AttributeService {
 
   // AttributeRangeValues
   getAllAttributeRangeValues(userId) {
+    let filter = {};
+    if (userId != undefined) {
+      filter.where = {
+        UserId: userId
+      }
+    }
+
     return new Promise((resolve, reject) => {
-      AttributeRangeValue.findAll({
-        where: {
-          UserId: userId
-        }
-      })
+      AttributeRangeValue.findAll(filter)
         .then(resolve)
         .catch(reject);
     });
@@ -589,6 +598,7 @@ class AttributeService {
       }
 
       let options = JSON.parse(entity.Options);
+
       // TODO: Add better type validation, ensure that the contents of possibleValues is actually well-formed
 
       /*
@@ -613,12 +623,15 @@ class AttributeService {
 
   // AttributeEnumValues
   getAllAttributeEnumValues(userId) {
+    let filter = {};
+    if (userId != undefined) {
+      filter.where = {
+        UserId: userId
+      }
+    }
+
     return new Promise((resolve, reject) => {
-      AttributeEnumValue.findAll({
-        where: {
-          UserId: userId
-        }
-      })
+      AttributeEnumValue.findAll(filter)
         .then(resolve)
         .catch(reject);
     });
@@ -673,6 +686,13 @@ class AttributeService {
             throw "Value cannot be empty or is invalid";
 
           let chosenOptions = JSON.parse(entity.Value);
+
+          // Shortcut hack to try to coerce data into the correct format
+          if (!Array.isArray(chosenOptions)) {
+            chosenOptions = [chosenOptions];
+            entity.Value = JSON.stringify(chosenOptions);
+          }
+
           let possibleOptions = JSON.parse(attribute.Options);
 
           for (let i = 0; i < chosenOptions.length; i ++) {

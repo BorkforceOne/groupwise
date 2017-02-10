@@ -60,7 +60,7 @@ import { DateSelectComponent } from './date-select/date-select.component';
     ConsumeTokenPageComponent,
     StudentSearchPageComponent,
     RegisterAttributeFieldComponent,
-    DateSelectComponent,
+    DateSelectComponent
   ],
   imports: [
     BrowserModule,

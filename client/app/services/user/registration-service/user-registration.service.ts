@@ -77,6 +77,17 @@ export class UserRegistrationService {
       .post(this.usersUrl, JSON.stringify(this.userRegistrationModel), {headers: this.headers})
       .map(this.extractData)
       .toPromise()
+      .then((user) => {
+        let attributes = this.attributes.filter((attribute) => {
+          return (attribute.Type.ForType === 'BOTH' || attribute.Type.ForType == user.Type)
+        });
+
+        attributes.map((attribute) => {
+          attribute.Value.UserId = user.Id;
+        });
+
+        this.attributeService.updateAllAttributes(attributes)
+      })
       .catch(this.handleError.bind(this));
   }
 

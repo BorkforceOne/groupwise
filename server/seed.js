@@ -34,11 +34,53 @@ const attributeSeedData = [
     }
   },
   {
+    Type: "STRING",
+    Data: {
+      "Name": "Citizenship",
+      "Description": "What is your country of citizenship?",
+      "ForType": "STUDENT"
+    }
+  },
+  {
+    Type: "STRING",
+    Data: {
+      "Name": "Languages",
+      "Description": "What language(s) do you speak?",
+      "ForType": "BOTH"
+    }
+  },
+  {
+    Type: "STRING",
+    Data: {
+      "Name": "Major",
+      "Description": "What is your Major?",
+      "ForType": "STUDENT"
+    }
+  },
+  {
     Type: "DATE",
     Data: {
-      "Name": "Birthday",
-      "Description": "What is your birthday?",
-      "ForType": "BOTH"
+      "Name": "StudyBegin",
+      "Description": "When did you begin your studies at NAU?",
+      "ForType": "STUDENT"
+    }
+  },
+  {
+    Type: "DATE",
+    Data: {
+      "Name": "StudyEnd",
+      "Description": "What is your expected graduation date?",
+      "ForType": "STUDENT"
+    }
+  },
+  {
+    Type: "RANGE",
+    Data: {
+      "Name": "Children",
+      "Description": "How many children do you have?",
+      "ForType": "BOTH",
+      "isInt": true,
+      "Min": 0
     }
   },
   {
@@ -62,6 +104,98 @@ const attributeSeedData = [
         {
           "Value": "OFTEN",
           "Display": "Often"
+        }
+      ]
+    }
+  },
+  {
+    Type: "ENUM",
+    Data: {
+      "Name": "Alcohol",
+      "Description": "How often do you drink alcohol?",
+      "ForType": "BOTH",
+      "MinSelect": 1,
+      "MaxSelect": 1,
+      "SelectType": "DROPDOWN",
+      "Options": [
+        {
+          "Value": "NEVER",
+          "Display": "Never"
+        },
+        {
+          "Value": "SOMETIMES",
+          "Display": "Sometimes"
+        },
+        {
+          "Value": "OFTEN",
+          "Display": "Often"
+        }
+      ]
+    }
+  },
+  {
+    Type: "ENUM",
+    Data: {
+      "Name": "Married",
+      "Description": "Are you married?",
+      "ForType": "BOTH",
+      "MinSelect": 1,
+      "MaxSelect": 1,
+      "SelectType": "RADIO",
+      "Options": [
+        {
+          "Value": "YES",
+          "Display": "Yes"
+        },
+        {
+          "Value": "NO",
+          "Display": "No"
+        }
+      ]
+    }
+  },
+  {
+    Type: "ENUM",
+    Data: {
+      "Name": "OwnCar",
+      "Description": "Do you own a car?",
+      "ForType": "BOTH",
+      "MinSelect": 1,
+      "MaxSelect": 1,
+      "SelectType": "RADIO",
+      "Options": [
+        {
+          "Value": "YES",
+          "Display": "Yes"
+        },
+        {
+          "Value": "NO",
+          "Display": "No"
+        }
+      ]
+    }
+  },
+  {
+    Type: "ENUM",
+    Data: {
+      "Name": "AcademicStatus",
+      "Description": "What is your academic status?",
+      "ForType": "STUDENT",
+      "MinSelect": 1,
+      "MaxSelect": 1,
+      "SelectType": "DROPDOWN",
+      "Options": [
+        {
+          "Value": "PIE",
+          "Display": "PIE Student"
+        },
+        {
+          "Value": "UNDERGRAD",
+          "Display": "Undergraduate Student"
+        },
+        {
+          "Value": "GRADUATE",
+          "Display": "Graduate Student (M.S., Ph.D, etc.)"
         }
       ]
     }

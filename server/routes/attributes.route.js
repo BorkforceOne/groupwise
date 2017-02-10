@@ -67,6 +67,15 @@ router.delete(`${routeName}/:id`, function(req, res, next) {
 routeName = '/attribute-string-values';
 
 /* GET attribute-string-value listings. */
+router.get(routeName, function(req, res, next) {
+  attributesService.getAllAttributeStringValues()
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* GET attribute-string-value listings. */
 router.get(`${routeName}/:userId`, function(req, res, next) {
   let userId = req.params.userId;
 
@@ -150,6 +159,15 @@ router.delete(`${routeName}/:id`, function(req, res, next) {
 });
 
 routeName = '/attribute-date-values';
+
+/* GET attribute-date-value listings. */
+router.get(routeName, function(req, res, next) {
+  attributesService.getAllAttributeDateValues()
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
 
 /* GET attribute-date-value listings. */
 router.get(`${routeName}/:userId`, function(req, res, next) {
@@ -237,6 +255,15 @@ router.delete(`${routeName}/:id`, function(req, res, next) {
 routeName = '/attribute-range-values';
 
 /* GET attribute-range-value listings. */
+router.get(routeName, function(req, res, next) {
+  attributesService.getAllAttributeRangeValues()
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* GET attribute-range-value listings. */
 router.get(`${routeName}/:userId`, function(req, res, next) {
   let userId = req.params.userId;
 
@@ -320,6 +347,15 @@ router.delete(`${routeName}/:id`, function(req, res, next) {
 });
 
 routeName = '/attribute-enum-values';
+
+/* GET attribute-enum-value listings. */
+router.get(routeName, function(req, res, next) {
+  attributesService.getAllAttributeEnumValues()
+    .then(serializer.serializeModels)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
 
 /* GET attribute-enum-value listings. */
 router.get(`${routeName}/:userId`, function(req, res, next) {

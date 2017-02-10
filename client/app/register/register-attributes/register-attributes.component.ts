@@ -19,8 +19,11 @@ export class RegisterAttributesComponent implements OnInit {
   constructor(private userRegistrationService: UserRegistrationService, private attributeService: AttributeService) { }
 
   ngOnInit() {
-    this.attributes = this.userRegistrationService.getAttributes();
     this.userRegistrationModel = this.userRegistrationService.getUserRegistrationModel();
+    this.attributes = this.userRegistrationService.getAttributes()
+      .filter((attribute) => {
+        return attribute.Type.ForType == this.userRegistrationModel.Type || attribute.Type.ForType == 'BOTH';
+      });
   }
 
 }

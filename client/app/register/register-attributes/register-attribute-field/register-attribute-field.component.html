@@ -15,7 +15,7 @@
 <div class="form-group" *ngIf="getAttributeType() === 'RANGE'">
   <label class="col-md-3 control-label">{{Attribute.Description}}</label>
   <div class="col-md-3">
-    <input [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" [type]="Attribute.isInt ? 'number' : null" [min]="Attribute.Min ? Attribute.Min : null" [max]="Attribute.Max ? Attribute.Max : null" class="form-control" required/>
+    <input [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" [type]="Attribute.isInt ? 'number' : null" [min]="Attribute.Min" [max]="Attribute.Max" (change)="onNumberChange($event)" class="form-control" required/>
   </div>
 </div>
 
