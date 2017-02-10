@@ -77,7 +77,7 @@ export class UserRegistrationService {
       .post(this.usersUrl, JSON.stringify(this.userRegistrationModel), {headers: this.headers})
       .map(this.extractData)
       .toPromise()
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
   }
 
   private extractData(res: Response) {

@@ -56,7 +56,13 @@ export class DateSelectComponent implements OnInit, ControlValueAccessor {
 
   //From ControlValueAccessor interface
   writeValue(value: any) {
-    if (value !== this.innerValue) {
+    if (value && value !== this.innerValue) {
+      this.selDate = {year: 0, month: 0, day: 0};
+      let date = new Date(value);
+      this.selDate.year = date.getFullYear();
+      this.selDate.month = date.getMonth() + 1;
+      this.selDate.day = date.getDate();
+
       this.innerValue = value;
     }
   }
@@ -74,7 +80,6 @@ export class DateSelectComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
 
   }
-
 
   onDateChanged(event: IMyDateModel) {
     if (event.jsdate != null) {
