@@ -22,7 +22,7 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     return this.http.get(this.usersUrl)
-      .map(this.extractData)
+      .map(this.extractData.bind(this, User))
       .catch(this.handleError);
   }
 
@@ -51,7 +51,7 @@ export class UserService {
   login(user: UserLogin): Promise<User> {
     return this.http
       .post(`${this.authUrl}/login`, JSON.stringify(user), {headers: this.headers})
-      .map(this.extractData)
+      .map(this.extractData.bind(this, User))
       .map(this._setLoggedInUser)
       .toPromise()
       .catch(this.handleError.bind(this));
@@ -60,7 +60,7 @@ export class UserService {
   logout(): Promise<boolean> {
     return this.http
       .post(`${this.authUrl}/logout`, null, {headers: this.headers})
-      .map(this.extractData)
+      .map(this.extractData.bind(this, User))
       .map(this._clearLoggedInUser.bind(this))
       .toPromise()
       .catch(this.handleError.bind(this));
@@ -85,13 +85,26 @@ export class UserService {
     return user.Firstname + " " + user.Lastname;
   }
 
-  private extractData(res: Response) {
+  private extractData(model: any, res: Response) {
     let body = res.json();
     if (Array.isArray(body.Errors) && body.Errors.length > 0)
       throw new RestError(body.Errors);
     if (body.Payload === undefined)
       throw new RestError(["Invalid response"]);
-    return new User().fromJSON(body.Payload);
+
+    let data;
+
+    if (Array.isArray(body.Payload)) {
+      data = [];
+      for (let dataum in body.Payload) {
+        data.push(new model().fromJSON(body.Payload[dataum]));
+      }
+    }
+    else {
+      data = new model().fromJSON(body.Payload);
+    }
+
+    return data;
   }
 
   private handleError(error: any): Promise<any> {

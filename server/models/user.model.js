@@ -3,15 +3,14 @@
  */
 const Sequelize = require('sequelize');
 const databaseManager = require('../user_modules/database-manager');
-const encryptionManager = require('../user_modules/encryption-manager');
 const mailerManager = require('../user_modules/mailer-manager');
 const userMap = require('./maps/user.map');
 const config = require('../config');
 
 const Attachment = require('./attachment.model');
 const ValidationToken = require('./validation-token.model');
-const StudentProfile = require('./student-profile.model');
-const HostProfile = require('./host-profile.model');
+const AttributeStringValue = require('./attribute-string-value.model');
+const AttributeDateValue = require('./attribute-date-value.model');
 
 module.exports = {};
 
@@ -34,18 +33,22 @@ const User = databaseManager.context.define('user', {
     allowNull: false,
     type: Sequelize.STRING
   },
-  Age: {
-    allowNull: true,
-    type:  Sequelize.INTEGER
+  Birthday: {
+    allowNull: false,
+    type:  Sequelize.DATE
   },
   Gender: {
-    allowNull: true,
+    allowNull: false,
     type: Sequelize.ENUM("MALE", "FEMALE", "OTHER")
   },
   Email: {
     allowNull: false,
     type: Sequelize.STRING,
     unique: true
+  },
+  Phone: {
+    allowNull: false,
+    type: Sequelize.STRING
   },
   Password: {
     allowNull: false,
@@ -78,22 +81,6 @@ const User = databaseManager.context.define('user', {
   instanceMethods: {
     getMap: function() {
       return User.getMap();
-    },
-    changePassword: function(password) {
-      return new Promise((resolve, reject) => {
-        encryptionManager.generateSalt()
-          .then(salt => {
-            this['Salt'] = salt;
-          })
-          .then(() => {
-            return encryptionManager.generateHash(password, this['Salt']);
-          })
-          .then(hash => {
-            this['Password'] = hash;
-            resolve(this);
-          })
-          .catch(reject);
-      });
     },
     validateEmail: function() {
       return new Promise((resolve, reject) => {
@@ -142,20 +129,20 @@ User.ValidationTokens = User.hasMany(ValidationToken, {
   as: 'ValidationTokens'
 });
 
-User.StudentProfile = User.hasOne(StudentProfile, {
+User.AttributeStringValues = User.hasMany(AttributeStringValue, {
   foreignKey: {
     name: 'UserId',
     allowNull: false
   },
-  as: 'StudentProfile'
+  as: 'AttributeStringValues'
 });
 
-User.HostProfile = User.hasOne(HostProfile, {
+User.AttributeDateValues = User.hasMany(AttributeDateValue, {
   foreignKey: {
     name: 'UserId',
     allowNull: false
   },
-  as: 'HostProfile'
+  as: 'AttributeDateValues'
 });
 
 /**

@@ -1,15 +1,12 @@
-const Attachment = require('./attachment.model');
-const User = require('./user.model');
-const Config = require('./config.model');
-const ValidationToken = require('./validation-token.model');
-const HostProfile = require('./host-profile.model');
-const StudentProfile = require('./student-profile.model');
+const models = {};
 
-module.exports = {
-  Attachment: Attachment,
-  User: User,
-  StudentProfile: StudentProfile,
-  HostProfile: HostProfile,
-  Config: Config,
-  ValidationToken: ValidationToken
-};
+let normalizedPath = require("path").join(__dirname);
+
+require("fs").readdirSync(normalizedPath).forEach(function(file) {
+  if (file.match(/\.model\.js/)) {
+    models[file] = require("./" + file);
+    console.log("[MODELS] Loading model '" + file + "'");
+  }
+});
+
+module.exports = models;

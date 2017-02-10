@@ -6,14 +6,12 @@ import {RegisterComponent} from "./register/register.component";
 import {LoginComponent} from "./login/login.component";
 import {AdminManageComponent} from "./admin-manage/admin-manage.component";
 import {HomeComponent} from "./home/home.component";
-import {RegisterStudentAdditionalPreferencesComponent} from "./register/register-student-additional-preferences/register-student-additional-preferences.component";
-import {RegisterStudentAdditionalPersonalInformationComponent} from "./register/register-student-additional-personal-information/register-student-additional-personal-information.component";
-import {RegisterHostAdditionalPreferencesComponent} from "./register/register-host-additional-preferences/register-host-additional-preferences.component";
-import {RegisterHostAdditionalPersonalInformationComponent} from "./register/register-host-additional-personal-information/register-host-additional-personal-information.component";
 import {NotLoggedinGuard} from "./guards/not-loggedin-guard";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {RegisterGeneralInformationComponent} from "./register/register-general-information/register-general-information.component";
 import {ConsumeTokenPageComponent} from "./consume-token-page/consume-token-page.component";
+import {StudentSearchPageComponent} from "./student-search-page/student-search-page.component";
+import {RegisterAttributesComponent} from "./register/register-attributes/register-attributes.component";
 
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -22,13 +20,11 @@ export const AppRoutes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [NotLoggedinGuard], canActivateChild: [NotLoggedinGuard],
     children: [
       { path: '', component: RegisterGeneralInformationComponent},
-      { path: 'host-personal', component: RegisterHostAdditionalPersonalInformationComponent },
-      { path: 'host-preferences', component: RegisterHostAdditionalPreferencesComponent },
-      { path: 'student-personal', component: RegisterStudentAdditionalPersonalInformationComponent },
-      { path: 'student-preferences', component: RegisterStudentAdditionalPreferencesComponent },
+      { path: 'attributes', component: RegisterAttributesComponent}
     ]},
   { path: 'login', component: LoginComponent, canActivate: [NotLoggedinGuard]},
   { path: 'validate', component: ConsumeTokenPageComponent },
+  { path: 'student-search', component: StudentSearchPageComponent, canActivate: [LoggedinGuard] },
   { path: 'admin-manage', component: AdminManageComponent },
   { path: 'home', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent }

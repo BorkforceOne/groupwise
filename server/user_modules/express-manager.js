@@ -58,9 +58,9 @@ class ExpressManager {
       const routes = require('./../routes/index');
 
       this.context.use('/api/v1/', routes);
-      this.context.use(express.static(path.join(__dirname, 'public')));
+      this.context.use(express.static(path.join(__dirname, '..', 'public')));
       this.context.use('^(?!.*\/api\/).*$', function(request, response, next) {
-        response.sendfile(__dirname + '/public/index.html');
+        response.sendfile(path.join(__dirname, '..', 'public', 'index.html'));
       });
 
       // catch 404 and forward to error handler

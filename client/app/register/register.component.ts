@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UserService } from '../services/user/user.service';
 import {AlertService} from "../services/alert/alert.service";
 import {Alert} from "../services/alert/alert";
 import {Router} from "@angular/router";
@@ -23,7 +22,7 @@ export class RegisterComponent implements OnInit {
     if (this.router.url != '/register')
       this.router.navigateByUrl('/register');
 
-    this.userRegistrationService.setSequence(['/register', '/register/host-personal', '/register/host-preferences']);
+    this.userRegistrationService.setSequence(['/register', '/register/attributes']);
     this.userRegistrationModel = this.userRegistrationService.getUserRegistrationModel();
     this.registrationComplete = false;
   }
@@ -41,14 +40,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onNext() {
-    if (this.getSequenceCurrent() == 1) {
-      if (this.userRegistrationModel.Type == 'HOST') {
-        this.userRegistrationService.setSequence(['/register', '/register/host-personal', '/register/host-preferences']);
-      }
-      else {
-        this.userRegistrationService.setSequence(['/register', '/register/student-personal', '/register/student-preferences']);
-      }
-    }
     this.userRegistrationService.next();
   }
 
