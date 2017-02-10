@@ -4,6 +4,8 @@ const serializer = require('./user_modules/serializer');
 const AttributeString = require('./models/attribute-string.model');
 const AttributeDate = require('./models/attribute-date.model');
 const AttributeRange = require('./models/attribute-range.model');
+const AttributeEnum = require('./models/attribute-enum.model');
+
 const User = require('./models/user.model');
 
 const attributesService = require('./services/attributes.service');
@@ -38,6 +40,31 @@ const attributeSeedData = [
       "Description": "What is your birthday?",
       "ForType": "BOTH"
     }
+  },
+  {
+    Type: "ENUM",
+    Data: {
+      "Name": "Smoke",
+      "Description": "How often do you smoke?",
+      "ForType": "BOTH",
+      "MinSelect": 1,
+      "MaxSelect": 1,
+      "SelectType": "DROPDOWN",
+      "Options": [
+        {
+          "Value": "NEVER",
+          "Display": "Never"
+        },
+        {
+          "Value": "SOMETIMES",
+          "Display": "Sometimes"
+        },
+        {
+          "Value": "OFTEN",
+          "Display": "Often"
+        }
+      ]
+    }
   }
 ];
 
@@ -59,6 +86,12 @@ module.exports.doSeed = () => {
 
       case "RANGE":
         serializer.mapDataToEntity(AttributeRange, datum.Data)
+          .then(entity => attributesService.addAttributeRange(entity))
+          .catch(error => restUtils.catchErrors(error));
+        break;
+
+      case "ENUM":
+        serializer.mapDataToEntity(AttributeEnum, datum.Data)
           .then(entity => attributesService.addAttributeRange(entity))
           .catch(error => restUtils.catchErrors(error));
         break;

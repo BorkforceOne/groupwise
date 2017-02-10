@@ -14,17 +14,12 @@ import {Attribute} from "../../services/attributes/attribute.model";
 
 export class RegisterAttributesComponent implements OnInit {
   userRegistrationModel: UserRegistrationModel;
-  Attributes: Array<Attribute> = [];
+  attributes: Array<Attribute> = [];
 
   constructor(private userRegistrationService: UserRegistrationService, private attributeService: AttributeService) { }
 
   ngOnInit() {
-    this.attributeService
-      .getAllAttributes()
-      .subscribe(p => {
-        this.Attributes = p
-      });
-
+    this.attributes = this.userRegistrationService.getAttributes();
     this.userRegistrationModel = this.userRegistrationService.getUserRegistrationModel();
   }
 

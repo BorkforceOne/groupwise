@@ -34,6 +34,8 @@ import { StudentSearchPageComponent } from './student-search-page/student-search
 import {RegisterAttributeFieldComponent} from "./register/register-attributes/register-attribute-field/register-attribute-field.component";
 import {RegisterAttributesComponent} from "./register/register-attributes/register-attributes.component";
 import {AttributeService} from "./services/attributes/attribute.service";
+import { MyDatePickerModule } from 'mydatepicker';
+import { DateSelectComponent } from './date-select/date-select.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import {AttributeService} from "./services/attributes/attribute.service";
     ConsumeTokenPageComponent,
     StudentSearchPageComponent,
     RegisterAttributeFieldComponent,
+    DateSelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ import {AttributeService} from "./services/attributes/attribute.service";
     RouterModule.forRoot(AppRoutes),
     AlertModule.forRoot(),
     DropdownModule.forRoot(),
-    FileUploadModule
+    FileUploadModule,
+    MyDatePickerModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService],
   bootstrap: [AppComponent]
