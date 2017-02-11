@@ -36,6 +36,8 @@ import {RegisterAttributesComponent} from "./register/register-attributes/regist
 import {AttributeService} from "./services/attributes/attribute.service";
 import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
+import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
+import {MomentModule} from "angular2-moment";
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { DateSelectComponent } from './date-select/date-select.component';
     ConsumeTokenPageComponent,
     StudentSearchPageComponent,
     RegisterAttributeFieldComponent,
-    DateSelectComponent
+    DateSelectComponent,
+    ChatMessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { DateSelectComponent } from './date-select/date-select.component';
     AlertModule.forRoot(),
     DropdownModule.forRoot(),
     FileUploadModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    MomentModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService],
   bootstrap: [AppComponent]
