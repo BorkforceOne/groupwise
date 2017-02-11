@@ -9,6 +9,8 @@ function bootstrap() {
   const mailerManager = require('./user_modules/mailer-manager');
   const notificationsManager = require('./user_modules/notifications-manager');
 
+  const services = require('./services');
+
   // We use Promises due to dependency issues and possible async calls that may occur in an init function
 
   // Note: We have to use .bind because of how promises work, they cause 'this' to become undefined on each call to '.then'
@@ -16,16 +18,18 @@ function bootstrap() {
 
   // Initialize Database
   databaseManager.init()
+    // Initialize services
+    .then(() => services.init())
     // Initialize Express
-    .then(expressManager.init.bind(expressManager))
+    .then(() => expressManager.init())
     // Initialize Http
-    .then(httpManager.init.bind(httpManager))
+    .then(() => httpManager.init())
     // Initialize SocketIO
-    .then(socketManager.init.bind(socketManager))
+    .then(() => socketManager.init())
     // Initialize Mailer Manager
-    .then(mailerManager.init.bind(mailerManager))
+    .then(() => mailerManager.init())
     // Initialize Notifications Manager
-    .then(notificationsManager.init.bind(notificationsManager))
+    .then(() => notificationsManager.init())
     .catch(handleError);
 }
 

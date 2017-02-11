@@ -9,13 +9,14 @@ const AttributeRangeValue = require('../models/attribute-range-value.model');
 const AttributeEnum = require('../models/attribute-enum.model');
 const AttributeEnumValue = require('../models/attribute-enum-value.model');
 
-
-const userService = require('./users.service');
-
 class AttributeService {
 
   constructor() {
 
+  }
+
+  init() {
+    this.userService = require('./users.service');
   }
 
   // AttributeStrings
@@ -148,7 +149,7 @@ class AttributeService {
           if (attribute.MaxLength != null && entity.Value.length > attribute.MaxLength)
             throw "Value exceeds MaxLength";
         })
-        .then(() => userService.getById(entity.UserId))
+        .then(() => this.userService.getById(entity.UserId))
         .then((_user) => {
           user = _user;
 
@@ -320,7 +321,7 @@ class AttributeService {
           if (attribute.MaxDate != null && entity.Value.getTime() > attribute.MaxDate.getTime())
             throw "Value is below allowed maxmimum";
         })
-        .then(() => userService.getById(entity.UserId))
+        .then(() => this.userService.getById(entity.UserId))
         .then((_user) => {
           user = _user;
 
@@ -503,7 +504,7 @@ class AttributeService {
           if (attribute.Max != null && entity.Value > attribute.Max)
             throw "Value is below allowed maxmimum";
         })
-        .then(() => userService.getById(entity.UserId))
+        .then(() => this.userService.getById(entity.UserId))
         .then((_user) => {
           user = _user;
 
@@ -716,7 +717,7 @@ class AttributeService {
             throw "Less options must be selected";
 
         })
-        .then(() => userService.getById(entity.UserId))
+        .then(() => this.userService.getById(entity.UserId))
         .then((_user) => {
           user = _user;
 

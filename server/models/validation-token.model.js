@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const databaseManager = require('../user_modules/database-manager');
-const crypto = require('crypto');
 
 const validationTokenMap = require('./maps/validation-token.map');
 
@@ -30,9 +29,6 @@ const ValidationToken = databaseManager.context.define('validationToken', {
   instanceMethods: {
     getMap: function() {
       return ValidationToken.getMap();
-    },
-    generateCode: function() {
-      return ValidationToken.generateCode();
     }
   },
 });
@@ -43,14 +39,6 @@ const ValidationToken = databaseManager.context.define('validationToken', {
  */
 ValidationToken.getMap = function () {
   return validationTokenMap;
-};
-
-ValidationToken.generateCode = function() {
-  return new Promise((resolve, reject) => {
-    crypto.randomBytes(8, function(ex, buf) {
-      resolve(buf.toString('hex'));
-    });
-  });
 };
 
 module.exports = ValidationToken;
