@@ -23,7 +23,13 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get(this.usersUrl)
       .map(this.extractData.bind(this, User))
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
+  }
+
+  getUserById(userId: number): Observable<User>{
+    return this.http.get(`${this.usersUrl}/${userId}`)
+      .map(this.extractData.bind(this, User))
+      .catch(this.handleError.bind(this));
   }
 
   private _setLoggedInUser(user: User) {

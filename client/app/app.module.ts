@@ -37,6 +37,7 @@ import {RegisterAttributesComponent} from "./register/register-attributes/regist
 import {AttributeService} from "./services/attributes/attribute.service";
 import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
+import { AgePipe } from './age.pipe';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { DateSelectComponent } from './date-select/date-select.component';
     UserProfilePageComponent,
     StudentSearchPageComponent,
     RegisterAttributeFieldComponent,
-    DateSelectComponent
+    DateSelectComponent,
+    AgePipe
   ],
   imports: [
     BrowserModule,
