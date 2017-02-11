@@ -26,14 +26,33 @@
             <ng-container *ngIf="(getSequenceCurrent() != getSequenceLength())">
               <button (click)="onNext()" class="btn btn-primary">Next</button>
             </ng-container>
+
+
+
             <ng-container *ngIf="(getSequenceCurrent() == getSequenceLength())">
               <button (click)="onRegister()" class="btn btn-primary">Register</button>
             </ng-container>
+
+<p></p>
+            <p><a class="btn btn-primary 3x pull-right" routerLink="/login">Log in!</a></p>
+            <div class="text">
+              <h4 class="cust-margin">If you already have an account, click here to login!</h4>
+            </div>
+
+
+
+
+
+
           </div>
         </div>
 
+
+
         </fieldset>
+
       </form>
+
     </div>
   </div>
 </div>
