@@ -104,6 +104,8 @@ const User = databaseManager.context.define('user', {
               VerificationURL: config.general.baseURL + '/validate?code=' + validationToken.Code
             };
 
+            console.log(params.VerificationURL);
+
             mailerManager.sendMail(mail, header, params)
               .then(() => resolve(this))
               .catch((error) => reject(error));
