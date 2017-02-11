@@ -14,15 +14,13 @@ export class ChatMessageComponent implements OnInit {
 
   public message: ChatMessage;
 
-  constructor(private  userService: UserService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
 
   isLoggedInUser(): boolean{
-
     return this.message.User.Id == this.userService.getLoggedInUser().Id;
-
   }
 
 }

@@ -1,11 +1,32 @@
-
-<li class="clearfix" [ngClass]="isLoggedInUser() ? 'left' : 'right'">
-  <span class="chat-img" [ngClass]="isLoggedInUser() ? 'pull-left' : 'pull-right'"><img alt="User Avatar" class="img-circle" src="http://placehold.it/50/55C1E7/fff&text=U"></span>
-  <div class="chat-body clearfix">
-    <div class="header">
-      <strong class="primary-font">{{message.User.Firstname}} {{message.User.Lastname}}</strong> <small class="pull-right text-muted" [ngClass]="isLoggedInUser() ? 'pull-right' : 'pull-left'">
-      <span class="glyphicon glyphicon-time"></span>{{message.ReceivedAt | amTimeAgo}}</small>
+<ng-container *ngIf="isLoggedInUser()">
+  <li class="right clearfix">
+    <span class="chat-img pull-right"><img alt="User Avatar" class="img-circle" src="http://placehold.it/50/FA6F57/fff&text=ME"></span>
+    <div class="chat-body clearfix">
+      <div class="header">
+        <small class=" text-muted">
+          <span class="glyphicon glyphicon-time"></span>{{message.ReceivedAt | amTimeAgo}}
+        </small>
+        <strong class="pull-right primary-font">{{message.User.Firstname}} {{message.User.Lastname}}</strong>
+      </div>
+      <p class="chat-message">{{message.Message}}</p>
     </div>
-    <p>{{message.Message}}</p>
-  </div>
-</li>
+  </li>
+</ng-container>
+
+
+
+
+<ng-container *ngIf="!isLoggedInUser()">
+  <li class="left clearfix">
+    <span class="chat-img pull-left"><img alt="User Avatar" class="img-circle" src="http://placehold.it/50/55C1E7/fff&text=U"></span>
+    <div class="chat-body clearfix">
+      <div class="header">
+        <strong class="primary-font">{{message.User.Firstname}} {{message.User.Lastname}}</strong>
+        <small class="pull-right text-muted">
+          <span class="glyphicon glyphicon-time"></span>{{message.ReceivedAt | amTimeAgo}}
+        </small>
+      </div>
+      <p class="chat-message">{{message.Message}}</p>
+    </div>
+  </li>
+</ng-container>
