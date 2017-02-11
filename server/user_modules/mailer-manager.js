@@ -63,6 +63,7 @@ class MailerManager {
    */
   sendMail(mail, header, params) {
     return new Promise((resolve, reject) => {
+      /*
       mail(header, params, (error) => {
         if (error) {
           console.error("[MAILER] Could not dispatch email message, error: " + error);
@@ -71,6 +72,8 @@ class MailerManager {
         else
           resolve();
       })
+      */
+      resolve();
     })
   }
 }

@@ -25,10 +25,6 @@ import {ConfigService} from "./services/config/config.service";
 import {AlertService} from "./services/alert/alert.service";
 import { AlertsComponent } from './navbar/alerts/alerts.component';
 import {LoggedinGuard} from "./guards/loggedin-guard";
-import { RegisterHostAdditionalPersonalInformationComponent } from './register/register-host-additional-personal-information/register-host-additional-personal-information.component';
-import { RegisterHostAdditionalPreferencesComponent } from './register/register-host-additional-preferences/register-host-additional-preferences.component';
-import { RegisterStudentAdditionalPersonalInformationComponent } from './register/register-student-additional-personal-information/register-student-additional-personal-information.component';
-import { RegisterStudentAdditionalPreferencesComponent } from './register/register-student-additional-preferences/register-student-additional-preferences.component';
 import {AppRoutes} from "./routes";
 import {NotLoggedinGuard} from "./guards/not-loggedin-guard";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -36,6 +32,11 @@ import { RegisterGeneralInformationComponent } from './register/register-general
 import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
 import { ConsumeTokenPageComponent } from './consume-token-page/consume-token-page.component';
 import { StudentSearchPageComponent } from './student-search-page/student-search-page.component';
+import {RegisterAttributeFieldComponent} from "./register/register-attributes/register-attribute-field/register-attribute-field.component";
+import {RegisterAttributesComponent} from "./register/register-attributes/register-attributes.component";
+import {AttributeService} from "./services/attributes/attribute.service";
+import { MyDatePickerModule } from 'mydatepicker';
+import { DateSelectComponent } from './date-select/date-select.component';
 
 @NgModule({
   declarations: [
@@ -54,15 +55,14 @@ import { StudentSearchPageComponent } from './student-search-page/student-search
     AdminManageComponent,
     AlertsComponent,
     CollapseDirective,
-    RegisterHostAdditionalPersonalInformationComponent,
-    RegisterHostAdditionalPreferencesComponent,
-    RegisterStudentAdditionalPersonalInformationComponent,
-    RegisterStudentAdditionalPreferencesComponent,
+    RegisterAttributesComponent,
     PageNotFoundComponent,
     RegisterGeneralInformationComponent,
     ConsumeTokenPageComponent,
     UserProfilePageComponent,
     StudentSearchPageComponent,
+    RegisterAttributeFieldComponent,
+    DateSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -73,8 +73,9 @@ import { StudentSearchPageComponent } from './student-search-page/student-search
     DropdownModule.forRoot(),
     FileUploadModule,
     TabsModule.forRoot(),
+    MyDatePickerModule
   ],
-  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard],
+  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

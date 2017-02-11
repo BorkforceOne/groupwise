@@ -7,36 +7,7 @@ module.exports = {};
  * @returns {Object}
  */
 const serializeModel = function(model) {
-  let data = model.get({plain: true});
-  let dto = model.getMap().outMap;
-  let serializedData = {};
-
-  for (let property in dto) {
-    if (dto.hasOwnProperty(property)) {
-      let translatedProperty = dto[property];
-      let fieldName;
-      let type;
-
-      if (typeof translatedProperty === "string")
-        fieldName = translatedProperty;
-      else {
-        fieldName = translatedProperty.name;
-        type = translatedProperty.type;
-      }
-
-      if (data.hasOwnProperty(fieldName)) {
-        switch (type) {
-          case 'JSON':
-            serializedData[fieldName] = JSON.parse(data[fieldName]);
-            break;
-          default:
-            serializedData[fieldName] = data[fieldName];
-        }
-      }
-    }
-  }
-
-  return serializedData;
+  return mapInstanceToData(model);
 };
 module.exports.serializeModel = serializeModel;
 
@@ -47,13 +18,103 @@ module.exports.serializeModel = serializeModel;
  */
 const serializeModels = function(models) {
   let serializedData = [];
+
+  let iterations = [];
+
   for (let i = 0; i < models.length; i++) {
     let model = models[i];
-    let entry = serializeModel(model);
-    if (Object.keys(entry).length > 0)
-      serializedData.push(entry);
+    let fn = serializeModel(model)
+      .then((data) => {
+        serializedData.push(data);
+      });
+    iterations.push(fn);
   }
 
-  return serializedData;
+  return Promise.all(iterations).then(() => {
+    return serializedData;
+  });
 };
 module.exports.serializeModels = serializeModels;
+
+const mapDataToEntity = function(entity, data) {
+  return mapDataToInstance(entity.build(), data);
+};
+module.exports.mapDataToEntity = mapDataToEntity;
+
+const mapDataToInstance = function(instance, data) {
+  return new Promise((resolve, reject) => {
+    if (instance == null)
+      reject("Instance cannot be null while mapping");
+
+    const map = instance.getMap().inMap;
+
+    for (let property in map) {
+      if (map.hasOwnProperty(property) && data.hasOwnProperty(property)) {
+        let mappedProperty = map[property];
+        let type = 'STRING';
+        let translatedProperty = mappedProperty;
+        if (typeof mappedProperty === 'object') {
+          type = mappedProperty.Type;
+          translatedProperty = mappedProperty.Value;
+        }
+
+        switch (type) {
+          case 'STRING':
+            instance[translatedProperty] = data[property];
+            break;
+
+          case 'JSON':
+            instance[translatedProperty] = JSON.stringify(data[property]);
+            break;
+
+          default:
+            throw "Unknown type to map";
+            break;
+        }
+      }
+    }
+
+    resolve(instance);
+  });
+};
+module.exports.mapDataToInstance = mapDataToInstance;
+
+const mapInstanceToData = function(instance) {
+  return new Promise((resolve, reject) => {
+
+    if (instance == null)
+      reject("Instance cannot be null while mapping");
+
+    const map = instance.getMap().outMap;
+    const data = {};
+
+    for (let property in map) {
+      if (map.hasOwnProperty(property)) {
+        let mappedProperty = map[property];
+        let type = 'STRING';
+        let translatedProperty = mappedProperty;
+        if (typeof mappedProperty === 'object') {
+          type = mappedProperty.Type;
+          translatedProperty = mappedProperty.Value;
+        }
+
+        switch (type) {
+          case 'STRING':
+            data[translatedProperty] = instance[property];
+            break;
+
+          case 'JSON':
+            data[translatedProperty] = JSON.parse(instance[property]);
+            break;
+
+          default:
+            throw "Unknown type to map";
+            break;
+        }
+      }
+    }
+
+    resolve(data);
+  });
+};
+module.exports.mapInstanceToData = mapInstanceToData;
