@@ -37,6 +37,8 @@ import {RegisterAttributesComponent} from "./register/register-attributes/regist
 import {AttributeService} from "./services/attributes/attribute.service";
 import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
+import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
+import {MomentModule} from "angular2-moment";
 import { AgePipe } from './age.pipe';
 
 @NgModule({
@@ -64,6 +66,7 @@ import { AgePipe } from './age.pipe';
     StudentSearchPageComponent,
     RegisterAttributeFieldComponent,
     DateSelectComponent,
+    ChatMessageComponent,
     AgePipe
   ],
   imports: [
@@ -74,8 +77,9 @@ import { AgePipe } from './age.pipe';
     AlertModule.forRoot(),
     DropdownModule.forRoot(),
     FileUploadModule,
-    TabsModule.forRoot(),
-    MyDatePickerModule
+    MyDatePickerModule,
+    MomentModule,
+    TabsModule.forRoot()
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService],
   bootstrap: [AppComponent]
