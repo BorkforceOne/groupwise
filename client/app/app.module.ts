@@ -23,7 +23,7 @@ import {SocketService} from "./services/socket/socket.service";
 import {UserService} from "./services/user/user.service";
 import {ConfigService} from "./services/config/config.service";
 import {AlertService} from "./services/alert/alert.service";
-import { AlertsComponent } from './navbar/alerts/alerts.component';
+import { AlertsComponent } from './alerts/alerts.component';
 import {LoggedinGuard} from "./guards/loggedin-guard";
 import {AppRoutes} from "./routes";
 import {NotLoggedinGuard} from "./guards/not-loggedin-guard";

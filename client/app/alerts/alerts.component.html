@@ -1,0 +1,7 @@
+<div class="container alerts">
+  <div class="row">
+    <div class="col-xs-12" *ngFor="let alert of alerts">
+      <alert [type]="alert.Type" dismissible="true" (onClosed)="removeAlert(alert)">{{ alert.Text }}</alert>
+    </div>
+  </div>
+</div>
