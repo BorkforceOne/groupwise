@@ -116,13 +116,13 @@ class UserService {
           let params = {
             Firstname: user.Firstname,
             Lastname: user.Lastname,
-            VerificationURL: config.general.baseURL + '/validate?code=' + validationToken.Token
+            VerificationURL: config.general.baseURL + '/validate?token=' + validationToken.Token
           };
 
           console.log(params.VerificationURL);
 
           mailerManager.sendMail(mail, header, params)
-            .then(() => resolve(this))
+            .then(() => resolve(user))
             .catch((error) => reject(error));
         })
     })
@@ -151,7 +151,7 @@ class UserService {
           let params = {
             Firstname: user.Firstname,
             Lastname: user.Lastname,
-            VerificationURL: config.general.baseURL + '/validate?code=' + validationToken.Token
+            VerificationURL: config.general.baseURL + '/validate?token=' + validationToken.Token
           };
 
           console.log(params.VerificationURL);

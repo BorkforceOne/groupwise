@@ -37,8 +37,7 @@ router.post(`${routeName}/forgot-password`, function(req, res, next) {
 
   usersService.getByEmail(data.Email)
     .then(entity => usersService.resetPassword(entity))
-    .then(() => {})
-    .then(restUtils.prepareResponse)
+    .then(() => restUtils.prepareResponse({}))
     .then(payload => restUtils.sendResponse(payload, req, res))
     .catch(error => restUtils.catchErrors(error, req, res));
 });

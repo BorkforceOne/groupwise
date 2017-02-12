@@ -21,24 +21,49 @@
 
           <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-              <button (click)="onLogin(editingUser)" class="btn btn-primary" type="submit">Login</button>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-              <a class="btn btn-primary 3x pull-left" routerLink="/register">Sign up!</a>
-              <div class="text">
-                <h4 class="cust-margin">&nbsp;&nbsp;&nbsp;&nbsp;If you don't have an account click here to make one!</h4>
+              <div class="btn-toolbar">
+                <button (click)="onLogin(editingUser)" class="btn btn-primary" type="submit">Login</button>
               </div>
 
+              <br>
+              <a class="clickable" routerLink="/register">Don't have an account? Click here to register!</a>
+              <br>
+              <a class="clickable" (click)="staticModal.show()">Forgot your password?</a>
 
             </div>
           </div>
-
         </fieldset>
-        <a (click)="onForgotFassword()">Forgot Password?</a>
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Forgot Password</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Email</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="passwordResetEmail" name="Email" type="email" class="form-control" placeholder="Email address" required="" autofocus="">
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button (click)="staticModal.hide()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button (click)="onForgotPassword()" class="btn btn-primary" type="submit">Reset Password</button>
+      </div>
     </div>
   </div>
 </div>

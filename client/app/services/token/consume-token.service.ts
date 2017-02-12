@@ -6,41 +6,30 @@ import '../../rxjs-operators';
 import {AlertService} from "../alert/alert.service";
 import {Alert} from "../alert/alert";
 import {Token} from "./token";
+import {BackendCommunicatorService} from "../backend-communicator.service";
 
 @Injectable()
-export class ConsumeTokenService {
+export class ConsumeTokenService extends BackendCommunicatorService{
   private headers = new Headers({'Content-Type': 'application/json'});
   private tokenUrl = '/api/v1/tokens';  // URL to web api
 
-  constructor(private http: Http, private alertService: AlertService) { }
+  constructor(private http: Http, alertService: AlertService) {
+    super(alertService);
+  }
 
-  consumeToken(tokenString: string): Promise<Token> {
-    let token = new Token();
-    token.Token = tokenString;
-
+  consumeToken(token: Token): Promise<Token> {
     return this.http
       .post(`${this.tokenUrl}/consume`, JSON.stringify(token), {headers: this.headers})
-      .map(this.extractData)
+      .map(this.extractData.bind(this, Token))
       .toPromise()
       .catch(this.handleError.bind(this));
   }
 
-  private extractData(res: Response) {
-    let body = res.json();
-    if (Array.isArray(body.Errors) && body.Errors.length > 0)
-      throw new RestError(body.Errors);
-    if (body.Payload === undefined)
-      throw new RestError(["Invalid response"]);
-    return new Token().fromJSON(body.Payload);
+  getToken(tokenString: string): Promise<Token> {
+    return this.http
+      .get(`${this.tokenUrl}/${tokenString}`)
+      .map(this.extractData.bind(this, Token))
+      .toPromise()
+      .catch(this.handleError.bind(this));
   }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    const alert = new Alert();
-    alert.Text = error.Errors.concat('\n');
-    alert.Type = "danger";
-    this.alertService.addAlert(alert);
-    return Promise.reject(error.message || error);
-  }
-
 }

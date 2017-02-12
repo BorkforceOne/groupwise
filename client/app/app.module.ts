@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes}   from '@angular/router';
-import {AlertModule, DropdownModule, CollapseDirective} from 'ng2-bootstrap';
+import {AlertModule, DropdownModule, CollapseDirective, ModalModule} from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -71,6 +71,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     RouterModule.forRoot(AppRoutes),
     AlertModule.forRoot(),
     DropdownModule.forRoot(),
+    ModalModule.forRoot(),
     FileUploadModule,
     MyDatePickerModule
   ],

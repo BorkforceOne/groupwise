@@ -41,6 +41,18 @@ class TokenService {
     });
   }
 
+  getByUserId(userId) {
+    return new Promise((resolve, reject) => {
+      ValidationToken.findAll({
+        where: {
+          UserId: userId
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    })
+  }
+
   processToken(token, data) {
     if (token == null)
       throw "Token does not exist";
@@ -76,20 +88,47 @@ class TokenService {
     });
   }
 
-  validate(entity) {
+  validate(token) {
     return new Promise((resolve, reject) => {
       //TODO: Validation
 
-      resolve();
+      this.getByUserId(token.UserId)
+        .then((tokens) => {
+          if (tokens.length > 0) {
+            let existingTokens = tokens.filter((entity) => {
+              return entity.Type == token.Type
+            });
+
+            if (existingTokens.length > 0) {
+              // Delete old tokens of this type
+              existingTokens.forEach((entity) => {
+                entity.destroy();
+              })
+            }
+
+          }
+
+          resolve();
+        })
+        .catch(reject);
+
+    });
+  }
+
+  _generateHashToken() {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(8, function(ex, buf) {
+        resolve(buf.toString('hex'));
+      });
     });
   }
 
   _generateToken(entity) {
     return new Promise((resolve, reject) => {
-      crypto.randomBytes(8, function(ex, buf) {
-        entity.Token = buf.toString('hex');
-        resolve();
-      });
+      this._generateHashToken()
+        .then((token) => entity.Token = token)
+        .then(resolve)
+        .catch(reject);
     });
   }
 
