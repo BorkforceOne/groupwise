@@ -7,6 +7,8 @@ class SocketChatManager {
   }
 
   onMessage(socket, message) {
+    let received = (new Date()).toISOString();
+
     socketManager.getSession(socket)
       .then((session) => {
         return User.findOne({
@@ -16,8 +18,7 @@ class SocketChatManager {
         })
       })
       .then((user) => {
-        message = `${user.Firstname} ${user.Lastname}: ${message}`;
-        socketManager.context.emit('on.message', {text: message});
+        socketManager.context.emit('on.message', {Message: message, UserId: user.Id, Received: received});
       })
   }
 }

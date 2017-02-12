@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes}   from '@angular/router';
-import {AlertModule, DropdownModule, CollapseDirective, ModalModule} from 'ng2-bootstrap';
+import {AlertModule, DropdownModule, CollapseDirective, TabsModule, ModalModule} from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -29,6 +29,7 @@ import {AppRoutes} from "./routes";
 import {NotLoggedinGuard} from "./guards/not-loggedin-guard";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterGeneralInformationComponent } from './register/register-general-information/register-general-information.component';
+import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
 import { ConsumeTokenPageComponent } from './consume-token-page/consume-token-page.component';
 import { StudentSearchPageComponent } from './student-search-page/student-search-page.component';
 import {RegisterAttributeFieldComponent} from "./register/register-attributes/register-attribute-field/register-attribute-field.component";
@@ -37,6 +38,9 @@ import {AttributeService} from "./services/attributes/attribute.service";
 import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
+import {MomentModule} from "angular2-moment";
+import { AgePipe } from './age.pipe';
 
 @NgModule({
   declarations: [
@@ -59,9 +63,12 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     PageNotFoundComponent,
     RegisterGeneralInformationComponent,
     ConsumeTokenPageComponent,
+    UserProfilePageComponent,
     StudentSearchPageComponent,
     RegisterAttributeFieldComponent,
     DateSelectComponent,
+    ChatMessageComponent,
+    AgePipe,
     PasswordResetComponent
   ],
   imports: [
@@ -73,7 +80,9 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     DropdownModule.forRoot(),
     ModalModule.forRoot(),
     FileUploadModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    MomentModule,
+    TabsModule.forRoot()
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService],
   bootstrap: [AppComponent]

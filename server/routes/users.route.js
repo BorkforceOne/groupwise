@@ -16,6 +16,16 @@ router.get(routeName, function(req, res, next) {
     .catch(error => restUtils.catchErrors(error, req, res));
 });
 
+//getUserById
+router.get(`${routeName}/:id`, function(req, res, next) {
+  let userId = req.params.id;
+  usersService.getById(userId)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
 /* Add a new user */
 router.post(routeName, function(req, res, next) {
 

@@ -1,24 +1,22 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="well">
-        <form class="form-horizontal">
-          <fieldset>
-            <legend class="text-center">Chat</legend>
-
-            <div *ngFor="let message of messages">
-              {{message.text}}
-            </div>
-
-            <!-- Message body -->
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Message" name="message" [(ngModel)]="message"/>
-              <span class="input-group-btn">
-                <button class="btn btn-primary" (click)="sendMessage()">Send</button>
-              </span>
-            </div>
-          </fieldset>
-        </form>
+<div class="chat-container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-comment"></span> Chat with<button aria-label="Close" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+      <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+      <ul class="chat">
+        <ng-container *ngFor="let message of messages">
+          <app-chat-message [message] = "message"></app-chat-message>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="panel-footer">
+      <div class="input-group">
+        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." [(ngModel)]="inputMessage"/>
+        <span class="input-group-btn">
+          <button class="btn btn-warning btn-sm" id="btn-chat" (click)="sendMessage()">Send</button>
+        </span>
       </div>
     </div>
   </div>
