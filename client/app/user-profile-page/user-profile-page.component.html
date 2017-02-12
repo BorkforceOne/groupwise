@@ -34,7 +34,7 @@
                   <tbody>
                   <tr>
                     <td>Last Online</td>
-                    <td>1 hour ago</td>
+                    <td>{{user.updatedAt | amTimeAgo}}</td>
                   </tr>
                   <ng-container *ngFor="let attribute of attributes">
                     <tr>
