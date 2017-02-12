@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row clearfix well">
+    <div class="col-md-2 column"><img alt="140x140" class="img-thumbnail" src="http://lorempixel.com/140/140/"></div>
+    <div class="col-md-8 column">
+      <blockquote>
+        <p>{{user.Firstname}} {{user.Lastname}}</p><small>{{user.Birthday | age}} / {{user.Gender}} / {{user.Type}} </small>
+      </blockquote>
+    </div>
+    <div class="col-md-2 column">
+       <button class="btn btn-default btn-block" type="button">Message</button> <button class="btn btn-default btn-block" type="button">Match</button>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <div>
+        <tabset>
+          <tab heading="About">
+            <div class="row clearfix">
+              <div class="col-md-8 column">
+                <ng-container *ngFor="let attribute of stringAttributes">
+                  <p><strong>{{attribute.Type.Description}}</strong><br>
+                    {{attribute.Value.Value}}</p>
+                  <hr>
+                </ng-container>
+              </div>
+              <div class="col-md-4 column">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>Details</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>Last Online</td>
+                    <td>1 hour ago</td>
+                  </tr>
+                  <ng-container *ngFor="let attribute of attributes">
+                    <tr>
+                      <td>{{attribute.Type.Description}}</td>
+                      <td>{{attribute.Value.Value}}</td>
+                    </tr>
+                  </ng-container>
+                  <!---
+                  <tr>
+                    <td>Attribute name</td>
+                    <td>Value</td>
+                  </tr>
+                  -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </tab>
+          <tab heading="Photos">
+            <div class="row clearfix">
+              <div class="col-md-8 column"><img alt="140x140" src="http://lorempixel.com/140/140/"><img alt="140x140" src="http://lorempixel.com/140/140/"><img alt="140x140" src="http://lorempixel.com/140/140/"><img alt="140x140" src="http://lorempixel.com/140/140/"></div>
+              <div class="col-md-4 column">
+                <p>Words by pictures, I don't know if we want to keep this section, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small></p>
+              </div>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>
