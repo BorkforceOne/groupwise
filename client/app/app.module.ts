@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes}   from '@angular/router';
-import {AlertModule, DropdownModule, CollapseDirective} from 'ng2-bootstrap';
+import {AlertModule, DropdownModule, CollapseDirective, TabsModule} from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -29,6 +29,7 @@ import {AppRoutes} from "./routes";
 import {NotLoggedinGuard} from "./guards/not-loggedin-guard";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterGeneralInformationComponent } from './register/register-general-information/register-general-information.component';
+import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
 import { ConsumeTokenPageComponent } from './consume-token-page/consume-token-page.component';
 import { StudentSearchPageComponent } from './student-search-page/student-search-page.component';
 import {RegisterAttributeFieldComponent} from "./register/register-attributes/register-attribute-field/register-attribute-field.component";
@@ -38,6 +39,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
+import { AgePipe } from './age.pipe';
 
 @NgModule({
   declarations: [
@@ -60,10 +62,12 @@ import {MomentModule} from "angular2-moment";
     PageNotFoundComponent,
     RegisterGeneralInformationComponent,
     ConsumeTokenPageComponent,
+    UserProfilePageComponent,
     StudentSearchPageComponent,
     RegisterAttributeFieldComponent,
     DateSelectComponent,
     ChatMessageComponent,
+    AgePipe
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,8 @@ import {MomentModule} from "angular2-moment";
     DropdownModule.forRoot(),
     FileUploadModule,
     MyDatePickerModule,
-    MomentModule
+    MomentModule,
+    TabsModule.forRoot()
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService],
   bootstrap: [AppComponent]
