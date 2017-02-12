@@ -7,10 +7,9 @@
 }
 
 .cover {
+  margin-top: -30px;
+  min-height: 100%;
+  background-size: cover;
   align-items: center;
   display: flex;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
 }

@@ -11,9 +11,8 @@ import {UserService} from "../services/user/user.service";
 })
 export class ChatComponent implements OnInit {
   private messages: ChatMessage[] = [];
-  private  users: User[] = [];
+  private users: User[] = [];
   private inputMessage: string = '';
-
 
   constructor(private socketService: SocketService, private  userService: UserService) { }
 

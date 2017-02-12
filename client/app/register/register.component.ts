@@ -50,7 +50,6 @@ export class RegisterComponent implements OnInit {
   onRegister(user: UserRegistrationModel) {
     this.userRegistrationService.register()
       .then(user => {
-        console.log(user);
         const alert = new Alert();
         alert.Text = "Please check your email to complete registration";
         alert.Type = "success";

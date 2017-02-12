@@ -20,7 +20,7 @@ const Attachment = databaseManager.context.define('attachment', {
     autoIncrement: true
   },
   Data: {
-    type: Sequelize.BLOB
+    type: Sequelize.BLOB('long')
   },
   Filename: {
     allowNull: false,
