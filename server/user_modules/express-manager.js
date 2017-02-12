@@ -59,7 +59,7 @@ class ExpressManager {
 
       this.context.use('/api/v1/', routes);
       this.context.use(express.static(path.join(__dirname, '..', 'public')));
-      this.context.use('^(?!.*\/api\/).*$', function(request, response, next) {
+      this.context.use('', function(request, response, next) {
         response.sendfile(path.join(__dirname, '..', 'public', 'index.html'));
       });
 
