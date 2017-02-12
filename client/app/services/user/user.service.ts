@@ -8,15 +8,17 @@ import '../../rxjs-operators';
 import { Observable } from "rxjs";
 import {AlertService} from "../alert/alert.service";
 import {Alert} from "../alert/alert";
+import {BackendCommunicatorService} from "../backend-communicator.service";
 
 @Injectable()
-export class UserService {
+export class UserService extends BackendCommunicatorService{
   private headers = new Headers({'Content-Type': 'application/json'});
   private usersUrl = '/api/v1/users';  // URL to web api
   private authUrl = '/api/v1/auth';  // URL to web api
   private loggedInUser : User;
 
-  constructor(private http: Http, private alertService: AlertService) {
+  constructor(private http: Http, alertService: AlertService) {
+    super(alertService);
     this.loggedInUser = null;
   }
 
@@ -63,6 +65,23 @@ export class UserService {
       .catch(this.handleError.bind(this));
   }
 
+  resetPassword(email: string): Promise<{}> {
+    let query = {
+      Email: email
+    };
+
+    return this.http
+      .post(`${this.usersUrl}/forgot-password`, JSON.stringify(query), {headers: this.headers})
+      .map(() => {
+        const alert = new Alert();
+        alert.Text = "Password reset request sent! Check your email to complete the request!";
+        alert.Type = "success";
+        this.alertService.addAlert(alert);
+      })
+      .toPromise()
+      .catch(this.handleError.bind(this));
+  }
+
   logout(): Promise<boolean> {
     return this.http
       .post(`${this.authUrl}/logout`, null, {headers: this.headers})
@@ -89,37 +108,6 @@ export class UserService {
 
   getUserDisplayName(user: User): string {
     return user.Firstname + " " + user.Lastname;
-  }
-
-  private extractData(model: any, res: Response) {
-    let body = res.json();
-    if (Array.isArray(body.Errors) && body.Errors.length > 0)
-      throw new RestError(body.Errors);
-    if (body.Payload === undefined)
-      throw new RestError(["Invalid response"]);
-
-    let data;
-
-    if (Array.isArray(body.Payload)) {
-      data = [];
-      for (let dataum in body.Payload) {
-        data.push(new model().fromJSON(body.Payload[dataum]));
-      }
-    }
-    else {
-      data = new model().fromJSON(body.Payload);
-    }
-
-    return data;
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    const alert = new Alert();
-    alert.Text = error.Errors.concat('\n');
-    alert.Type = "danger"
-    this.alertService.addAlert(alert);
-    return Promise.reject(error.message || error);
   }
 
 }

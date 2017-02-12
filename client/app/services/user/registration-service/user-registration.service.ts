@@ -8,9 +8,10 @@ import {Response, Headers, Http} from "@angular/http";
 import {AlertService} from "../../alert/alert.service";
 import {AttributeService} from "../../attributes/attribute.service";
 import {Attribute} from "../../attributes/attribute.model";
+import {BackendCommunicatorService} from "../../backend-communicator.service";
 
 @Injectable()
-export class UserRegistrationService {
+export class UserRegistrationService extends BackendCommunicatorService{
   private headers = new Headers({'Content-Type': 'application/json'});
   private usersUrl = '/api/v1/users';  // URL to web api
   private userRegistrationModel: UserRegistrationModel = new UserRegistrationModel();
@@ -18,7 +19,9 @@ export class UserRegistrationService {
   private current : number = 0;
   private sequence : string[] = [];
 
-  constructor(private router : Router, private http: Http, private alertService: AlertService, private attributeService: AttributeService) {
+  constructor(private router : Router, private http: Http, alertService: AlertService, private attributeService: AttributeService) {
+    super(alertService);
+
     this.attributeService
       .getAllAttributes()
       .subscribe(a => {this.attributes = a});
@@ -75,9 +78,9 @@ export class UserRegistrationService {
   register(): Promise<User> {
     return this.http
       .post(this.usersUrl, JSON.stringify(this.userRegistrationModel), {headers: this.headers})
-      .map(this.extractData)
+      .map(this.extractData.bind(this, User))
       .toPromise()
-      .then((user) => {
+      .then((user: User) => {
         let attributes = this.attributes.filter((attribute) => {
           return (attribute.Type.ForType === 'BOTH' || attribute.Type.ForType == user.Type)
         });
@@ -89,24 +92,6 @@ export class UserRegistrationService {
         this.attributeService.updateAllAttributes(attributes)
       })
       .catch(this.handleError.bind(this));
-  }
-
-  private extractData(res: Response) {
-    let body = res.json();
-    if (Array.isArray(body.Errors) && body.Errors.length > 0)
-      throw new RestError(body.Errors);
-    if (body.Payload === undefined)
-      throw new RestError(["Invalid response"]);
-    return new User().fromJSON(body.Payload);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    const alert = new Alert();
-    alert.Text = error.Errors.concat('\n');
-    alert.Type = "danger";
-    this.alertService.addAlert(alert);
-    return Promise.reject(error.message || error);
   }
 
 }

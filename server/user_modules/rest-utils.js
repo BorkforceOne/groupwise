@@ -27,6 +27,8 @@ const catchErrors = function(error, req, res) {
       message = error;
     console.log("Error: ", message);
 
+    res.status(500);
+
     prepareResponse({}, [message])
       .then(payload => sendResponse(payload, req, res))
       .then(resolve());

@@ -1,12 +1,19 @@
 const serializer = require('../user_modules/serializer');
 const encryptionManager = require('../user_modules/encryption-manager');
+const mailerManager = require('../user_modules/mailer-manager');
+const config = require('../config');
 
 const User = require('../models/user.model');
+const ValidationToken = require('../models/validation-token.model');
 
 class UserService {
 
   constructor() {
 
+  }
+
+  init() {
+    this.tokenService = require('./token.service');
   }
 
   getById(id) {
@@ -16,6 +23,18 @@ class UserService {
             Id: id
           }
         })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getByEmail(email) {
+    return new Promise((resolve, reject) => {
+      User.findOne({
+        where: {
+          Email: email
+        }
+      })
         .then(resolve)
         .catch(reject);
     });
@@ -70,9 +89,78 @@ class UserService {
         .then(hash => {
           entity.Password = hash;
         })
-        .then(resolve)
+        .then(() => resolve(entity))
         .catch(reject);
     });
+  }
+
+  validateEmail(user) {
+    if (user == null)
+      throw "User does not exist";
+
+    return new Promise((resolve, reject) => {
+
+      let token = ValidationToken.build({
+        UserId: user.Id,
+        Type: 'REGISTRATION'
+      });
+
+      this.tokenService.add(token)
+        .then((validationToken) => {
+          let mail = mailerManager.templates.validateEmail;
+
+          let header = {
+            to: user.Email
+          };
+
+          let params = {
+            Firstname: user.Firstname,
+            Lastname: user.Lastname,
+            VerificationURL: config.general.baseURL + '/validate?token=' + validationToken.Token
+          };
+
+          console.log(params.VerificationURL);
+
+          mailerManager.sendMail(mail, header, params)
+            .then(() => resolve(user))
+            .catch((error) => reject(error));
+        })
+    })
+  }
+
+  resetPassword(user) {
+    if (user == null)
+      throw "User does not exist";
+
+    return new Promise((resolve, reject) => {
+
+      let token = ValidationToken.build({
+        UserId: user.Id,
+        Type: 'FORGOT_PASSWORD'
+      });
+
+      this.tokenService.add(token)
+        .then((validationToken) => {
+          //let mail = mailerManager.templates.validateEmail;
+          let mail;
+
+          let header = {
+            to: user.Email
+          };
+
+          let params = {
+            Firstname: user.Firstname,
+            Lastname: user.Lastname,
+            VerificationURL: config.general.baseURL + '/validate?token=' + validationToken.Token
+          };
+
+          console.log(params.VerificationURL);
+
+          mailerManager.sendMail(mail, header, params)
+            .then(() => resolve(this))
+            .catch((error) => reject(error));
+        })
+    })
   }
 
 }

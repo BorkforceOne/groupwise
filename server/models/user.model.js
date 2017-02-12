@@ -81,34 +81,6 @@ const User = databaseManager.context.define('user', {
   instanceMethods: {
     getMap: function() {
       return User.getMap();
-    },
-    validateEmail: function() {
-      return new Promise((resolve, reject) => {
-
-        ValidationToken.generateCode()
-          .then(validationToken => ValidationToken.create({
-            UserId: this.Id,
-            Type: 'REGISTRATION',
-            Token: validationToken
-          }))
-          .then((validationToken) => {
-            let mail = mailerManager.templates.validateEmail;
-
-            let header = {
-              to: this.Email
-            };
-
-            let params = {
-              Firstname: this.Firstname,
-              Lastname: this.Lastname,
-              VerificationURL: config.general.baseURL + '/validate?code=' + validationToken.Code
-            };
-
-            mailerManager.sendMail(mail, header, params)
-              .then(() => resolve(this))
-              .catch((error) => reject(error));
-          })
-      })
     }
   },
 });

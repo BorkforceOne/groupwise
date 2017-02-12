@@ -14,9 +14,10 @@ import {AttributeRangeValue} from "./attribute-range-value.model";
 import {AttributeEnum} from "./attribute-enum.model";
 import {AttributeEnumValue} from "./attribute-enum-value.model";
 import {User} from "../user/user";
+import {BackendCommunicatorService} from "../backend-communicator.service";
 
 @Injectable()
-export class AttributeService {
+export class AttributeService extends BackendCommunicatorService{
   private headers = new Headers({'Content-Type': 'application/json'});
 
   private stringRemoteUrlBase = '/api/v1/attribute-strings';
@@ -28,7 +29,9 @@ export class AttributeService {
   private enumRemoteUrlBase = '/api/v1/attribute-enums';
   private enumValueRemoteUrlBase = '/api/v1/attribute-enum-values';
 
-  constructor(private http: Http, private alertService: AlertService) { }
+  constructor(private http: Http, alertService: AlertService) {
+    super(alertService);
+  }
 
   getAttributeStrings(): Observable<AttributeString[]> {
     return this.http.get(this.stringRemoteUrlBase)
@@ -375,36 +378,5 @@ export class AttributeService {
       return attributes;
     }).toPromise();
 
-  }
-
-  private extractData(model: any, res: Response) {
-    let body = res.json();
-    if (Array.isArray(body.Errors) && body.Errors.length > 0)
-      throw new RestError(body.Errors);
-    if (body.Payload === undefined)
-      throw new RestError(["Invalid response"]);
-
-    let data;
-
-    if (Array.isArray(body.Payload)) {
-      data = [];
-      for (let dataum in body.Payload) {
-        data.push(new model().fromJSON(body.Payload[dataum]));
-      }
-    }
-    else {
-      data = new model().fromJSON(body.Payload);
-    }
-
-    return data;
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    const alert = new Alert();
-    alert.Text = error.Errors.concat('\n');
-    alert.Type = "danger";
-    this.alertService.addAlert(alert);
-    return Promise.reject(error.message || error);
   }
 }

@@ -12,40 +12,23 @@
       <form class="form-horizontal">
         <fieldset>
 
-        <router-outlet></router-outlet>
+          <router-outlet></router-outlet>
 
-        <div class="form-group">
-          <div class="col-md-offset-2 col-md-4">
-            <ng-container *ngIf="(getSequenceCurrent() != 1)">
-              <button (click)="onPrevious()" class="btn btn-primary">Previous</button>
-            </ng-container>
-          </div>
-          <div class="col-md-5 text-right">
-            <ng-container *ngIf="(getSequenceCurrent() != getSequenceLength())">
-              <button (click)="onNext()" class="btn btn-primary">Next</button>
-            </ng-container>
+          <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+              <div class="btn-toolbar">
+                <div class="btn-group">
+                  <button (click)="onPrevious()" [disabled]="getSequenceCurrent() == 1" class="btn btn-primary">Previous</button>
+                  <button (click)="onNext()" [disabled]="(getSequenceCurrent() == getSequenceLength())" class="btn btn-primary">Next</button>
+                </div>
+                <button (click)="onRegister()" [disabled]="getSequenceCurrent() != getSequenceLength()" class="btn btn-primary">Register</button>
+              </div>
 
+              <br>
+              <a class="clickable" routerLink="/login">Already have an account? Click here to login!</a>
 
-
-            <ng-container *ngIf="(getSequenceCurrent() == getSequenceLength())">
-              <button (click)="onRegister()" class="btn btn-primary">Register</button>
-            </ng-container>
-
-<p></p>
-            <p><a class="btn btn-primary 3x pull-right" routerLink="/login">Log in!</a></p>
-            <div class="text">
-              <h4 class="cust-margin">If you already have an account, click here to login!</h4>
             </div>
-
-
-
-
-
-
           </div>
-        </div>
-
-
 
         </fieldset>
 

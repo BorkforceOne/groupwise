@@ -4,27 +4,66 @@
   <div class="row">
     <div class="well">
 
-      <div *ngIf="lastTokenSuccess">
-        <div *ngIf="lastToken.Type === 'REGISTRATION'">
+      <div *ngIf="status == 'SUCCESS'">
+
+        <div *ngIf="foundToken.Type == 'REGISTRATION'">
           <legend class="text-center">Email Validated</legend>
 
           <p>
             Your email has been validated! You may now log in.
           </p>
         </div>
-        <div *ngIf="lastToken.Type === 'FORGOT_PASSWORD'">
+
+        <div *ngIf="foundToken.Type == 'FORGOT_PASSWORD'">
           <legend class="text-center">Password Reset</legend>
 
           <p>
-            Your password can be reset here eventually
+            Your password has been reset! You may now log in using your new password.
           </p>
         </div>
+
       </div>
 
-      <div *ngIf="!lastTokenSuccess">
-        <legend class="text-center">Invalid Token</legend>
-        <p>The token used is either invalid or has already been used!</p>
-        <p>Please try your action again.</p>
+      <div *ngIf="status=='FOUND_TOKEN'">
+
+        <div *ngIf="foundToken.Type == 'FORGOT_PASSWORD'">
+          <legend class="text-center">Password Reset</legend>
+
+          <form class="form-horizontal">
+            <fieldset>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">New Password</label>
+                <div class="col-md-9">
+                  <input [(ngModel)]="foundToken.Password" name="Password" type="password" class="form-control" placeholder="Password" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">New Password Verify</label>
+                <div class="col-md-9">
+                  <input [(ngModel)]="foundToken.PasswordVerify" name="PasswordVerify" type="password" class="form-control" placeholder="Password" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                  <button (click)="consumeToken(foundToken)" class="btn btn-primary">Reset Password</button>
+                </div>
+              </div>
+
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+
+      <div *ngIf="status == 'FAIL'">
+        <legend class="text-center">Expired Token</legend>
+
+        <p>
+          The validation token used is expired or invalid.
+        </p>
       </div>
 
     </div>

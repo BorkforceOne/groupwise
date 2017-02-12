@@ -33,9 +33,21 @@ router.post(routeName, function(req, res, next) {
 
   serializer.mapDataToEntity(User, data)
     .then(entity => usersService.add(entity))
-    .then(entity => entity.validateEmail())
+    .then(entity => usersService.validateEmail(entity))
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
+/* POST Forgot Password */
+router.post(`${routeName}/forgot-password`, function(req, res, next) {
+
+  let data = req.body;
+
+  usersService.getByEmail(data.Email)
+    .then(entity => usersService.resetPassword(entity))
+    .then(() => restUtils.prepareResponse({}))
     .then(payload => restUtils.sendResponse(payload, req, res))
     .catch(error => restUtils.catchErrors(error, req, res));
 });
