@@ -41,6 +41,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
 import { AgePipe } from './age.pipe';
+import { UploadPhotoComponent } from './upload-photo/upload-photo.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { AgePipe } from './age.pipe';
     DateSelectComponent,
     ChatMessageComponent,
     AgePipe,
-    PasswordResetComponent
+    PasswordResetComponent,
+    UploadPhotoComponent
   ],
   imports: [
     BrowserModule,
