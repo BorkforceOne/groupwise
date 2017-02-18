@@ -4,6 +4,8 @@ const mailerManager = require('../user_modules/mailer-manager');
 const config = require('../config');
 
 const User = require('../models/user.model');
+const UserPhoto = require('../models/user-photo.model');
+
 const ValidationToken = require('../models/validation-token.model');
 
 class UserService {
@@ -72,6 +74,14 @@ class UserService {
   }
 
   validate(entity) {
+    return new Promise((resolve, reject) => {
+      //TODO: Validation
+
+      resolve();
+    });
+  }
+
+  validateUserPhoto(entity) {
     return new Promise((resolve, reject) => {
       //TODO: Validation
 
@@ -161,6 +171,52 @@ class UserService {
             .catch((error) => reject(error));
         })
     })
+  }
+
+  getAllUserPhotos() {
+    return new Promise((resolve, reject) => {
+      UserPhoto.findAll()
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getUserPhotoById() {
+    return new Promise((resolve, reject) => {
+      UserPhoto.findOne({
+        where: {
+          Id: id
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  addUserPhoto(entity) {
+    return new Promise((resolve, reject) => {
+      this.validateUserPhoto(entity)
+        .then(() => entity.save())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  updateUserPhoto(data) {
+    return new Promise((resolve, reject) => {
+      // Ensure that the value is valid
+
+      this.getUserPhotoById(data.Id)
+        .then(entity => serializer.mapDataToInstance(entity, data))
+        .then(this.validateUserPhoto.bind(this))
+        .then(entity => entity.save())
+        .then(entity => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  deleteUserPhoto() {
+
   }
 
 }
