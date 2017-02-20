@@ -3,13 +3,13 @@
     <div class="col-md-2 column">
 
       <ng-container *ngIf="userPhotos.length == 0">
-        <img alt="140x140" class="img-thumbnail" [src]="defaultPhotoURL">
+        <img class="img-thumbnail" [src]="defaultPhotoURL">
       </ng-container>
 
       <ng-container *ngIf="userPhotos.length > 0">
         <carousel [interval]="false">
-          <slide *ngFor="let photo of userPhotos">
-            <img (click)="inspectImage(photo)" class="img-thumbnail clickable" [src]="photo">
+          <slide *ngFor="let photo of userPhotos; let i = index;">
+            <img (click)="inspectImage(i)" class="img-thumbnail clickable" [src]="photo">
           </slide>
         </carousel>
       </ng-container>
@@ -70,8 +70,8 @@
           <tab heading="Photos">
             <div class="row clearfix">
               <div class="col-md-12">
-                <ng-container *ngFor="let photo of userPhotos">
-                  <img (click)="inspectImage(photo)" class="img-gallery clickable" [src]="photo">
+                <ng-container *ngFor="let photo of userPhotos;let i = index">
+                  <img (click)="inspectImage(i)" class="img-gallery clickable" [src]="photo">
                 </ng-container>
               </div>
             </div>
@@ -92,7 +92,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <img [src]="inspectingImage">
+        <carousel #inspectCarousel [interval]="false">
+          <slide *ngFor="let photo of userPhotos">
+            <img class="img-thumbnail clickable" [src]="photo">
+          </slide>
+        </carousel>
       </div>
     </div>
   </div>

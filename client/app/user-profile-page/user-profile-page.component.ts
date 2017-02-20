@@ -8,7 +8,7 @@ import {Attribute} from "../services/attributes/attribute.model";
 import {AttributeString} from "../services/attributes/attribute-string.model";
 import {Subscription} from "rxjs";
 import {UserPhoto} from "../services/user/user-photo";
-import {ModalDirective} from "ng2-bootstrap";
+import {ModalDirective, CarouselComponent} from "ng2-bootstrap";
 //import {AttributeService} from "PATH";
 
 @Component({
@@ -20,8 +20,8 @@ import {ModalDirective} from "ng2-bootstrap";
 })
 export class UserProfilePageComponent implements OnInit {
   @ViewChild('inspectModal') public inspectModal:ModalDirective;
+  @ViewChild('inspectCarousel') public inspectCarousel: CarouselComponent;
   private defaultPhotoURL: string = "/assets/profile-placeholder-default.png";
-  private inspectingImage: string;
   private photoURL: string = "/api/v1/user-photos";
   private querySub: Subscription = null;
   private user: User = new User();
@@ -58,8 +58,9 @@ export class UserProfilePageComponent implements OnInit {
     );
   }
 
-  inspectImage(image: string) {
-    this.inspectingImage = image;
+  inspectImage(index: number) {
+    this.inspectCarousel.selectSlide(index);
+
     this.inspectModal.show();
   }
 
