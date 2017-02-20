@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bb = require('express-busboy');
 const uuid = require('node-uuid');
+const csurf = require('csurf')
 const database = require('./database-manager');
 const config = require('./../config');
 
@@ -18,6 +19,7 @@ class ExpressManager {
   init() {
     return new Promise((resolve, reject) => {
       this.context = express();
+      this.csrfProtection = csurf();
 
       // Create the session store
       const SequelizeStore = require('connect-session-sequelize')(session.Store);
@@ -32,7 +34,7 @@ class ExpressManager {
         upload: true
       });
 
-      this.context.use(favicon(path.join(__dirname, '..', 'assets', 'favicon.ico')));
+      this.context.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
       this.context.use(cookieParser());
       this.context.use(session({
         secret: config.session.secret,
@@ -41,16 +43,11 @@ class ExpressManager {
         store: sessionStore
       }));
 
-      // Add a GUID for each client
-      this.context.use(function(req, res, next) {
-        // check if client sent cookie
-        let cookie = req.cookies.guid;
-        if (cookie === undefined)
-        {
-          // no: set a new cookie
-          let guid = uuid.v4();
-          res.cookie('guid', guid, { maxAge: 3600000, httpOnly: true });
-        }
+      // Set up XSRF token stuff
+
+      this.context.use(this.csrfProtection);
+      this.context.use((req, res, next) => {
+        res.cookie('XSRF-TOKEN', req.csrfToken());
         next();
       });
 

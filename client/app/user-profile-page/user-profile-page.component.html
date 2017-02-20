@@ -1,13 +1,28 @@
 <div class="container">
   <div class="row clearfix well">
-    <div class="col-md-2 column"><img alt="140x140" class="img-thumbnail" src="http://lorempixel.com/140/140/"></div>
+    <div class="col-md-2 column">
+
+      <ng-container *ngIf="userPhotos.length == 0">
+        <img class="img-thumbnail" [src]="defaultPhotoURL">
+      </ng-container>
+
+      <ng-container *ngIf="userPhotos.length > 0">
+        <carousel [interval]="false">
+          <slide *ngFor="let photo of userPhotos; let i = index;">
+            <img (click)="inspectImage(i)" class="img-thumbnail clickable" [src]="photo.URL">
+          </slide>
+        </carousel>
+      </ng-container>
+
+    </div>
     <div class="col-md-8 column">
       <blockquote>
         <p>{{user.Firstname}} {{user.Lastname}}</p><small>{{user.Birthday | age}} / {{user.Gender}} / {{user.Type}} </small>
       </blockquote>
     </div>
     <div class="col-md-2 column">
-       <button class="btn btn-default btn-block" type="button">Message</button> <button class="btn btn-default btn-block" type="button">Match</button>
+       <button class="btn btn-default btn-block" type="button" [disabled]="isLoggedInUser">Message</button>
+      <button class="btn btn-default btn-block" type="button" [disabled]="isLoggedInUser">Match</button>
     </div>
   </div>
   <div class="row clearfix">
@@ -55,13 +70,47 @@
           </tab>
           <tab heading="Photos">
             <div class="row clearfix">
-              <div class="col-md-8 column"><img alt="140x140" src="http://lorempixel.com/140/140/"><img alt="140x140" src="http://lorempixel.com/140/140/"><img alt="140x140" src="http://lorempixel.com/140/140/"><img alt="140x140" src="http://lorempixel.com/140/140/"></div>
-              <div class="col-md-4 column">
-                <p>Words by pictures, I don't know if we want to keep this section, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small></p>
+              <div class="col-md-8">
+                <ng-container *ngFor="let photo of userPhotos;let i = index">
+                  <div class="col-md-12 img-gallery-wrapper">
+                    <img (click)="inspectImage(i)" class="img-gallery clickable" [src]="photo.URL">
+                    <span *ngIf="isLoggedInUser" class="img-delete glyphicon glyphicon-trash text-danger clickable" (click)="deleteUserPhoto(photo)"></span>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="col-md-4" *ngIf="isLoggedInUser">
+                <div ng2FileDrop
+                     [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                     (fileOver)="fileOverBase($event)"
+                     [uploader]="uploader"
+                     class="well my-drop-zone">
+                  Drop photo here
+                </div>
+                <input type="file" ng2FileSelect [uploader]="uploader" />
               </div>
             </div>
           </tab>
         </tabset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #inspectModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Inspect Image</h4>
+        <button type="button" class="close pull-right" (click)="inspectModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <carousel #inspectCarousel [interval]="false">
+          <slide *ngFor="let photo of userPhotos">
+            <img class="img-thumbnail clickable" [src]="photo.URL">
+          </slide>
+        </carousel>
       </div>
     </div>
   </div>
