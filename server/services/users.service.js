@@ -81,14 +81,6 @@ class UserService {
     });
   }
 
-  validateUserPhoto(entity) {
-    return new Promise((resolve, reject) => {
-      //TODO: Validation
-
-      resolve();
-    });
-  }
-
   changePassword(entity, password) {
     return new Promise((resolve, reject) => {
       encryptionManager.generateSalt()
@@ -173,6 +165,22 @@ class UserService {
     })
   }
 
+  validateUserPhoto(entity) {
+    return new Promise((resolve, reject) => {
+      //TODO: Validation
+
+      switch (entity.MimeType) {
+        case 'image/png':
+        case 'image/jpeg':
+          break;
+        default:
+          throw "Image mime type not acceptable, must be 'image/png' or 'image/jpeg'";
+      }
+
+      resolve();
+    });
+  }
+
   getAllUserPhotos() {
     return new Promise((resolve, reject) => {
       UserPhoto.findAll()
@@ -181,11 +189,23 @@ class UserService {
     });
   }
 
-  getUserPhotoById() {
+  getUserPhotoById(id) {
     return new Promise((resolve, reject) => {
       UserPhoto.findOne({
         where: {
           Id: id
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getUserPhotosByUserId(id) {
+    return new Promise((resolve, reject) => {
+      UserPhoto.findAll({
+        where: {
+          UserId: id
         }
       })
         .then(resolve)
@@ -202,23 +222,21 @@ class UserService {
     });
   }
 
-  updateUserPhoto(data) {
+  deleteUserPhoto(id) {
     return new Promise((resolve, reject) => {
-      // Ensure that the value is valid
+      let entity;
 
-      this.getUserPhotoById(data.Id)
-        .then(entity => serializer.mapDataToInstance(entity, data))
-        .then(this.validateUserPhoto.bind(this))
-        .then(entity => entity.save())
-        .then(entity => resolve(entity))
+      this.getUserPhotoById(id)
+        .then(_entity => {
+          entity = _entity;
+
+          return entity;
+        })
+        .then(() => entity.destroy())
+        .then(() => resolve(entity))
         .catch(reject);
     });
   }
-
-  deleteUserPhoto() {
-
-  }
-
 }
 
 module.exports = new UserService();

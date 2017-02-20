@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ViewChild} from '@angular/core';
 
 import {User} from "../services/user/user";
 import {ActivatedRoute} from "@angular/router";
@@ -7,6 +7,8 @@ import {AttributeService} from "../services/attributes/attribute.service";
 import {Attribute} from "../services/attributes/attribute.model";
 import {AttributeString} from "../services/attributes/attribute-string.model";
 import {Subscription} from "rxjs";
+import {UserPhoto} from "../services/user/user-photo";
+import {ModalDirective} from "ng2-bootstrap";
 //import {AttributeService} from "PATH";
 
 @Component({
@@ -17,10 +19,16 @@ import {Subscription} from "rxjs";
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class UserProfilePageComponent implements OnInit {
+  @ViewChild('inspectModal') public inspectModal:ModalDirective;
+  private defaultPhotoURL: string = "/assets/profile-placeholder-default.png";
+  private inspectingImage: string;
+  private photoURL: string = "/api/v1/user-photos";
   private querySub: Subscription = null;
   private user: User = new User();
   private attributes: Attribute[] = [];
   private stringAttributes: Attribute[] = [];
+  private userPhotos: string[] = [];
+
   constructor(private route: ActivatedRoute, private userService: UserService,
               private attributeService: AttributeService) {
     this.querySub = this.route.params.subscribe(params => {
@@ -40,8 +48,19 @@ export class UserProfilePageComponent implements OnInit {
             });
         });
 
+      this.userService.getUserPhotosByUserId(id)
+        .subscribe((photos: UserPhoto[]) => {
+          photos.map((photo) => {
+            this.userPhotos.push(`${this.photoURL}/${photo.Id}`)
+          })
+        })
       }
     );
+  }
+
+  inspectImage(image: string) {
+    this.inspectingImage = image;
+    this.inspectModal.show();
   }
 
 

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes}   from '@angular/router';
-import {AlertModule, DropdownModule, CollapseDirective, TabsModule, ModalModule} from 'ng2-bootstrap';
+import {AlertModule, DropdownModule, CollapseDirective, TabsModule, ModalModule, CarouselModule} from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -37,7 +37,6 @@ import {RegisterAttributesComponent} from "./register/register-attributes/regist
 import {AttributeService} from "./services/attributes/attribute.service";
 import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
-import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
 import { AgePipe } from './age.pipe';
@@ -70,7 +69,6 @@ import { UploadPhotoComponent } from './upload-photo/upload-photo.component';
     DateSelectComponent,
     ChatMessageComponent,
     AgePipe,
-    PasswordResetComponent,
     UploadPhotoComponent
   ],
   imports: [
@@ -84,7 +82,8 @@ import { UploadPhotoComponent } from './upload-photo/upload-photo.component';
     FileUploadModule,
     MyDatePickerModule,
     MomentModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    CarouselModule.forRoot()
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService],
   bootstrap: [AppComponent]

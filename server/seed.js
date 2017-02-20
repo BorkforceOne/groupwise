@@ -26,6 +26,19 @@ const attributeSeedData = [
     }
   },
   {
+    Type: "USER",
+    Data: {
+      "Firstname": "John",
+      "Lastname": "Doe",
+      "Email": "john@doe.com",
+      "Type": "HOST",
+      "Password": "1234",
+      "Phone": "555-555-5555",
+      "Gender": "MALE",
+      "Birthday": "1995-01-14T00:00:00Z"
+    }
+  },
+  {
     Type: "STRING",
     Data: {
       "Name": "Hobbies",

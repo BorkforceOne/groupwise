@@ -11,8 +11,13 @@ p.chat-message {
 }
 
 .clickable {
-  cursor:pointer;
+  cursor: pointer;
 }
+
+.carousel-control {
+  cursor: pointer;
+}
+
 .chat-container{
   position: fixed;
   right: 0px;

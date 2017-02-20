@@ -12,13 +12,20 @@ const UserPhoto = databaseManager.context.define('userPhoto', {
     primaryKey: true,
     autoIncrement: true
   },
-  AttachmentId: {
-    allowNull: false,
-    type:  Sequelize.TEXT
-  },
   UserId: {
-    type: Sequelize.INTEGER,
-    unique: 'User_Attribute_unique',
+    allowNull: false,
+    type: Sequelize.INTEGER
+  },
+  Data: {
+    type: Sequelize.BLOB('long')
+  },
+  Filename: {
+    allowNull: false,
+    type: Sequelize.STRING
+  },
+  MimeType: {
+    allowNull: false,
+    type: Sequelize.STRING
   }
 },{
   instanceMethods: {

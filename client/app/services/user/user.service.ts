@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from "./user";
 import { UserLogin } from "./user-login";
-import { RestError } from '../rest-error';
 import {Headers, Http, Response} from '@angular/http';
 
 import '../../rxjs-operators';
@@ -9,11 +8,13 @@ import { Observable } from "rxjs";
 import {AlertService} from "../alert/alert.service";
 import {Alert} from "../alert/alert";
 import {BackendCommunicatorService} from "../backend-communicator.service";
+import {UserPhoto} from "./user-photo";
 
 @Injectable()
 export class UserService extends BackendCommunicatorService{
   private headers = new Headers({'Content-Type': 'application/json'});
   private usersUrl = '/api/v1/users';  // URL to web api
+  private userPhotoUrl = '/api/v1/user-photos'; // URL to web api
   private authUrl = '/api/v1/auth';  // URL to web api
   private loggedInUser : User;
 
@@ -108,6 +109,21 @@ export class UserService extends BackendCommunicatorService{
 
   getUserDisplayName(user: User): string {
     return user.Firstname + " " + user.Lastname;
+  }
+
+  addUserPhoto(userPhoto: UserPhoto): Promise<UserPhoto> {
+    return this.http
+      .post(`${this.userPhotoUrl}`, JSON.stringify(userPhoto), {headers: this.headers})
+      .map(this.extractData.bind(this, UserPhoto))
+      .toPromise()
+      .catch(this.handleError.bind(this));
+  }
+
+  getUserPhotosByUserId(userId: number): Observable<UserPhoto[]> {
+    return this.http
+      .get(`${this.userPhotoUrl}/user/${userId}`)
+      .map(this.extractData.bind(this, UserPhoto))
+      .catch(this.handleError.bind(this));
   }
 
 }
