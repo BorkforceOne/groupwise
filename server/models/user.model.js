@@ -11,6 +11,7 @@ const Attachment = require('./attachment.model');
 const ValidationToken = require('./validation-token.model');
 const AttributeStringValue = require('./attribute-string-value.model');
 const AttributeDateValue = require('./attribute-date-value.model');
+const UserPhoto = require('./user-photo.model');
 
 module.exports = {};
 
@@ -116,6 +117,15 @@ User.AttributeDateValues = User.hasMany(AttributeDateValue, {
   },
   as: 'AttributeDateValues'
 });
+
+User.UserPhotos = User.hasMany(UserPhoto, {
+  foreignKey: {
+    name: 'UserId',
+    allowNull: false
+  },
+  as: 'UserPhotos'
+});
+
 
 /**
  * Figures out how to serialize and deserialize this model

@@ -34,7 +34,7 @@ class ExpressManager {
         upload: true
       });
 
-      this.context.use(favicon(path.join(__dirname, '..', 'assets', 'favicon.ico')));
+      this.context.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
       this.context.use(cookieParser());
       this.context.use(session({
         secret: config.session.secret,

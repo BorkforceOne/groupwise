@@ -4,6 +4,8 @@ const mailerManager = require('../user_modules/mailer-manager');
 const config = require('../config');
 
 const User = require('../models/user.model');
+const UserPhoto = require('../models/user-photo.model');
+
 const ValidationToken = require('../models/validation-token.model');
 
 class UserService {
@@ -163,6 +165,78 @@ class UserService {
     })
   }
 
+  validateUserPhoto(entity) {
+    return new Promise((resolve, reject) => {
+      //TODO: Validation
+
+      switch (entity.MimeType) {
+        case 'image/png':
+        case 'image/jpeg':
+          break;
+        default:
+          throw "Image mime type not acceptable, must be 'image/png' or 'image/jpeg'";
+      }
+
+      resolve();
+    });
+  }
+
+  getAllUserPhotos() {
+    return new Promise((resolve, reject) => {
+      UserPhoto.findAll()
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getUserPhotoById(id) {
+    return new Promise((resolve, reject) => {
+      UserPhoto.findOne({
+        where: {
+          Id: id
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  getUserPhotosByUserId(id) {
+    return new Promise((resolve, reject) => {
+      UserPhoto.findAll({
+        where: {
+          UserId: id
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  addUserPhoto(entity) {
+    return new Promise((resolve, reject) => {
+      this.validateUserPhoto(entity)
+        .then(() => entity.save())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
+
+  deleteUserPhoto(id) {
+    return new Promise((resolve, reject) => {
+      let entity;
+
+      this.getUserPhotoById(id)
+        .then(_entity => {
+          entity = _entity;
+
+          return entity;
+        })
+        .then(() => entity.destroy())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
 }
 
 module.exports = new UserService();
