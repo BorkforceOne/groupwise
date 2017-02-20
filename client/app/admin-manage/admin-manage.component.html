@@ -62,7 +62,73 @@
               </div>
             </fieldset>
 
+            <fieldset>
 
+              <legend>Attributes</legend>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">Type</label>
+                <div class="col-md-9">
+                  <select class="selectpicker">
+                    <option>String</option>
+                    <option>Date</option>
+                    <option>Enum</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">Profile Type</label>
+                <div class="col-md-9">
+                  <select class="selectpicker">
+                    <option>Host</option>
+                    <option>Student</option>
+                    <option>Both</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">Name</label>
+                <div class="col-md-9">
+                  <!--<input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>-->
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 control-label">Description</label>
+                <div class="col-md-9">
+                  <!--<input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>-->
+                </div>
+              </div>
+
+              <div class="input-group">
+                <button class="btn btn-primary" (click)="uploader.uploadAll()">Clear</button>
+              <span class="input-group-btn">
+                  <button class="btn btn-primary" (click)="uploader.uploadAll()">Submit</button>
+                </span>
+              </div>
+
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>For type</th>
+                  <th>Remove</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngFor="let attribute of attributes">
+                  <tr>
+                    <td>{{attribute.Type.Name}}</td>
+                    <td>{{attribute.Type.ForType}}</td>
+                    <td>REMOVE BUTTON</td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+
+            </fieldset>
             <fieldset>
               <legend>Reporting</legend>
               <pre>
