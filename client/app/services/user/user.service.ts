@@ -119,6 +119,14 @@ export class UserService extends BackendCommunicatorService{
       .catch(this.handleError.bind(this));
   }
 
+  deleteUserPhoto(photoId: number): Promise<UserPhoto> {
+    return this.http
+      .delete(`${this.userPhotoUrl}/${photoId}`)
+      .map(this.extractData.bind(this, UserPhoto))
+      .toPromise()
+      .catch(this.handleError.bind(this));
+  }
+
   getUserPhotosByUserId(userId: number): Observable<UserPhoto[]> {
     return this.http
       .get(`${this.userPhotoUrl}/user/${userId}`)

@@ -9,7 +9,7 @@
       <ng-container *ngIf="userPhotos.length > 0">
         <carousel [interval]="false">
           <slide *ngFor="let photo of userPhotos; let i = index;">
-            <img (click)="inspectImage(i)" class="img-thumbnail clickable" [src]="photo">
+            <img (click)="inspectImage(i)" class="img-thumbnail clickable" [src]="photo.URL">
           </slide>
         </carousel>
       </ng-container>
@@ -21,7 +21,8 @@
       </blockquote>
     </div>
     <div class="col-md-2 column">
-       <button class="btn btn-default btn-block" type="button">Message</button> <button class="btn btn-default btn-block" type="button">Match</button><button class="btn btn-default btn-block" type="button" routerLink="/upload-photo">Change Photo</button>
+       <button class="btn btn-default btn-block" type="button" [disabled]="isLoggedInUser">Message</button>
+      <button class="btn btn-default btn-block" type="button" [disabled]="isLoggedInUser">Match</button>
     </div>
   </div>
   <div class="row clearfix">
@@ -69,10 +70,23 @@
           </tab>
           <tab heading="Photos">
             <div class="row clearfix">
-              <div class="col-md-12">
+              <div class="col-md-8">
                 <ng-container *ngFor="let photo of userPhotos;let i = index">
-                  <img (click)="inspectImage(i)" class="img-gallery clickable" [src]="photo">
+                  <div class="col-md-12 img-gallery-wrapper">
+                    <img (click)="inspectImage(i)" class="img-gallery clickable" [src]="photo.URL">
+                    <span *ngIf="isLoggedInUser" class="img-delete glyphicon glyphicon-trash text-danger clickable" (click)="deleteUserPhoto(photo)"></span>
+                  </div>
                 </ng-container>
+              </div>
+              <div class="col-md-4" *ngIf="isLoggedInUser">
+                <div ng2FileDrop
+                     [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                     (fileOver)="fileOverBase($event)"
+                     [uploader]="uploader"
+                     class="well my-drop-zone">
+                  Drop photo here
+                </div>
+                <input type="file" ng2FileSelect [uploader]="uploader" />
               </div>
             </div>
           </tab>
@@ -94,7 +108,7 @@
       <div class="modal-body">
         <carousel #inspectCarousel [interval]="false">
           <slide *ngFor="let photo of userPhotos">
-            <img class="img-thumbnail clickable" [src]="photo">
+            <img class="img-thumbnail clickable" [src]="photo.URL">
           </slide>
         </carousel>
       </div>

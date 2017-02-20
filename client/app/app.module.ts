@@ -40,7 +40,6 @@ import { DateSelectComponent } from './date-select/date-select.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
 import { AgePipe } from './age.pipe';
-import { UploadPhotoComponent } from './upload-photo/upload-photo.component';
 
 @NgModule({
   declarations: [
@@ -68,8 +67,7 @@ import { UploadPhotoComponent } from './upload-photo/upload-photo.component';
     RegisterAttributeFieldComponent,
     DateSelectComponent,
     ChatMessageComponent,
-    AgePipe,
-    UploadPhotoComponent
+    AgePipe
   ],
   imports: [
     BrowserModule,
