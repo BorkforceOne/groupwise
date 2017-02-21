@@ -13,6 +13,13 @@ class AttributeView {
   Type: string;
   ForType: "STUDENT" | "HOST" | "BOTH";
   StringMaxLen: number;
+  MinDate: string;
+  MaxDate: string;
+  MaxSelect: number;
+  MinSelect: number;
+  Min: number;
+  Max: number;
+  isInt: boolean;
   ExistingAttribute: Attribute = null;
 }
 
@@ -77,6 +84,20 @@ export class AdminAttributesComponent implements OnInit {
       case 'STRING':
         this.editingAttribute.StringMaxLen = attribute.Type.MaxLength;
         break;
+      case 'DATE':
+        this.editingAttribute.MaxDate = attribute.Type.MaxDate;
+        this.editingAttribute.MinDate = attribute.Type.MinDate;
+        break;
+      case 'ENUM':
+        this.editingAttribute.MaxSelect= attribute.Type.MaxSelect;
+        this.editingAttribute.MinSelect = attribute.Type.MinSelect;
+        //Need to do Options and type too!
+        break;
+      case 'RANGE':
+        this.editingAttribute.Min= attribute.Type.Min;
+        this.editingAttribute.Max = attribute.Type.Max;
+        this.editingAttribute.isInt = attribute.Type.isInt;
+        break;
     }
   }
 
@@ -88,7 +109,26 @@ export class AdminAttributesComponent implements OnInit {
         this.attributeService.deleteAttributeString(attribute.Type)
           .subscribe(() => {
             this.attributes.splice(this.attributes.indexOf(attribute), 1);
-          })
+          });
+        break;
+      case 'DATE':
+        this.attributeService.deleteAttributeDate(attribute.Type)
+          .subscribe(() => {
+            this.attributes.splice(this.attributes.indexOf(attribute), 1);
+          });
+        break;
+      case 'ENUM':
+        this.attributeService.deleteAttributeEnum(attribute.Type)
+          .subscribe(() => {
+            this.attributes.splice(this.attributes.indexOf(attribute), 1);
+          });
+        break;
+      case 'RANGE':
+        this.attributeService.deleteAttributeRange(attribute.Type)
+          .subscribe(() => {
+            this.attributes.splice(this.attributes.indexOf(attribute), 1);
+          });
+        break;
     }
   }
 
@@ -120,6 +160,85 @@ export class AdminAttributesComponent implements OnInit {
               this.attributeEditModal.hide();
             })
         }
+        break;
+      case 'DATE':
+        let attributeDate = new AttributeDate();
+
+        if (!isNew)
+          attributeDate = this.editingAttribute.ExistingAttribute.Type;
+
+        attributeDate.Name = this.editingAttribute.Name;
+        attributeDate.Description = this.editingAttribute.Description;
+        attributeDate.ForType = this.editingAttribute.ForType;
+        attributeDate.MaxDate = this.editingAttribute.MaxDate;
+        attributeDate.MinDate = this.editingAttribute.MinDate;
+
+        if (isNew) {
+          this.attributeService.createAttributeDate(attributeDate)
+            .subscribe((attributeDate) => {
+              this.attributes.push(this.attributeService.mapToAttribute(attributeDate)[0]);
+              this.attributeEditModal.hide();
+            })
+        }
+        else {
+          this.attributeService.updateAttributeDate(attributeDate)
+            .subscribe((attributeDate) => {
+              this.attributeEditModal.hide();
+            })
+        }
+        break;
+      case 'ENUM':
+        let attributeEnum = new AttributeEnum();
+
+        if (!isNew)
+          attributeEnum = this.editingAttribute.ExistingAttribute.Type;
+
+        attributeEnum.Name = this.editingAttribute.Name;
+        attributeEnum.Description = this.editingAttribute.Description;
+        attributeEnum.ForType = this.editingAttribute.ForType;
+        attributeEnum.MaxSelect = this.editingAttribute.MaxSelect;
+        attributeEnum.MinSelect = this.editingAttribute.MinSelect;
+
+        if (isNew) {
+          this.attributeService.createAttributeEnum(attributeEnum)
+            .subscribe((attributeEnum) => {
+              this.attributes.push(this.attributeService.mapToAttribute(attributeEnum)[0]);
+              this.attributeEditModal.hide();
+            })
+        }
+        else {
+          this.attributeService.updateAttributeEnum(attributeEnum)
+            .subscribe((attributeEnum) => {
+              this.attributeEditModal.hide();
+            })
+        }
+        break;
+      case 'RANGE':
+        let attributeRange = new AttributeRange();
+
+        if (!isNew)
+          attributeRange = this.editingAttribute.ExistingAttribute.Type;
+
+        attributeRange.Name = this.editingAttribute.Name;
+        attributeRange.Description = this.editingAttribute.Description;
+        attributeRange.ForType = this.editingAttribute.ForType;
+        attributeRange.Min = this.editingAttribute.Min;
+        attributeRange.Max = this.editingAttribute.Max;
+
+        if (isNew) {
+          this.attributeService.createAttributeRange(attributeRange)
+            .subscribe((attributeRange) => {
+              this.attributes.push(this.attributeService.mapToAttribute(attributeRange)[0]);
+              this.attributeEditModal.hide();
+            })
+        }
+        else {
+          this.attributeService.updateAttributeRange(attributeRange)
+            .subscribe((attributeRange) => {
+              this.attributeEditModal.hide();
+            })
+        }
+        break;
     }
   }
 
