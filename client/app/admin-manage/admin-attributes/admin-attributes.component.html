@@ -1,65 +1,119 @@
 <div>
-  <legend>Attributes</legend>
-
-  <div class="form-group">
-    <label class="col-md-2 control-label">Type</label>
-    <div class="col-md-9">
-      <select class="selectpicker">
-        <option>String</option>
-        <option>Date</option>
-        <option>Enum</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-md-2 control-label">Profile Type</label>
-    <div class="col-md-9">
-      <select class="selectpicker">
-        <option>Host</option>
-        <option>Student</option>
-        <option>Both</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-md-2 control-label">Name</label>
-    <div class="col-md-9">
-      <!--<input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>-->
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-md-2 control-label">Description</label>
-    <div class="col-md-9">
-      <!--<input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>-->
-    </div>
-  </div>
-
-  <div class="input-group">
-    <button class="btn btn-primary" (click)="uploader.uploadAll()">Clear</button>
-    <span class="input-group-btn">
-                  <button class="btn btn-primary" (click)="uploader.uploadAll()">Submit</button>
-                </span>
-  </div>
-
   <table class="table">
     <thead>
     <tr>
       <th>Name</th>
-      <th>For type</th>
-      <th>Remove</th>
+      <th>Attribute Type</th>
+      <th>For User Type</th>
+      <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <ng-container *ngFor="let attribute of attributes">
       <tr>
         <td>{{attribute.Type.Name}}</td>
-        <td>{{attribute.Type.ForType}}</td>
-        <td>REMOVE BUTTON</td>
+        <td>
+          <span class="label label-default">
+            {{getAttributeType(attribute)}}
+          </span>
+        </td>
+        <td>
+          <span class="label label-default">
+            {{attribute.Type.ForType}}
+          </span>
+        </td>
+        <td>
+          <span class="glyphicon glyphicon-remove text-danger clickable" (click)="deleteAttribute(attribute)"></span>
+          <span class="glyphicon glyphicon-pencil clickable" (click)="editAttribute(attribute)"></span>
+        </td>
       </tr>
     </ng-container>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <button class="btn btn-success" (click)="addAttribute()">
+          <span class="glyphicon glyphicon-plus"></span>
+          Add
+        </button>
+      </td>
+    </tr>
     </tbody>
   </table>
+</div>
+
+<div bsModal #attributeEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add/Edit Attribute</h4>
+        <button type="button" class="close pull-right" (click)="attributeEditModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Type</label>
+            <div class="col-md-9">
+              <select class="form-control" [(ngModel)]="editingAttribute.Type">
+                <option value="STRING">String</option>
+                <option value="DATE">Date</option>
+                <option value="ENUM">Enum</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Profile Type</label>
+            <div class="col-md-9">
+              <select class="form-control" [(ngModel)]="editingAttribute.ForType">
+                <option value="HOST">Host</option>
+                <option value="STUDENT">Student</option>
+                <option value="BOTH">Both</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Name</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="editingAttribute.Name" name="Name" class="form-control" placeholder="Name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Description</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="editingAttribute.Description" name="Description" class="form-control" placeholder="Description" required>
+            </div>
+          </div>
+
+          <ng-container [ngSwitch]="editingAttribute.Type">
+            <ng-container *ngSwitchCase="'STRING'">
+              <div class="form-group">
+                <label class="col-md-2 control-label">Max Response Length</label>
+                <div class="col-md-9">
+                  <input [(ngModel)]="editingAttribute.StringMaxLen" type="number" name="StringMaxLen" class="form-control">
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+              <div class="btn-toolbar">
+                <button class="btn btn-primary" (click)="resetEditingAttribute()">Reset</button>
+                <button class="btn btn-primary" (click)="submitAttribute()">Submit</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

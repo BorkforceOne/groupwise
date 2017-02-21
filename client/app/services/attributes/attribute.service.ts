@@ -101,8 +101,11 @@ export class AttributeService extends BackendCommunicatorService{
       .catch(this.handleError.bind(this));
   }
 
-  private mapToAttribute(data): Attribute[] {
+  mapToAttribute(data): Attribute[] {
     let attributes: Attribute[] = [];
+
+    if (!Array.isArray(data))
+      data = [data];
 
     for (let i = 0; i < data.length; i ++) {
       let dataum = data[i];
@@ -284,7 +287,28 @@ export class AttributeService extends BackendCommunicatorService{
     return false;
   }
 
-  createAttributeStringValue(attributeValue: AttributeStringValue) {
+  createAttributeString(attribute: AttributeString): Observable<AttributeString> {
+    return this
+      .http.post(this.stringRemoteUrlBase, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeString))
+      .catch(this.handleError.bind(this));
+  }
+
+  deleteAttributeString(attribute: AttributeString): Observable<any> {
+    return this
+      .http.delete(`${this.stringRemoteUrlBase}/${attribute.Id}`)
+      .map(this.extractData.bind(this, AttributeString))
+      .catch(this.handleError.bind(this));
+  }
+
+  updateAttributeString(attribute: AttributeString): Observable<AttributeString> {
+    return this
+      .http.put(`${this.stringRemoteUrlBase}/${attribute.Id}`, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeString))
+      .catch(this.handleError.bind(this));
+  }
+
+  createAttributeStringValue(attributeValue: AttributeStringValue): Observable<AttributeStringValue> {
     return this
       .http.post(this.stringValueRemoteUrlBase, JSON.stringify(attributeValue), {headers: this.headers})
       .map(this.extractData.bind(this, AttributeStringValue))
