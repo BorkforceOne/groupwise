@@ -7,7 +7,7 @@ import {ConfigService} from "../../services/config/config.service";
   styleUrls: ['./hero-cover.component.scss']
 })
 export class HeroCoverComponent implements OnInit {
-  private bannerURL;
+  private bannerURL = "/assets/hero-cover-default.jpg";
   private host: string = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
 
   constructor(private configService: ConfigService) { }
@@ -21,7 +21,7 @@ export class HeroCoverComponent implements OnInit {
 
   getBanner() {
     if (this.bannerURL)
-      return `url(${this.bannerURL})`
+      return `url(${this.bannerURL})`;
     return '';
   }
 
