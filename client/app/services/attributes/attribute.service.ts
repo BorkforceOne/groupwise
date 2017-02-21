@@ -101,8 +101,11 @@ export class AttributeService extends BackendCommunicatorService{
       .catch(this.handleError.bind(this));
   }
 
-  private mapToAttribute(data): Attribute[] {
+  mapToAttribute(data): Attribute[] {
     let attributes: Attribute[] = [];
+
+    if (!Array.isArray(data))
+      data = [data];
 
     for (let i = 0; i < data.length; i ++) {
       let dataum = data[i];
@@ -284,28 +287,112 @@ export class AttributeService extends BackendCommunicatorService{
     return false;
   }
 
-  createAttributeStringValue(attributeValue: AttributeStringValue) {
+  createAttributeString(attribute: AttributeString): Observable<AttributeString> {
+    return this
+      .http.post(this.stringRemoteUrlBase, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeString))
+      .catch(this.handleError.bind(this));
+  }
+
+  deleteAttributeString(attribute: AttributeString): Observable<any> {
+    return this
+      .http.delete(`${this.stringRemoteUrlBase}/${attribute.Id}`)
+      .map(this.extractData.bind(this, AttributeString))
+      .catch(this.handleError.bind(this));
+  }
+
+  updateAttributeString(attribute: AttributeString): Observable<AttributeString> {
+    return this
+      .http.put(`${this.stringRemoteUrlBase}/${attribute.Id}`, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeString))
+      .catch(this.handleError.bind(this));
+  }
+
+  createAttributeStringValue(attributeValue: AttributeStringValue): Observable<AttributeStringValue> {
     return this
       .http.post(this.stringValueRemoteUrlBase, JSON.stringify(attributeValue), {headers: this.headers})
       .map(this.extractData.bind(this, AttributeStringValue))
       .catch(this.handleError.bind(this));
   }
 
-  createAttributeEnumValue(attributeValue: AttributeEnumValue) {
+  createAttributeEnum(attribute: AttributeEnum): Observable<AttributeEnum> {
+    return this
+      .http.post(this.enumRemoteUrlBase, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeEnum))
+      .catch(this.handleError.bind(this));
+  }
+
+  deleteAttributeEnum(attribute: AttributeEnum): Observable<AttributeEnum> {
+    return this
+      .http.delete(`${this.enumRemoteUrlBase}/${attribute.Id}`)
+      .map(this.extractData.bind(this, AttributeEnum))
+      .catch(this.handleError.bind(this));
+  }
+
+  updateAttributeEnum(attribute: AttributeEnum): Observable<AttributeEnum> {
+    return this
+      .http.put(`${this.enumRemoteUrlBase}/${attribute.Id}`, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeEnum))
+      .catch(this.handleError.bind(this));
+  }
+
+  createAttributeEnumValue(attributeValue: AttributeEnumValue): Observable<AttributeEnumValue> {
     return this
       .http.post(this.enumValueRemoteUrlBase, JSON.stringify(attributeValue), {headers: this.headers})
       .map(this.extractData.bind(this, AttributeEnumValue))
       .catch(this.handleError.bind(this));
   }
 
-  createAttributeDateValue(attributeValue: AttributeDateValue) {
+  createAttributeDate(attribute: AttributeDate): Observable<AttributeDate> {
+    return this
+      .http.post(this.dateRemoteUrlBase, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeDate))
+      .catch(this.handleError.bind(this));
+  }
+
+  deleteAttributeDate(attribute: AttributeDate): Observable<any> {
+    return this
+      .http.delete(`${this.dateRemoteUrlBase}/${attribute.Id}`)
+      .map(this.extractData.bind(this, AttributeDate))
+      .catch(this.handleError.bind(this));
+  }
+
+  updateAttributeDate(attribute: AttributeDate): Observable<AttributeDate> {
+    return this
+      .http.put(`${this.dateRemoteUrlBase}/${attribute.Id}`, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeDate))
+      .catch(this.handleError.bind(this));
+  }
+
+  createAttributeDateValue(attributeValue: AttributeDateValue): Observable<AttributeDateValue> {
     return this
       .http.post(this.dateValueRemoteUrlBase, JSON.stringify(attributeValue), {headers: this.headers})
       .map(this.extractData.bind(this, AttributeDateValue))
       .catch(this.handleError.bind(this));
   }
 
-  createAttributeRangeValue(attributeValue: AttributeRangeValue) {
+  createAttributeRange(attribute: AttributeRange): Observable<AttributeRange> {
+    return this
+      .http.post(this.rangeRemoteUrlBase, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeRange))
+      .catch(this.handleError.bind(this));
+  }
+
+  deleteAttributeRange(attribute: AttributeRange): Observable<AttributeRange> {
+    return this
+      .http.delete(`${this.rangeRemoteUrlBase}/${attribute.Id}`)
+      .map(this.extractData.bind(this, AttributeRange))
+      .catch(this.handleError.bind(this));
+  }
+
+  updateAttributeRange(attribute: AttributeRange): Observable<AttributeRange> {
+    return this
+      .http.put(`${this.rangeRemoteUrlBase}/${attribute.Id}`, JSON.stringify(attribute), {headers: this.headers})
+      .map(this.extractData.bind(this, AttributeRange))
+      .catch(this.handleError.bind(this));
+  }
+
+  createAttributeRangeValue(attributeValue: AttributeRangeValue): Observable<AttributeRangeValue> {
     return this
       .http.post(this.rangeValueRemoteUrlBase, JSON.stringify(attributeValue), {headers: this.headers})
       .map(this.extractData.bind(this, AttributeRangeValue))

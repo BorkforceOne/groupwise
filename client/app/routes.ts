@@ -30,4 +30,5 @@ export const AppRoutes: Routes = [
   { path: 'admin-manage', component: AdminManageComponent },
   { path: 'home', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent }
+
 ];

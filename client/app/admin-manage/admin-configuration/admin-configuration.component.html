@@ -1,0 +1,57 @@
+<div>
+  <div class="row clearfix">
+    <legend>Update hero image</legend>
+    <table class="table">
+      <thead>
+      <tr>
+        <th width="50%">Name</th>
+        <th>Size</th>
+        <th>Progress</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of uploader.queue">
+        <td><strong>{{ item?.file?.name }}</strong></td>
+        <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+        <td>
+          <div class="progress" style="margin-bottom: 0;">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+          </div>
+        </td>
+        <td class="text-center">
+          <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+          <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+          <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+        </td>
+        <td nowrap>
+          <button type="button" class="btn btn-warning btn-xs"
+                  (click)="item.cancel()" [disabled]="!item.isUploading">
+            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+          </button>
+          <button type="button" class="btn btn-danger btn-xs"
+                  (click)="item.remove()">
+            <span class="glyphicon glyphicon-trash"></span> Remove
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div>
+      Queue progress:
+      <div class="progress" style="">
+        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+      </div>
+    </div>
+
+    <!-- Message body -->
+    <div class="input-group">
+      <input type="file" ng2FileSelect [uploader]="uploader" />
+      <span class="input-group-btn">
+                  <button class="btn btn-primary" (click)="uploader.uploadAll()">Upload</button>
+                </span>
+    </div>
+  </div>
+</div>

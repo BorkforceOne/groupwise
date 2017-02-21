@@ -81,7 +81,7 @@ class AttributeService {
     return new Promise((resolve, reject) => {
       // Do validation here
 
-      resolve();
+      resolve(entity);
     });
   }
 
@@ -247,7 +247,7 @@ class AttributeService {
         if (entity.MinDate > entity.MaxDate)
           throw "MinDate cannot be larger than MaxDate";
 
-      resolve();
+      resolve(entity);
     });
   }
 
@@ -426,7 +426,7 @@ class AttributeService {
         if (entity.Min > entity.Max)
           throw "Min cannot be larger than Max";
 
-      resolve();
+      resolve(entity);
     });
   }
 
@@ -618,7 +618,7 @@ class AttributeService {
         if (entity.MinSelect > entity.MaxSelect)
           throw "Min cannot be larger than Max";
 
-      resolve();
+      resolve(entity);
     });
   }
 
