@@ -224,6 +224,7 @@ export class AdminAttributesComponent implements OnInit {
         attributeRange.ForType = this.editingAttribute.ForType;
         attributeRange.Min = this.editingAttribute.Min;
         attributeRange.Max = this.editingAttribute.Max;
+        attributeRange.isInt = this.editingAttribute.isInt;
 
         if (isNew) {
           this.attributeService.createAttributeRange(attributeRange)
