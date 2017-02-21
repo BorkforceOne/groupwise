@@ -1,39 +1,42 @@
-<div class="form-group" *ngIf="getAttributeType() === 'STRING'">
-  <label class="col-md-3 control-label">{{Attribute.Description}}</label>
-  <div class="col-md-9">
-    <textarea [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" class="form-control" required></textarea>
+<ng-container [ngSwitch]="getAttributeType()">
+  <div class="form-group" *ngSwitchCase="'STRING'">
+    <label class="col-md-3 control-label">{{Attribute.Description}}</label>
+    <div class="col-md-9">
+      <textarea [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" class="form-control" required></textarea>
+    </div>
   </div>
-</div>
 
-<div class="form-group" *ngIf="getAttributeType() === 'DATE'">
-  <label class="col-md-3 control-label">{{Attribute.Description}}</label>
-  <div class="col-md-3">
-    <app-date-select [(ngModel)]="AttributeValue.Value"></app-date-select>
+  <div class="form-group" *ngSwitchCase="'DATE'">
+    <label class="col-md-3 control-label">{{Attribute.Description}}</label>
+    <div class="col-md-3">
+      <app-date-select [(ngModel)]="AttributeValue.Value"></app-date-select>
+    </div>
   </div>
-</div>
 
-<div class="form-group" *ngIf="getAttributeType() === 'RANGE'">
-  <label class="col-md-3 control-label">{{Attribute.Description}}</label>
-  <div class="col-md-3">
-    <input [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" [type]="Attribute.isInt ? 'number' : null" [min]="Attribute.Min" [max]="Attribute.Max" (change)="onNumberChange($event)" class="form-control" required/>
+  <div class="form-group" *ngSwitchCase="'RANGE'">
+    <label class="col-md-3 control-label">{{Attribute.Description}}</label>
+    <div class="col-md-3">
+      <input [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" [type]="Attribute.isInt ? 'number' : null" [min]="Attribute.Min" [max]="Attribute.Max" (change)="onNumberChange($event)" class="form-control" required/>
+    </div>
   </div>
-</div>
 
-<div class="form-group" *ngIf="getAttributeType() === 'ENUM'">
-  <label class="col-md-3 control-label">{{Attribute.Description}}</label>
-  <div class="col-md-3" *ngIf="Attribute.SelectType === 'DROPDOWN'">
-    <select class="form-control" [name]="Attribute.Name" [(ngModel)]="AttributeValue.Value">
+  <div class="form-group" *ngSwitchCase="'ENUM'">
+    <label class="col-md-3 control-label">{{Attribute.Description}}</label>
+    <div class="col-md-3" *ngIf="Attribute.SelectType === 'DROPDOWN'">
+      <select class="form-control" [name]="Attribute.Name" [(ngModel)]="AttributeValue.Value">
+        <ng-container *ngFor="let option of Attribute.Options">
+          <option [value]="option.Value">{{option.Display}}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="col-md-3" *ngIf="Attribute.SelectType === 'RADIO'">
       <ng-container *ngFor="let option of Attribute.Options">
-        <option [value]="option.Value">{{option.Display}}</option>
+        <div class="radio">
+          <label><input type="radio" [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" [value]="option.Value">{{option.Display}}</label>
+        </div>
       </ng-container>
-    </select>
+    </div>
   </div>
+</ng-container>
 
-  <div class="col-md-3" *ngIf="Attribute.SelectType === 'RADIO'">
-    <ng-container *ngFor="let option of Attribute.Options">
-      <div class="radio">
-        <label><input type="radio" [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" [value]="option.Value">{{option.Display}}</label>
-      </div>
-    </ng-container>
-  </div>
-</div>
