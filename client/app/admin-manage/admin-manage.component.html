@@ -1,142 +1,18 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="well">
-        <form class="form-horizontal">
-          <fieldset>
-            <legend class="text-center">Admin Manage</legend>
-
-            <fieldset>
-              <legend>Update hero image</legend>
-              <table class="table">
-                <thead>
-                <tr>
-                  <th width="50%">Name</th>
-                  <th>Size</th>
-                  <th>Progress</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let item of uploader.queue">
-                  <td><strong>{{ item?.file?.name }}</strong></td>
-                  <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                  <td>
-                    <div class="progress" style="margin-bottom: 0;">
-                      <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                  </td>
-                  <td nowrap>
-                    <button type="button" class="btn btn-warning btn-xs"
-                            (click)="item.cancel()" [disabled]="!item.isUploading">
-                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                    </button>
-                    <button type="button" class="btn btn-danger btn-xs"
-                            (click)="item.remove()">
-                      <span class="glyphicon glyphicon-trash"></span> Remove
-                    </button>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-
-              <div>
-                Queue progress:
-                <div class="progress" style="">
-                  <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-                </div>
-              </div>
-
-              <!-- Message body -->
-              <div class="input-group">
-                <input type="file" ng2FileSelect [uploader]="uploader" />
-                <span class="input-group-btn">
-                  <button class="btn btn-primary" (click)="uploader.uploadAll()">Upload</button>
-                </span>
-              </div>
-            </fieldset>
-
-            <fieldset>
-
-              <legend>Attributes</legend>
-
-              <div class="form-group">
-                <label class="col-md-2 control-label">Type</label>
-                <div class="col-md-9">
-                  <select class="selectpicker">
-                    <option>String</option>
-                    <option>Date</option>
-                    <option>Enum</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-2 control-label">Profile Type</label>
-                <div class="col-md-9">
-                  <select class="selectpicker">
-                    <option>Host</option>
-                    <option>Student</option>
-                    <option>Both</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-2 control-label">Name</label>
-                <div class="col-md-9">
-                  <!--<input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>-->
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-2 control-label">Description</label>
-                <div class="col-md-9">
-                  <!--<input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>-->
-                </div>
-              </div>
-
-              <div class="input-group">
-                <button class="btn btn-primary" (click)="uploader.uploadAll()">Clear</button>
-              <span class="input-group-btn">
-                  <button class="btn btn-primary" (click)="uploader.uploadAll()">Submit</button>
-                </span>
-              </div>
-
-              <table class="table">
-                <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>For type</th>
-                  <th>Remove</th>
-                </tr>
-                </thead>
-                <tbody>
-                <ng-container *ngFor="let attribute of attributes">
-                  <tr>
-                    <td>{{attribute.Type.Name}}</td>
-                    <td>{{attribute.Type.ForType}}</td>
-                    <td>REMOVE BUTTON</td>
-                  </tr>
-                </ng-container>
-                </tbody>
-              </table>
-
-            </fieldset>
-            <fieldset>
-              <legend>Reporting</legend>
-              <pre>
-                {{users | json}}
-              </pre>
-            </fieldset>
-          </fieldset>
-        </form>
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <div>
+        <tabset>
+          <tab heading="Configuration">
+            <app-admin-configuration></app-admin-configuration>
+          </tab>
+          <tab heading="Attributes">
+            <app-admin-attributes></app-admin-attributes>
+          </tab>
+          <tab heading="Reporting">
+            <app-admin-reporting></app-admin-reporting>
+          </tab>
+        </tabset>
       </div>
     </div>
   </div>

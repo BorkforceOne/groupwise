@@ -40,6 +40,9 @@ import { DateSelectComponent } from './date-select/date-select.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
 import { AgePipe } from './age.pipe';
+import { AdminConfigurationComponent } from './admin-manage/admin-configuration/admin-configuration.component';
+import { AdminAttributesComponent } from './admin-manage/admin-attributes/admin-attributes.component';
+import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-reporting.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,10 @@ import { AgePipe } from './age.pipe';
     RegisterAttributeFieldComponent,
     DateSelectComponent,
     ChatMessageComponent,
-    AgePipe
+    AgePipe,
+    AdminConfigurationComponent,
+    AdminAttributesComponent,
+    AdminReportingComponent
   ],
   imports: [
     BrowserModule,
