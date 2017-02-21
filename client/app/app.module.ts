@@ -40,6 +40,7 @@ import { DateSelectComponent } from './date-select/date-select.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
 import { AgePipe } from './age.pipe';
+import {CookieService} from "angular2-cookie/services/cookies.service";
 
 @NgModule({
   declarations: [
@@ -83,7 +84,7 @@ import { AgePipe } from './age.pipe';
     TabsModule.forRoot(),
     CarouselModule.forRoot()
   ],
-  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService],
+  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
