@@ -143,8 +143,7 @@ class UserService {
 
       this.tokenService.add(token)
         .then((validationToken) => {
-          //let mail = mailerManager.templates.validateEmail;
-          let mail;
+          let mail = mailerManager.templates.resetPasswordEmail;
 
           let header = {
             to: user.Email

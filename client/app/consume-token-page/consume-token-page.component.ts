@@ -40,7 +40,13 @@ export class ConsumeTokenPageComponent implements OnInit {
 
         switch (this.foundToken.Type) {
           case 'REGISTRATION':
-            this.consumeTokenService.consumeToken(this.foundToken);
+            this.consumeTokenService.consumeToken(this.foundToken)
+              .then(resolvedToken => {
+                this.status = "SUCCESS";
+              })
+              .catch((error) => {
+                this.status = "FAIL";
+              });
             break;
 
           case "FORGOT_PASSWORD":
