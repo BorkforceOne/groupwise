@@ -13,12 +13,12 @@ class AttributeView {
   Type: string;
   ForType: "STUDENT" | "HOST" | "BOTH";
   StringMaxLen: number;
-  MinDate: string;
-  MaxDate: string;
-  MaxSelect: number;
-  MinSelect: number;
-  Min: number;
-  Max: number;
+  DateMin: string;
+  DateMax: string;
+  SelectMax: number;
+  SelectMin: number;
+  RangeMin: number;
+  RangeMax: number;
   isInt: boolean;
   ExistingAttribute: Attribute = null;
   EnumOptions: Enum[] = [];
@@ -87,18 +87,18 @@ export class AdminAttributesComponent implements OnInit {
         this.editingAttribute.StringMaxLen = attribute.Type.MaxLength;
         break;
       case 'DATE':
-        this.editingAttribute.MaxDate = attribute.Type.MaxDate;
-        this.editingAttribute.MinDate = attribute.Type.MinDate;
+        this.editingAttribute.DateMax = attribute.Type.MaxDate;
+        this.editingAttribute.DateMin = attribute.Type.MinDate;
         break;
       case 'ENUM':
-        this.editingAttribute.MaxSelect= attribute.Type.MaxSelect;
-        this.editingAttribute.MinSelect = attribute.Type.MinSelect;
         this.editingAttribute.EnumOptions = attribute.Type.Options;
         this.editingAttribute.SelectType = attribute.Type.SelectType;
+        this.editingAttribute.SelectMax = attribute.Type.MaxSelect;
+        this.editingAttribute.SelectMin = attribute.Type.MinSelect;
         break;
       case 'RANGE':
-        this.editingAttribute.Min= attribute.Type.Min;
-        this.editingAttribute.Max = attribute.Type.Max;
+        this.editingAttribute.RangeMin = attribute.Type.Min;
+        this.editingAttribute.RangeMax = attribute.Type.Max;
         this.editingAttribute.isInt = attribute.Type.isInt;
         break;
     }
@@ -173,8 +173,8 @@ export class AdminAttributesComponent implements OnInit {
         attributeDate.Name = this.editingAttribute.Name;
         attributeDate.Description = this.editingAttribute.Description;
         attributeDate.ForType = this.editingAttribute.ForType;
-        attributeDate.MaxDate = this.editingAttribute.MaxDate;
-        attributeDate.MinDate = this.editingAttribute.MinDate;
+        attributeDate.MaxDate = this.editingAttribute.DateMax;
+        attributeDate.MinDate = this.editingAttribute.DateMin;
 
         if (isNew) {
           this.attributeService.createAttributeDate(attributeDate)
@@ -199,10 +199,10 @@ export class AdminAttributesComponent implements OnInit {
         attributeEnum.Name = this.editingAttribute.Name;
         attributeEnum.Description = this.editingAttribute.Description;
         attributeEnum.ForType = this.editingAttribute.ForType;
-        attributeEnum.MaxSelect = this.editingAttribute.MaxSelect;
-        attributeEnum.MinSelect = this.editingAttribute.MinSelect;
         attributeEnum.Options = this.editingAttribute.EnumOptions;
         attributeEnum.SelectType = this.editingAttribute.SelectType;
+        attributeEnum.MaxSelect = this.editingAttribute.SelectMax;
+        attributeEnum.MinSelect = this.editingAttribute.SelectMax;
 
 
         if (isNew) {
@@ -228,8 +228,8 @@ export class AdminAttributesComponent implements OnInit {
         attributeRange.Name = this.editingAttribute.Name;
         attributeRange.Description = this.editingAttribute.Description;
         attributeRange.ForType = this.editingAttribute.ForType;
-        attributeRange.Min = this.editingAttribute.Min;
-        attributeRange.Max = this.editingAttribute.Max;
+        attributeRange.Min = this.editingAttribute.RangeMin;
+        attributeRange.Max = this.editingAttribute.RangeMax;
         attributeRange.isInt = this.editingAttribute.isInt;
 
         if (isNew) {
