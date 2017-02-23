@@ -128,6 +128,52 @@
                   <input [(ngModel)]="editingAttribute.MinSelect" type="number" name="MinSelect" class="form-control">
                 </div>
               </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">Type of Enum</label>
+                <div class="col-md-9">
+                  <select class="form-control" [(ngModel)]="editingAttribute.SelectType">
+                    <option value="DROPDOWN">Drop Down</option>
+                    <option value="RADIO">Radio Buttons</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>Display</th>
+                    <th>Value</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <ng-container *ngFor="let option of editingAttribute.EnumOptions">
+                    <tr>
+                      <td>
+                        <input [(ngModel)]="option.Display" name="Display" placeholder="Option" class="form-control">
+                      </td>
+                      <td>
+                        <span class="label label-default">
+                         {{option.Value}}
+                        </span>
+                      </td>
+                      <td>
+                        <span class="glyphicon glyphicon-remove text-danger clickable" (click)="deleteEnum(option)"></span>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button class="btn btn-success" (click)="addEnumOption()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
             </ng-container>
             <ng-container *ngSwitchCase="'RANGE'">
               <div class="form-group">

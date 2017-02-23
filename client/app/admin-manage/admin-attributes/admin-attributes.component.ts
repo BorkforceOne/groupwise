@@ -5,7 +5,7 @@ import {ModalDirective} from "ng2-bootstrap";
 import {AttributeString} from "../../services/attributes/attribute-string.model";
 import {AttributeDate} from "../../services/attributes/attribute-date.model";
 import {AttributeRange} from "../../services/attributes/attribute-range.model";
-import {AttributeEnum} from "../../services/attributes/attribute-enum.model";
+import {AttributeEnum, Enum} from "../../services/attributes/attribute-enum.model";
 
 class AttributeView {
   Name: string;
@@ -21,6 +21,8 @@ class AttributeView {
   Max: number;
   isInt: boolean;
   ExistingAttribute: Attribute = null;
+  EnumOptions: Enum[] = [];
+  SelectType: "DROPDOWN" | "RADIO";
 }
 
 @Component({
@@ -91,7 +93,8 @@ export class AdminAttributesComponent implements OnInit {
       case 'ENUM':
         this.editingAttribute.MaxSelect= attribute.Type.MaxSelect;
         this.editingAttribute.MinSelect = attribute.Type.MinSelect;
-        //Need to do Options and type too!
+        this.editingAttribute.EnumOptions = attribute.Type.Options;
+        this.editingAttribute.SelectType = attribute.Type.SelectType;
         break;
       case 'RANGE':
         this.editingAttribute.Min= attribute.Type.Min;
@@ -198,6 +201,9 @@ export class AdminAttributesComponent implements OnInit {
         attributeEnum.ForType = this.editingAttribute.ForType;
         attributeEnum.MaxSelect = this.editingAttribute.MaxSelect;
         attributeEnum.MinSelect = this.editingAttribute.MinSelect;
+        attributeEnum.Options = this.editingAttribute.EnumOptions;
+        attributeEnum.SelectType = this.editingAttribute.SelectType;
+
 
         if (isNew) {
           this.attributeService.createAttributeEnum(attributeEnum)
@@ -250,4 +256,13 @@ export class AdminAttributesComponent implements OnInit {
       this.editingAttribute = new AttributeView();
   }
 
+  addEnumOption(){
+    let newEnum = new Enum();
+    newEnum.Value = Math.round(Math.random()*10000000).toString();
+    newEnum.Display = "";
+    this.editingAttribute.EnumOptions.push(newEnum);
+  }
+  deleteEnum(option) {
+    this.editingAttribute.EnumOptions.splice(this.editingAttribute.EnumOptions.indexOf(option), 1);
+  }
 }
