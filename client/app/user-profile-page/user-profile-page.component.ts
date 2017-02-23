@@ -12,6 +12,8 @@ import {ModalDirective, CarouselComponent} from "ng2-bootstrap";
 import {FileUploader, FileItem} from "ng2-file-upload";
 import {AlertService} from "../services/alert/alert.service";
 import {Alert} from "../services/alert/alert";
+import {AttributeEnum} from "../services/attributes/attribute-enum.model";
+import {AttributeEnumValue} from "../services/attributes/attribute-enum-value.model";
 //import {AttributeService} from "PATH";
 
 
@@ -128,6 +130,17 @@ export class UserProfilePageComponent implements OnInit {
       .then(() => {
         this.userPhotos.splice(this.userPhotos.indexOf(photoView), 1)
       })
+  }
+
+  private findOption(type: AttributeEnum, value: AttributeEnumValue) {
+
+    for (let i = 0; i < type.Options.length; i++) {
+      let option = type.Options[i];
+      if (option.Value == value.Value)
+        return option;
+    }
+
+    return null;
   }
 
 }

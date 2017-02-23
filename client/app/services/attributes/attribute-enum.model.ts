@@ -9,6 +9,7 @@ export class AttributeEnum extends Serializable {
   "Id": number;
   "Name": string;
   "Description": string;
+  "Question": string;
   "ForType": "STUDENT" | "HOST" | "BOTH";
   "MaxSelect": number;
   "MinSelect": number;
