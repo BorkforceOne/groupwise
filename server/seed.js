@@ -42,7 +42,8 @@ const attributeSeedData = [
     Type: "STRING",
     Data: {
       "Name": "Hobbies",
-      "Description": "What hobbies do you enjoy?",
+      "Question": "What hobbies do you enjoy?",
+      "Description": "Hobbies",
       "ForType": "BOTH"
     }
   },
@@ -50,7 +51,8 @@ const attributeSeedData = [
     Type: "STRING",
     Data: {
       "Name": "Citizenship",
-      "Description": "What is your country of citizenship?",
+      "Description": "Country of citizenship",
+      "Question": "What is your country of citizenship?",
       "ForType": "STUDENT"
     }
   },
@@ -58,7 +60,8 @@ const attributeSeedData = [
     Type: "STRING",
     Data: {
       "Name": "Languages",
-      "Description": "What language(s) do you speak?",
+      "Description": "Languages spoken",
+      "Question": "What language(s) do you speak?",
       "ForType": "BOTH"
     }
   },
@@ -66,7 +69,8 @@ const attributeSeedData = [
     Type: "STRING",
     Data: {
       "Name": "Major",
-      "Description": "What is your Major?",
+      "Description": "Major",
+      "Question": "What is your Major?",
       "ForType": "STUDENT"
     }
   },
@@ -74,7 +78,8 @@ const attributeSeedData = [
     Type: "DATE",
     Data: {
       "Name": "StudyBegin",
-      "Description": "When did you begin your studies at NAU?",
+      "Description": "Began studying at NAU",
+      "Question": "When did you begin your studies at NAU?",
       "ForType": "STUDENT"
     }
   },
@@ -82,7 +87,8 @@ const attributeSeedData = [
     Type: "DATE",
     Data: {
       "Name": "StudyEnd",
-      "Description": "What is your expected graduation date?",
+      "Description": "End studying at NAU",
+      "Question": "What is your expected graduation date?",
       "ForType": "STUDENT"
     }
   },
@@ -90,7 +96,8 @@ const attributeSeedData = [
     Type: "RANGE",
     Data: {
       "Name": "Children",
-      "Description": "How many children do you have?",
+      "Description": "Children",
+      "Question": "How many children do you have?",
       "ForType": "BOTH",
       "isInt": true,
       "Min": 0
@@ -100,7 +107,8 @@ const attributeSeedData = [
     Type: "ENUM",
     Data: {
       "Name": "Smoke",
-      "Description": "How often do you smoke?",
+      "Description": "Smoking frequency",
+      "Question": "How often do you smoke?",
       "ForType": "BOTH",
       "MinSelect": 1,
       "MaxSelect": 1,
@@ -125,7 +133,8 @@ const attributeSeedData = [
     Type: "ENUM",
     Data: {
       "Name": "Alcohol",
-      "Description": "How often do you drink alcohol?",
+      "Description": "Alcohol consumption frequency",
+      "Question": "How often do you drink alcohol?",
       "ForType": "BOTH",
       "MinSelect": 1,
       "MaxSelect": 1,
@@ -150,7 +159,8 @@ const attributeSeedData = [
     Type: "ENUM",
     Data: {
       "Name": "Married",
-      "Description": "Are you married?",
+      "Description": "Married?",
+      "Question": "Are you married?",
       "ForType": "BOTH",
       "MinSelect": 1,
       "MaxSelect": 1,
@@ -171,7 +181,8 @@ const attributeSeedData = [
     Type: "ENUM",
     Data: {
       "Name": "OwnCar",
-      "Description": "Do you own a car?",
+      "Description": "Has own car?",
+      "Question": "Do you own a car?",
       "ForType": "BOTH",
       "MinSelect": 1,
       "MaxSelect": 1,
@@ -192,7 +203,8 @@ const attributeSeedData = [
     Type: "ENUM",
     Data: {
       "Name": "AcademicStatus",
-      "Description": "What is your academic status?",
+      "Question": "What is your academic status?",
+      "Description": "Academic status",
       "ForType": "STUDENT",
       "MinSelect": 1,
       "MaxSelect": 1,

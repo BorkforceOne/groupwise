@@ -4,6 +4,7 @@ export class AttributeRange extends Serializable {
   "Id": number;
   "Name": string;
   "Description": string;
+  "Question": string;
   "ForType": "STUDENT" | "HOST" | "BOTH";
   "Min": number;
   "Max": number;
