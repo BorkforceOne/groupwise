@@ -14,14 +14,14 @@
 <div class="form-group">
   <label class="col-md-2 control-label">Password</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Password" name="Password" type="password" class="form-control" placeholder="Password" required>
+    <input [(ngModel)]="userRegistrationModel.Password" name="Password" type="password" class="form-control" placeholder="Password" required maxlength="16" minlength="6">
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">Password Verify</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.PasswordVerify" name="PasswordVerify" type="password" class="form-control" placeholder="Password" required>
+    <input [(ngModel)]="userRegistrationModel.PasswordVerify" name="PasswordVerify" type="password" class="form-control" placeholder="Password" required maxlength="16" minlength="6">
   </div>
 </div>
 
@@ -57,7 +57,11 @@
 <div class="form-group">
   <label class="col-md-2 control-label">Phone</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Phone" name="Phone" class="form-control" placeholder="Phone" type="tel" required>
+    <input [(ngModel)]="userRegistrationModel.Phone" name="Phone" #phone="ngModel" class="form-control" placeholder="Phone" type="tel" required pattern="[0-9]{10}" maxlength="10">
+    <div [hidden]="phone.valid ||phone.pristine"
+         class="alert alert-danger">
+      Phone number is required
+    </div>
   </div>
 </div>
 
