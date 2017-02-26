@@ -57,7 +57,11 @@
 <div class="form-group">
   <label class="col-md-2 control-label">Phone</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Phone" name="Phone" class="form-control" placeholder="Phone" type="tel" required>
+    <input [(ngModel)]="userRegistrationModel.Phone" name="Phone" #phone="ngModel" class="form-control" placeholder="Phone" type="tel" required pattern="[0-9]{10}" maxlength="10">
+    <div [hidden]="phone.valid ||phone.pristine"
+         class="alert alert-danger">
+      Phone number is required
+    </div>
   </div>
 </div>
 
