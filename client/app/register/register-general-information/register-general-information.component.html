@@ -14,14 +14,14 @@
 <div class="form-group">
   <label class="col-md-2 control-label">Password</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Password" name="Password" type="password" class="form-control" placeholder="Password" required>
+    <input [(ngModel)]="userRegistrationModel.Password" name="Password" type="password" class="form-control" placeholder="Password" required maxlength="16" minlength="6">
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">Password Verify</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.PasswordVerify" name="PasswordVerify" type="password" class="form-control" placeholder="Password" required>
+    <input [(ngModel)]="userRegistrationModel.PasswordVerify" name="PasswordVerify" type="password" class="form-control" placeholder="Password" required maxlength="16" minlength="6">
   </div>
 </div>
 
