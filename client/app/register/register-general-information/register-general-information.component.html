@@ -3,7 +3,11 @@
 <div class="form-group">
   <label class="col-md-2 control-label">Email</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Email" name="Email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input [(ngModel)]="userRegistrationModel.Email" name="Email" #email="ngModel" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$">
+    <div [hidden]="email.valid || email.pristine"
+         class="alert alert-danger">
+      Email Address is required
+    </div>
   </div>
 </div>
 
@@ -24,21 +28,29 @@
 <div class="form-group">
   <label class="col-md-2 control-label">Firstname</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Firstname" name="Firstname" class="form-control" placeholder="Firstname" required>
+    <input [(ngModel)]="userRegistrationModel.Firstname" name="Firstname" #firstname="ngModel" class="form-control" placeholder="Firstname" required>
+    <div [hidden]="firstname.valid ||firstname.pristine"
+         class="alert alert-danger">
+      First name is required
+    </div>
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">Lastname</label>
   <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>
+    <input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" #lastname="ngModel" class="form-control" placeholder="Lastname" required>
+    <div [hidden]="lastname.valid ||lastname.pristine"
+         class="alert alert-danger">
+      Last name is required
+    </div>
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-2 control-label">Birthday</label>
   <div class="col-md-9">
-    <app-date-select [(ngModel)]="userRegistrationModel.Birthday"></app-date-select>
+    <app-date-select [(ngModel)]="userRegistrationModel.Birthday" ></app-date-select>
   </div>
 </div>
 
