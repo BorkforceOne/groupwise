@@ -9,11 +9,12 @@ import {AttributeString} from "../services/attributes/attribute-string.model";
 import {Subscription} from "rxjs";
 import {UserPhoto} from "../services/user/user-photo";
 import {ModalDirective, CarouselComponent} from "ng2-bootstrap";
-import {FileUploader, FileItem} from "ng2-file-upload";
+import {FileUploader} from "ng2-file-upload";
 import {AlertService} from "../services/alert/alert.service";
 import {Alert} from "../services/alert/alert";
 import {AttributeEnum} from "../services/attributes/attribute-enum.model";
 import {AttributeEnumValue} from "../services/attributes/attribute-enum-value.model";
+import {CookieService} from "angular2-cookie/services/cookies.service";
 //import {AttributeService} from "PATH";
 
 
@@ -49,7 +50,7 @@ export class UserProfilePageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private userService: UserService,
               private attributeService: AttributeService, private router: Router,
-              private alertService: AlertService) {
+              private alertService: AlertService, private cookieService: CookieService) {
     this.querySub = this.route.params.subscribe(params => {
       this.attributes = [];
       this.stringAttributes = [];
@@ -95,7 +96,7 @@ export class UserProfilePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.uploader = new FileUploader({url: this.photoURL, autoUpload: true});
+    this.uploader = new FileUploader({url: this.photoURL, autoUpload: true, authTokenHeader: 'X-XSRF-TOKEN', authToken: this.cookieService.get('XSRF-TOKEN')});
 
     this.uploader.onSuccessItem = (item: any , response: any, headers: any) => {
       // TODO: Add error checking!

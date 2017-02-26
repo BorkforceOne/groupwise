@@ -16,7 +16,8 @@ class MailerManager {
 
       // pre-load all templates
       this.loadTemplate("welcome", "server/templates/welcome.html", "server/templates/welcome.text", "Welcome to FlagFriends!")
-        .then(() => this.loadTemplate("validateEmail", "server/templates/validateEmail.html", "server/templates/validateEmail.text", "FlagFriends Confirm Account Creation"))
+        .then(() => this.loadTemplate("validateEmail", "server/templates/validateEmail.html", "server/templates/validateEmail.text", "FlagFriends - Confirm Account Creation"))
+        .then(() => this.loadTemplate("resetPasswordEmail", "server/templates/resetPasswordEmail.html", "server/templates/resetPasswordEmail.text", "FlagFriends - Password Reset"))
         .then(resolve)
         .catch((err) => {
           console.error("[MAILER] Could not load template " + err);
@@ -63,7 +64,6 @@ class MailerManager {
    */
   sendMail(mail, header, params) {
     return new Promise((resolve, reject) => {
-      /*
       mail(header, params, (error) => {
         if (error) {
           console.error("[MAILER] Could not dispatch email message, error: " + error);
@@ -72,8 +72,6 @@ class MailerManager {
         else
           resolve();
       })
-      */
-      resolve();
     })
   }
 }
