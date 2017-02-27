@@ -23,6 +23,10 @@ const AttributeDate = databaseManager.context.define('attributeDate', {
     allowNull: false,
     type:  Sequelize.STRING
   },
+  Question: {
+    allowNull: false,
+    type:  Sequelize.STRING
+  },
   ForType: {
     allowNull: false,
     type:  Sequelize.ENUM("STUDENT", "HOST", "BOTH")

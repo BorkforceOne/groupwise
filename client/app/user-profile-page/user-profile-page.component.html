@@ -52,10 +52,20 @@
                     <td>{{user.updatedAt | amTimeAgo}}</td>
                   </tr>
                   <ng-container *ngFor="let attribute of attributes">
-                    <tr>
-                      <td>{{attribute.Type.Description}}</td>
-                      <td>{{attribute.Value.Value}}</td>
-                    </tr>
+                    <ng-container [ngSwitch]="attributeService.getAttributeType(attribute)">
+                      <tr *ngSwitchCase="'DATE'">
+                        <td>{{attribute.Type.Description}}</td>
+                        <td>{{attribute.Value.Value | amDateFormat:'LL'}}</td>
+                      </tr>
+                      <tr *ngSwitchCase="'ENUM'">
+                        <td>{{attribute.Type.Description}}</td>
+                        <td>{{findOption(attribute.Type, attribute.Value).Display}}</td>
+                      </tr>
+                      <tr *ngSwitchCase="'RANGE'">
+                        <td>{{attribute.Type.Description}}</td>
+                        <td>{{attribute.Value.Value}}</td>
+                      </tr>
+                    </ng-container>
                   </ng-container>
                   <!---
                   <tr>

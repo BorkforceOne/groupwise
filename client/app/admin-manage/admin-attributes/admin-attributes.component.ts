@@ -5,11 +5,13 @@ import {ModalDirective} from "ng2-bootstrap";
 import {AttributeString} from "../../services/attributes/attribute-string.model";
 import {AttributeDate} from "../../services/attributes/attribute-date.model";
 import {AttributeRange} from "../../services/attributes/attribute-range.model";
-import {AttributeEnum} from "../../services/attributes/attribute-enum.model";
+import {AttributeEnum, Enum} from "../../services/attributes/attribute-enum.model";
+import * as _ from 'lodash';
 
 class AttributeView {
   Name: string;
   Description: string;
+  Question: string;
   Type: string;
   ForType: "STUDENT" | "HOST" | "BOTH";
   StringMaxLen: number;
@@ -21,6 +23,8 @@ class AttributeView {
   RangeMax: number;
   isInt: boolean;
   ExistingAttribute: Attribute = null;
+  EnumOptions: Enum[] = [];
+  SelectType: "DROPDOWN" | "RADIO";
 }
 
 @Component({
@@ -49,20 +53,14 @@ export class AdminAttributesComponent implements OnInit {
     this.attributeEditModal.show();
   }
 
-  private getAttributeType(attribute: Attribute) {
-    if (attribute.Type instanceof AttributeString)
-      return "STRING";
-
-    if (attribute.Type instanceof AttributeDate)
-      return "DATE";
-
-    if (attribute.Type instanceof AttributeRange)
-      return "RANGE";
-
-    if (attribute.Type instanceof AttributeEnum)
-      return "ENUM";
-
-    return null;
+  private guid(): string {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
   }
 
   editAttribute(attribute: Attribute) {
@@ -77,8 +75,9 @@ export class AdminAttributesComponent implements OnInit {
     this.editingAttribute.ExistingAttribute = attribute;
     this.editingAttribute.Name = attribute.Type.Name;
     this.editingAttribute.ForType = attribute.Type.ForType;
+    this.editingAttribute.Question = attribute.Type.Question;
     this.editingAttribute.Description = attribute.Type.Description;
-    this.editingAttribute.Type = this.getAttributeType(attribute);
+    this.editingAttribute.Type = this.attributeService.getAttributeType(attribute);
 
     switch (this.editingAttribute.Type) {
       case 'STRING':
@@ -89,9 +88,10 @@ export class AdminAttributesComponent implements OnInit {
         this.editingAttribute.DateMin = attribute.Type.MinDate;
         break;
       case 'ENUM':
+        this.editingAttribute.EnumOptions = _.cloneDeep(attribute.Type.Options);
+        this.editingAttribute.SelectType = attribute.Type.SelectType;
         this.editingAttribute.SelectMax = attribute.Type.MaxSelect;
         this.editingAttribute.SelectMin = attribute.Type.MinSelect;
-        //Need to do Options and type too!
         break;
       case 'RANGE':
         this.editingAttribute.RangeMin = attribute.Type.Min;
@@ -102,7 +102,7 @@ export class AdminAttributesComponent implements OnInit {
   }
 
   deleteAttribute(attribute: Attribute) {
-    let type = this.getAttributeType(attribute);
+    let type = this.attributeService.getAttributeType(attribute);
 
     switch (type) {
       case 'STRING':
@@ -143,6 +143,7 @@ export class AdminAttributesComponent implements OnInit {
           attributeString = this.editingAttribute.ExistingAttribute.Type;
 
         attributeString.Name = this.editingAttribute.Name;
+        attributeString.Question = this.editingAttribute.Question;
         attributeString.Description = this.editingAttribute.Description;
         attributeString.ForType = this.editingAttribute.ForType;
         attributeString.MaxLength = this.editingAttribute.StringMaxLen;
@@ -168,6 +169,7 @@ export class AdminAttributesComponent implements OnInit {
           attributeDate = this.editingAttribute.ExistingAttribute.Type;
 
         attributeDate.Name = this.editingAttribute.Name;
+        attributeDate.Question = this.editingAttribute.Question;
         attributeDate.Description = this.editingAttribute.Description;
         attributeDate.ForType = this.editingAttribute.ForType;
         attributeDate.MaxDate = this.editingAttribute.DateMax;
@@ -194,10 +196,14 @@ export class AdminAttributesComponent implements OnInit {
           attributeEnum = this.editingAttribute.ExistingAttribute.Type;
 
         attributeEnum.Name = this.editingAttribute.Name;
+        attributeEnum.Question = this.editingAttribute.Question;
         attributeEnum.Description = this.editingAttribute.Description;
         attributeEnum.ForType = this.editingAttribute.ForType;
+        attributeEnum.Options = this.editingAttribute.EnumOptions;
+        attributeEnum.SelectType = this.editingAttribute.SelectType;
         attributeEnum.MaxSelect = this.editingAttribute.SelectMax;
         attributeEnum.MinSelect = this.editingAttribute.SelectMax;
+
 
         if (isNew) {
           this.attributeService.createAttributeEnum(attributeEnum)
@@ -220,6 +226,7 @@ export class AdminAttributesComponent implements OnInit {
           attributeRange = this.editingAttribute.ExistingAttribute.Type;
 
         attributeRange.Name = this.editingAttribute.Name;
+        attributeRange.Question = this.editingAttribute.Question;
         attributeRange.Description = this.editingAttribute.Description;
         attributeRange.ForType = this.editingAttribute.ForType;
         attributeRange.Min = this.editingAttribute.RangeMin;
@@ -250,4 +257,14 @@ export class AdminAttributesComponent implements OnInit {
       this.editingAttribute = new AttributeView();
   }
 
+  addEnumOption(){
+    let newEnum = new Enum();
+    newEnum.Value = this.guid();
+    newEnum.Display = "";
+    this.editingAttribute.EnumOptions.push(newEnum);
+  }
+
+  deleteEnum(option) {
+    this.editingAttribute.EnumOptions.splice(this.editingAttribute.EnumOptions.indexOf(option), 1);
+  }
 }

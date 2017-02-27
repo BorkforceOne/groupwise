@@ -33,6 +33,22 @@ export class AttributeService extends BackendCommunicatorService{
     super(alertService);
   }
 
+  getAttributeType(attribute: Attribute) {
+    if (attribute.Type instanceof AttributeString)
+      return "STRING";
+
+    if (attribute.Type instanceof AttributeDate)
+      return "DATE";
+
+    if (attribute.Type instanceof AttributeRange)
+      return "RANGE";
+
+    if (attribute.Type instanceof AttributeEnum)
+      return "ENUM";
+
+    return null;
+  }
+
   getAttributeStrings(): Observable<AttributeString[]> {
     return this.http.get(this.stringRemoteUrlBase)
       .map(this.extractData.bind(this, AttributeString))

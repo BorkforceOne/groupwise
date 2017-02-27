@@ -14,7 +14,7 @@
         <td>{{attribute.Type.Name}}</td>
         <td>
           <span class="label label-default">
-            {{getAttributeType(attribute)}}
+            {{attributeService.getAttributeType(attribute)}}
           </span>
         </td>
         <td>
@@ -30,15 +30,15 @@
     </ng-container>
 
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
       <td>
         <button class="btn btn-success" (click)="addAttribute()">
           <span class="glyphicon glyphicon-plus"></span>
           Add
         </button>
       </td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     </tbody>
   </table>
@@ -56,13 +56,20 @@
       <div class="modal-body">
         <div class="form-horizontal">
           <div class="form-group">
+            <label class="col-md-2 control-label">Name</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="editingAttribute.Name" name="Name" class="form-control" placeholder="Name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
             <label class="col-md-2 control-label">Type</label>
             <div class="col-md-9">
               <select class="form-control" [(ngModel)]="editingAttribute.Type">
-                <option value="STRING">String</option>
+                <option value="STRING">Text</option>
                 <option value="DATE">Date</option>
-                <option value="ENUM">Enum</option>
-                <option value="RANGE">Range</option>
+                <option value="ENUM">Select</option>
+                <option value="RANGE">Number</option>
               </select>
             </div>
           </div>
@@ -79,16 +86,16 @@
           </div>
 
           <div class="form-group">
-            <label class="col-md-2 control-label">Name</label>
+            <label class="col-md-2 control-label">Profile Representation</label>
             <div class="col-md-9">
-              <input [(ngModel)]="editingAttribute.Name" name="Name" class="form-control" placeholder="Name" required>
+              <input [(ngModel)]="editingAttribute.Description" name="Description" class="form-control" placeholder="Description" required>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-md-2 control-label">Description</label>
+            <label class="col-md-2 control-label">Question Representation</label>
             <div class="col-md-9">
-              <input [(ngModel)]="editingAttribute.Description" name="Description" class="form-control" placeholder="Description" required>
+              <input [(ngModel)]="editingAttribute.Question" name="Question" class="form-control" placeholder="Question" required>
             </div>
           </div>
 
@@ -97,7 +104,7 @@
               <div class="form-group">
                 <label class="col-md-2 control-label">Max Response Length</label>
                 <div class="col-md-9">
-                  <input [(ngModel)]="editingAttribute.StringMaxLen" type="number" name="StringMaxLen" class="form-control">
+                  <input [(ngModel)]="editingAttribute.StringMaxLen" type="number" name="StringMaxLen" placeholder="No limit" class="form-control">
                 </div>
               </div>
             </ng-container>
@@ -119,13 +126,56 @@
               <div class="form-group">
                 <label class="col-md-2 control-label">Min Select</label>
                 <div class="col-md-9">
-                  <input [(ngModel)]="editingAttribute.SelectMin" type="number" name="MinSelect" class="form-control">
+                  <input [(ngModel)]="editingAttribute.SelectMin" type="number" name="MinSelect" placeholder="No limit" class="form-control">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Max Select</label>
                 <div class="col-md-9">
-                  <input [(ngModel)]="editingAttribute.SelectMax" type="number" name="MaxSelect" class="form-control">
+                  <input [(ngModel)]="editingAttribute.SelectMax" type="number" name="MaxSelect" placeholder="No limit" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">Type of Enum</label>
+                <div class="col-md-9">
+                  <select class="form-control" [(ngModel)]="editingAttribute.SelectType">
+                    <option value="DROPDOWN">Drop Down</option>
+                    <option value="RADIO">Radio Buttons</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12">
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>Option</th>
+                      <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <ng-container *ngFor="let option of editingAttribute.EnumOptions">
+                      <tr>
+                        <td>
+                          <input [(ngModel)]="option.Display" name="Option" placeholder="Option" class="form-control">
+                        </td>
+                        <td>
+                          <span class="glyphicon glyphicon-remove text-danger clickable" (click)="deleteEnum(option)"></span>
+                        </td>
+                      </tr>
+                    </ng-container>
+
+                    <tr>
+                      <td>
+                        <button class="btn btn-success" (click)="addEnumOption()">
+                          <span class="glyphicon glyphicon-plus"></span>
+                          Add
+                        </button>
+                      </td>
+                      <td></td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </ng-container>
@@ -133,17 +183,17 @@
               <div class="form-group">
                 <label class="col-md-2 control-label">Min Value</label>
                 <div class="col-md-9">
-                  <input [(ngModel)]="editingAttribute.RangeMin" [type]="editingAttribute.isInt ? 'number' : null" name="Min" class="form-control">
+                  <input [(ngModel)]="editingAttribute.RangeMin" [type]="editingAttribute.isInt ? 'number' : null" name="Min" placeholder="No limit" class="form-control">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Max Value</label>
                 <div class="col-md-9">
-                  <input [(ngModel)]="editingAttribute.RangeMax" [type]="editingAttribute.isInt ? 'number' : null" name="Max" class="form-control">
+                  <input [(ngModel)]="editingAttribute.RangeMax" [type]="editingAttribute.isInt ? 'number' : null" name="Max" placeholder="No limit" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-2 control-label">Number?</label>
+                <label class="col-md-2 control-label">Whole numbers only?</label>
                 <div class="col-md-9">
                   <select class="form-control" [(ngModel)]="editingAttribute.isInt">
                     <option [value]="true">Yes</option>
@@ -153,12 +203,14 @@
               </div>
             </ng-container>
           </ng-container>
+        </div>
+        <div class="modal-footer">
 
           <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-
-              <div class="btn-toolbar">
+            <div class="col-md-12">
+              <div class="btn-toolbar pull-right">
                 <button class="btn btn-primary" (click)="resetEditingAttribute()">Reset</button>
+                <button class="btn btn-primary" (click)="attributeEditModal.hide()">Close</button>
                 <button class="btn btn-primary" (click)="submitAttribute()">Submit</button>
               </div>
             </div>
