@@ -3,6 +3,11 @@ import { UserService } from '../services/user/user.service';
 import { UserLogin } from "../services/user/user-login";
 import { Router } from '@angular/router'
 import {ModalDirective} from "ng2-bootstrap";
+import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
+
+interface UserPasswordReset {
+  Email: string
+}
 
 @Component({
   selector: 'app-login',
@@ -12,24 +17,32 @@ import {ModalDirective} from "ng2-bootstrap";
 export class LoginComponent implements OnInit {
   @ViewChild('staticModal') public staticModal:ModalDirective;
 
-  editingUser: UserLogin = new UserLogin();
-  passwordResetEmail: string = "";
+  loginForm: FormGroup;
+  resetPasswordForm: FormGroup;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.editingUser = new UserLogin();
+
+    this.loginForm = this.formBuilder.group({
+      Email: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      Password: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+    });
+
+    this.resetPasswordForm = this.formBuilder.group({
+      Email: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+    });
   }
 
-  onLogin() {
-    this.userService.login(this.editingUser)
+  onLogin(user: UserLogin, valid: boolean) {
+    this.userService.login(user)
       .then(() => {
         this.router.navigateByUrl('');
       });
   }
 
-  onForgotPassword() {
-    this.userService.resetPassword(this.passwordResetEmail)
+  onForgotPassword(userReset: UserPasswordReset, valid: boolean) {
+    this.userService.resetPassword(userReset.Email)
       .then(() => {
         this.staticModal.hide();
       })

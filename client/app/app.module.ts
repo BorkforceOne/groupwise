@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes}   from '@angular/router';
 import {AlertModule, DropdownModule, CollapseDirective, TabsModule, ModalModule, CarouselModule} from 'ng2-bootstrap';
@@ -88,7 +88,8 @@ import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-re
     MyDatePickerModule,
     MomentModule,
     TabsModule.forRoot(),
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService, CookieService],
   bootstrap: [AppComponent]
