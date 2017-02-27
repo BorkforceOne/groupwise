@@ -9,26 +9,102 @@ import {AlertService} from "../../alert/alert.service";
 import {AttributeService} from "../../attributes/attribute.service";
 import {Attribute} from "../../attributes/attribute.model";
 import {BackendCommunicatorService} from "../../backend-communicator.service";
+import {FormGroup, FormBuilder, Form, Validators} from "@angular/forms";
 
 @Injectable()
 export class UserRegistrationService extends BackendCommunicatorService{
   private headers = new Headers({'Content-Type': 'application/json'});
   private usersUrl = '/api/v1/users';  // URL to web api
-  private userRegistrationModel: UserRegistrationModel = new UserRegistrationModel();
+  public userRegistrationForm: FormGroup;
+  public hostAttributeForm: FormGroup;
+  public studentAttributeForm: FormGroup;
+
   private attributes: Attribute[] = [];
+
   private current : number = 0;
   private sequence : string[] = [];
 
-  constructor(private router : Router, private http: Http, alertService: AlertService, private attributeService: AttributeService) {
+  constructor(private router : Router, private http: Http, alertService: AlertService, private attributeService: AttributeService, private formBuilder: FormBuilder) {
     super(alertService);
+
+    this.userRegistrationForm = this.formBuilder.group({
+      Email: ['', [<any>Validators.required, <any>Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$")]],
+      Password: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
+      PasswordVerify: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
+      Firstname: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      Lastname: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      Birthday: ['', [<any>Validators.required]],
+      Phone: ['', [<any>Validators.required, <any>Validators.pattern("[0-9]{10}")]],
+      Gender: ['', [<any>Validators.required]],
+      Type: ['', [<any>Validators.required]]
+    }, {validator: this.matchingPasswords('Password', 'PasswordVerify')});
 
     this.attributeService
       .getAllAttributes()
-      .subscribe(a => {this.attributes = a});
+      .subscribe((attributes: Attribute[]) => {
+        this.attributes = attributes;
+        let hostAttrs = attributes.filter((attr) => attr.Type.ForType == 'HOST' || attr.Type.ForType == 'BOTH');
+        let studentAttrs = attributes.filter((attr) => attr.Type.ForType == 'STUDENT' || attr.Type.ForType == 'BOTH');
+        let hostForm = {};
+        let studentForm = {};
+
+        this.processAttrs(hostForm, hostAttrs);
+        this.processAttrs(studentForm, studentAttrs);
+
+        this.hostAttributeForm = this.formBuilder.group(hostForm);
+        this.studentAttributeForm = this.formBuilder.group(studentForm);
+      });
   }
 
-  getUserRegistrationModel() : UserRegistrationModel {
-    return this.userRegistrationModel;
+  processAttrs(form, attrs) {
+
+    attrs.forEach((attr) => {
+      switch (this.attributeService.getAttributeType(attr)) {
+        case 'STRING':
+          var validators = [];
+          validators.push(<any>Validators.required);
+          form[attr.Type.Name] = ['', validators];
+          break;
+        case 'DATE':
+          var validators = [];
+          validators.push(<any>Validators.required);
+          form[attr.Type.Name] = ['', validators];
+          break;
+        case 'RANGE':
+          var validators = [];
+          validators.push(<any>Validators.required);
+          form[attr.Type.Name] = ['', validators];
+          break;
+        case 'ENUM':
+          var validators = [];
+          validators.push(<any>Validators.required);
+          form[attr.Type.Name] = ['', validators];
+          break;
+      }
+    });
+  }
+
+  getAttributeForm() {
+    switch (this.getType()) {
+      case 'STUDENT':
+        return this.studentAttributeForm;
+      case 'HOST':
+        return this.hostAttributeForm;
+    }
+  }
+
+  getType() {
+    return this.userRegistrationForm.controls['Type'].value;
+  }
+
+  matchingPasswords(passwordKey: string, passwordConfirmKey: string) {
+    return (group: FormGroup) => {
+      let passwordInput = group.controls[passwordKey];
+      let passwordConfirmationInput = group.controls[passwordConfirmKey];
+      if (passwordInput.value !== passwordConfirmationInput.value) {
+        return passwordConfirmationInput.setErrors({notEquivalent: true})
+      }
+    }
   }
 
   getAttributes() : Attribute[] {
@@ -75,21 +151,26 @@ export class UserRegistrationService extends BackendCommunicatorService{
     }
   }
 
-  register(): Promise<User> {
+  register(user: UserRegistrationModel): Promise<User> {
     return this.http
-      .post(this.usersUrl, JSON.stringify(this.userRegistrationModel), {headers: this.headers})
+      .post(this.usersUrl, JSON.stringify(user), {headers: this.headers})
       .map(this.extractData.bind(this, User))
       .toPromise()
       .then((user: User) => {
+        let attributeValues = this.getAttributeForm().value;
         let attributes = this.attributes.filter((attribute) => {
           return (attribute.Type.ForType === 'BOTH' || attribute.Type.ForType == user.Type)
         });
 
         attributes.map((attribute) => {
           attribute.Value.UserId = user.Id;
+          if (this.attributeService.getAttributeType(attribute) == 'RANGE')
+            attributeValues[attribute.Type.Name] = +attributeValues[attribute.Type.Name];
+          attribute.Value.Value = attributeValues[attribute.Type.Name];
         });
 
-        this.attributeService.updateAllAttributes(attributes)
+        this.attributeService.updateAllAttributes(attributes);
+        return user;
       })
       .catch(this.handleError.bind(this));
   }

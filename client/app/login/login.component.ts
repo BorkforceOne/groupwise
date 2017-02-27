@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     this.loginForm = this.formBuilder.group({
-      Email: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      Password: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      Email: ['', [<any>Validators.required, <any>Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$")]],
+      Password: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
     });
 
     this.resetPasswordForm = this.formBuilder.group({
-      Email: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      Email: ['', [<any>Validators.required, <any>Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$")]],
     });
   }
 
