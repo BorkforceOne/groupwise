@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import {UserRegistrationService} from "../../services/user/registration-service/user-registration.service";
-import {UserRegistrationModel} from "../../services/user/registration-service/user-registration.model";
-import {AttributeService} from "../../services/attributes/attribute.service";
 import {Attribute} from "../../services/attributes/attribute.model";
 
 @Component({
@@ -13,17 +11,15 @@ import {Attribute} from "../../services/attributes/attribute.model";
 })
 
 export class RegisterAttributesComponent implements OnInit {
-  userRegistrationModel: UserRegistrationModel;
   attributes: Array<Attribute> = [];
 
-  constructor(private userRegistrationService: UserRegistrationService, private attributeService: AttributeService) { }
+  constructor(private userRegistrationService: UserRegistrationService) {
+  }
 
   ngOnInit() {
-    this.userRegistrationModel = this.userRegistrationService.getUserRegistrationModel();
+    let type = this.userRegistrationService.getType();
     this.attributes = this.userRegistrationService.getAttributes()
-      .filter((attribute) => {
-        return attribute.Type.ForType == this.userRegistrationModel.Type || attribute.Type.ForType == 'BOTH';
-      });
+      .filter((attribute) => attribute.Type.ForType == type || attribute.Type.ForType == 'BOTH');
   }
 
 }

@@ -1,42 +1,58 @@
-<ng-container [ngSwitch]="getAttributeType()">
-  <div class="form-group" *ngSwitchCase="'STRING'">
-    <label class="col-md-3 control-label">{{Attribute.Description}}</label>
-    <div class="col-md-9">
-      <textarea [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" class="form-control" required></textarea>
-    </div>
-  </div>
-
-  <div class="form-group" *ngSwitchCase="'DATE'">
-    <label class="col-md-3 control-label">{{Attribute.Description}}</label>
-    <div class="col-md-3">
-      <app-date-select [(ngModel)]="AttributeValue.Value"></app-date-select>
-    </div>
-  </div>
-
-  <div class="form-group" *ngSwitchCase="'RANGE'">
-    <label class="col-md-3 control-label">{{Attribute.Description}}</label>
-    <div class="col-md-3">
-      <input [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" [type]="Attribute.isInt ? 'number' : null" [min]="Attribute.Min" [max]="Attribute.Max" (change)="onNumberChange($event)" class="form-control" required/>
-    </div>
-  </div>
-
-  <div class="form-group" *ngSwitchCase="'ENUM'">
-    <label class="col-md-3 control-label">{{Attribute.Description}}</label>
-    <div class="col-md-3" *ngIf="Attribute.SelectType === 'DROPDOWN'">
-      <select class="form-control" [name]="Attribute.Name" [(ngModel)]="AttributeValue.Value">
-        <ng-container *ngFor="let option of Attribute.Options">
-          <option [value]="option.Value">{{option.Display}}</option>
-        </ng-container>
-      </select>
-    </div>
-
-    <div class="col-md-3" *ngIf="Attribute.SelectType === 'RADIO'">
-      <ng-container *ngFor="let option of Attribute.Options">
-        <div class="radio">
-          <label><input type="radio" [(ngModel)]="AttributeValue.Value" [name]="Attribute.Name" [value]="option.Value">{{option.Display}}</label>
+<form [formGroup]="attributeRegistrationForm" >
+  <ng-container [ngSwitch]="attributeService.getAttributeType(Attribute)">
+    <div class="form-group required" *ngSwitchCase="'STRING'">
+      <label class="col-md-3 control-label">{{Attribute.Type.Description}}</label>
+      <div class="col-md-9">
+        <textarea [formControlName]="Attribute.Type.Name" class="form-control" required></textarea>
+        <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
+          Field is required
         </div>
-      </ng-container>
+      </div>
     </div>
-  </div>
-</ng-container>
 
+    <div class="form-group required" *ngSwitchCase="'DATE'">
+      <label class="col-md-3 control-label">{{Attribute.Type.Description}}</label>
+      <div class="col-md-3">
+        <app-date-select [formControlName]="Attribute.Type.Name"></app-date-select>
+        <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
+          Field is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group required" *ngSwitchCase="'RANGE'">
+      <label class="col-md-3 control-label">{{Attribute.Type.Description}}</label>
+      <div class="col-md-3">
+        <input [formControlName]="Attribute.Type.Name" [type]="Attribute.Type.isInt ? 'number' : null" [min]="Attribute.Type.Min" [max]="Attribute.Type.Max" (change)="onNumberChange($event)" class="form-control" required/>
+        <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
+          Field is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group required" *ngSwitchCase="'ENUM'">
+      <label class="col-md-3 control-label">{{Attribute.Type.Description}}</label>
+      <div class="col-md-3" *ngIf="Attribute.Type.SelectType === 'DROPDOWN'">
+        <select class="form-control" [name]="Attribute.Type.Name" [formControlName]="Attribute.Type.Name">
+          <ng-container *ngFor="let option of Attribute.Type.Options">
+            <option [value]="option.Value">{{option.Display}}</option>
+          </ng-container>
+        </select>
+        <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
+          Field is required
+        </div>
+      </div>
+
+      <div class="col-md-3" *ngIf="Attribute.Type.SelectType === 'RADIO'">
+        <ng-container *ngFor="let option of Attribute.Type.Options">
+          <div class="radio">
+            <label><input type="radio" [formControlName]="Attribute.Type.Name" [value]="option.Value">{{option.Display}}</label>
+          </div>
+        </ng-container>
+        <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
+          Field is required
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</form>

@@ -18,10 +18,10 @@
             <div class="col-md-offset-2 col-md-10">
               <div class="btn-toolbar">
                 <div class="btn-group">
-                  <button (click)="onPrevious()" [disabled]="getSequenceCurrent() == 1" class="btn btn-primary">Previous</button>
-                  <button (click)="onNext()" [disabled]="(getSequenceCurrent() == getSequenceLength())" class="btn btn-primary">Next</button>
+                  <button (click)="onPrevious()" [disabled]="getSequenceCurrent() == 1 || !canMoveToPrev()" class="btn btn-primary">Previous</button>
+                  <button (click)="onNext()" [disabled]="(getSequenceCurrent() == getSequenceLength()) || !canMoveToNext()" class="btn btn-primary">Next</button>
                 </div>
-                <button (click)="onRegister()" [disabled]="getSequenceCurrent() != getSequenceLength()" class="btn btn-primary">Register</button>
+                <button (click)="onRegister(userRegistrationForm.value)" [disabled]="getSequenceCurrent() != getSequenceLength() || !canMoveToNext()" class="btn btn-primary">Register</button>
               </div>
 
               <br>

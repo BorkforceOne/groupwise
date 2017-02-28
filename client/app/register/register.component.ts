@@ -5,6 +5,7 @@ import {Alert} from "../services/alert/alert";
 import {Router} from "@angular/router";
 import {UserRegistrationService} from "../services/user/registration-service/user-registration.service";
 import {UserRegistrationModel} from "../services/user/registration-service/user-registration.model";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ import {UserRegistrationModel} from "../services/user/registration-service/user-
   providers: [UserRegistrationService]
 })
 export class RegisterComponent implements OnInit {
-  userRegistrationModel: UserRegistrationModel;
+  userRegistrationForm: FormGroup;
   registrationComplete: Boolean;
 
   constructor(private alertService: AlertService, private router: Router, private userRegistrationService: UserRegistrationService) { }
@@ -23,7 +24,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigateByUrl('/register');
 
     this.userRegistrationService.setSequence(['/register', '/register/attributes']);
-    this.userRegistrationModel = this.userRegistrationService.getUserRegistrationModel();
+    this.userRegistrationForm = this.userRegistrationService.userRegistrationForm;
     this.registrationComplete = false;
   }
 
@@ -47,8 +48,20 @@ export class RegisterComponent implements OnInit {
     this.userRegistrationService.previous();
   }
 
+  canMoveToNext() {
+    if (this.getSequenceCurrent() == 1)
+      return this.userRegistrationForm.valid;
+    if (this.getSequenceCurrent() == 2)
+      return this.userRegistrationService.getAttributeForm().valid;
+    return false;
+  }
+
+  canMoveToPrev() {
+    return true;
+  }
+
   onRegister(user: UserRegistrationModel) {
-    this.userRegistrationService.register()
+    this.userRegistrationService.register(user)
       .then(user => {
         const alert = new Alert();
         alert.Text = "Please check your email to complete registration";

@@ -1,77 +1,104 @@
 <legend>General Information</legend>
 
-<div class="form-group">
-  <label class="col-md-2 control-label">Email</label>
-  <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Email" name="Email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-2 control-label">Password</label>
-  <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Password" name="Password" type="password" class="form-control" placeholder="Password" required>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-2 control-label">Password Verify</label>
-  <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.PasswordVerify" name="PasswordVerify" type="password" class="form-control" placeholder="Password" required>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-2 control-label">Firstname</label>
-  <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Firstname" name="Firstname" class="form-control" placeholder="Firstname" required>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-2 control-label">Lastname</label>
-  <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Lastname" name="Lastname" class="form-control" placeholder="Lastname" required>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-2 control-label">Birthday</label>
-  <div class="col-md-9">
-    <app-date-select [(ngModel)]="userRegistrationModel.Birthday"></app-date-select>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-2 control-label">Phone</label>
-  <div class="col-md-9">
-    <input [(ngModel)]="userRegistrationModel.Phone" name="Phone" class="form-control" placeholder="Phone" type="tel" required>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-2 control-label">Gender</label>
-  <div class="col-md-9">
-    <div class="radio-inline">
-      <label><input type="radio" [(ngModel)]="userRegistrationModel.Gender"  name="Gender" value="MALE">Male</label>
-    </div>
-    <div class="radio-inline">
-      <label><input type="radio" [(ngModel)]="userRegistrationModel.Gender" name="Gender" value="FEMALE">Female</label>
-    </div>
-    <div class="radio-inline">
-      <label><input type="radio" [(ngModel)]="userRegistrationModel.Gender" name="Gender" value="OTHER">Other</label>
+<form class="form-horizontal" [formGroup]="userRegistrationForm">
+  <div class="form-group required">
+    <label class="col-md-2 control-label">Email</label>
+    <div class="col-md-9">
+      <input formControlName="Email" type="email" class="form-control" placeholder="Email address" required>
+      <div [hidden]="userRegistrationForm.controls.Email.valid || userRegistrationForm.controls.Email.pristine" class="alert alert-danger">
+        Email Address is required
+      </div>
     </div>
   </div>
-</div>
 
-<div class="form-group">
-  <label class="col-md-2 control-label">I am a</label>
-  <div class="col-md-9">
-    <div class="radio-inline">
-      <label><input type="radio" [(ngModel)]="userRegistrationModel.Type"  name="Type" value="STUDENT">Student</label>
-    </div>
-    <div class="radio-inline">
-      <label><input type="radio" [(ngModel)]="userRegistrationModel.Type" name="Type" value="HOST">Host</label>
+  <div class="form-group required">
+    <label class="col-md-2 control-label">Password</label>
+    <div class="col-md-9">
+      <input formControlName="Password" type="password" class="form-control" placeholder="Password" required>
+      <div [hidden]="userRegistrationForm.controls.Password.valid || userRegistrationForm.controls.Password.pristine" class="alert alert-danger">
+        Password is required
+      </div>
     </div>
   </div>
-</div>
+
+  <div class="form-group required">
+    <label class="col-md-2 control-label">Password Verify</label>
+    <div class="col-md-9">
+      <input formControlName="PasswordVerify" type="password" class="form-control" placeholder="Password Verify" required>
+      <div [hidden]="userRegistrationForm.controls.PasswordVerify.valid || userRegistrationForm.controls.PasswordVerify.pristine || userRegistrationForm.controls.PasswordVerify.errors.notEquivalent" class="alert alert-danger">
+        Password verify is required
+      </div>
+      <div [hidden]="userRegistrationForm.controls.PasswordVerify.valid || userRegistrationForm.controls.PasswordVerify.pristine || !userRegistrationForm.controls.PasswordVerify.errors.notEquivalent" class="alert alert-danger">
+        Passwords do not match
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group required">
+    <label class="col-md-2 control-label">Firstname</label>
+    <div class="col-md-9">
+      <input formControlName="Firstname" class="form-control" placeholder="Firstname" required>
+      <div [hidden]="userRegistrationForm.controls.Firstname.valid || userRegistrationForm.controls.Firstname.pristine" class="alert alert-danger">
+        Firstname is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group required">
+    <label class="col-md-2 control-label">Lastname</label>
+    <div class="col-md-9">
+      <input formControlName="Lastname" class="form-control" placeholder="Lastname" required>
+      <div [hidden]="userRegistrationForm.controls.Lastname.valid || userRegistrationForm.controls.Lastname.pristine" class="alert alert-danger">
+        Lastname is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group required">
+    <label class="col-md-2 control-label">Birthday</label>
+    <div class="col-md-9">
+      <app-date-select formControlName="Birthday" required></app-date-select>
+      <div [hidden]="userRegistrationForm.controls.Birthday.valid || userRegistrationForm.controls.Birthday.pristine" class="alert alert-danger">
+        Birthday required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group required">
+    <label class="col-md-2 control-label">Phone</label>
+    <div class="col-md-9">
+      <input formControlName="Phone" class="form-control" placeholder="Phone" type="tel" required>
+      <div [hidden]="userRegistrationForm.controls.Phone.valid || userRegistrationForm.controls.Phone.pristine" class="alert alert-danger">
+        Phone number is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group required">
+    <label class="col-md-2 control-label">Gender</label>
+    <div class="col-md-9">
+      <div class="radio-inline">
+        <label><input type="radio" formControlName="Gender" value="MALE">Male</label>
+      </div>
+      <div class="radio-inline">
+        <label><input type="radio" formControlName="Gender" value="FEMALE">Female</label>
+      </div>
+      <div class="radio-inline">
+        <label><input type="radio" formControlName="Gender" value="OTHER">Other</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group required">
+    <label class="col-md-2 control-label">I am a</label>
+    <div class="col-md-9">
+      <div class="radio-inline">
+        <label><input type="radio" formControlName="Type" value="STUDENT">Student</label>
+      </div>
+      <div class="radio-inline">
+        <label><input type="radio" formControlName="Type" value="HOST">Host</label>
+      </div>
+    </div>
+  </div>
+
+</form>
