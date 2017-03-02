@@ -46,6 +46,7 @@ import { AdminAttributesComponent } from './admin-manage/admin-attributes/admin-
 import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-reporting.component';
 import { ChatWindowComponent } from './chat/chat-window/chat-window.component';
 import {ChatService} from "./services/chat/chat.service";
+import { RegisterAddonPageComponent } from './register/register-addon-page/register-addon-page.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import {ChatService} from "./services/chat/chat.service";
     AdminConfigurationComponent,
     AdminAttributesComponent,
     AdminReportingComponent,
-    ChatWindowComponent
+    ChatWindowComponent,
+    RegisterAddonPageComponent
   ],
   imports: [
     BrowserModule,

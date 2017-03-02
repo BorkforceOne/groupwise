@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     if (this.router.url != '/register')
       this.router.navigateByUrl('/register');
 
-    this.userRegistrationService.setSequence(['/register', '/register/attributes']);
+    this.userRegistrationService.setSequence(['/register', '/register/prescreen', '/register/attributes']);
     this.userRegistrationForm = this.userRegistrationService.userRegistrationForm;
     this.registrationComplete = false;
   }
@@ -52,6 +52,8 @@ export class RegisterComponent implements OnInit {
     if (this.getSequenceCurrent() == 1)
       return this.userRegistrationForm.valid;
     if (this.getSequenceCurrent() == 2)
+      return true;
+    if (this.getSequenceCurrent() == 3)
       return this.userRegistrationService.getAttributeForm().valid;
     return false;
   }
