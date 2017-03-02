@@ -60,7 +60,10 @@ class DatabaseManager {
       return new Promise((resolve, reject) => {
         resolve(this.context.sync({force: force}));
       })
-        .then(() => seed.doSeed())
+        .then(() => {
+          if (force)
+            seed.doSeed()
+        })
         .catch(e => {
           console.error(e);
         });

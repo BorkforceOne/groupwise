@@ -17,7 +17,6 @@ import {RegisterAttributesComponent} from "./register/register-attributes/regist
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'contact', component: ContactComponent },
-  { path: 'chat', component: ChatComponent, canActivate: [LoggedinGuard] },
   { path: 'user-profile/:id', component: UserProfilePageComponent, canActivate: [] },//Eventual Login guard
   { path: 'register', component: RegisterComponent, canActivate: [NotLoggedinGuard], canActivateChild: [NotLoggedinGuard],
     children: [

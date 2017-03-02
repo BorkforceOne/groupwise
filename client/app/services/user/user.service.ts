@@ -133,5 +133,4 @@ export class UserService extends BackendCommunicatorService{
       .map(this.extractData.bind(this, UserPhoto))
       .catch(this.handleError.bind(this));
   }
-
 }

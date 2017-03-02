@@ -11,16 +11,23 @@ import {UserService} from "../../services/user/user.service";
   inputs: ['message']
 })
 export class ChatMessageComponent implements OnInit {
-
-  public message: ChatMessage;
+  private defaultPhotoURL: string = "/assets/profile-placeholder-default.png";
+  private photoURL: string = "/api/v1/user-photos";
+  private profileImage: string = this.defaultPhotoURL;
+  private message: ChatMessage;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userService.getUserPhotosByUserId(this.message.UserId)
+      .subscribe((photos) => {
+        if (photos.length > 0)
+          this.profileImage = this.photoURL + `/${photos[0].Id}`
+      })
   }
 
   isLoggedInUser(): boolean{
-    return this.message.User.Id == this.userService.getLoggedInUser().Id;
+    return this.message.UserId == this.userService.getLoggedInUser().Id;
   }
 
 }

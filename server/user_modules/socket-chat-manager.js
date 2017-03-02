@@ -6,10 +6,10 @@ class SocketChatManager {
     socket.on('message', this.onMessage.bind(this, socket));
   }
 
-  onMessage(socket, message) {
+  onMessage(socket, payload) {
     let received = (new Date()).toISOString();
 
-    socketManager.getSession(socket)
+    socketManager.getSession(socket.sessionId)
       .then((session) => {
         return User.findOne({
           where: {
@@ -18,7 +18,15 @@ class SocketChatManager {
         })
       })
       .then((user) => {
-        socketManager.context.emit('on.message', {Message: message, UserId: user.Id, Received: received});
+        let message = payload.Message;
+        let userId = payload.UserId;
+        socketManager.getSocket(userId)
+          .then((otherSock) => {
+            otherSock.emit('on.message', {Message: message, UserId: user.Id, Received: received});
+          })
+          .catch((e) => {
+            console.error("Trying to send message to non-existent user");
+          });
       })
   }
 }

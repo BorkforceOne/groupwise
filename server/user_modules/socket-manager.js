@@ -9,6 +9,7 @@ class SocketManager {
 
   constructor() {
     this.context = null;
+    this.sockets = [];
   }
 
   init() {
@@ -17,34 +18,63 @@ class SocketManager {
       this.context = socketio(http.context);
 
       this.context.on('connection', (socket) => {
+        this.sockets.push(socket);
 
-        socket.on('disconnect', () => {
+        let sid = this.getSessionId(socket);
+        socket.sessionId = sid;
 
-        });
+        this.getSession(sid)
+          .then((session) => {
+            if (session) {
+              session.socketId = socket.id;
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+          });
 
         const socketChat = require('./socket-chat-manager');
-        socketChat.init(socket);
 
+        socket.on('disconnect', () => {
+          this.sockets.splice(this.sockets.indexOf(socketChat), 1);
+          console.log("[SOCKET] Removing disconnected client");
+        });
+
+        socketChat.init(socket);
       });
 
       resolve();
     });
   }
 
-  getSocketGuid(socket) {
+  getSessionId(socket) {
     let cookies = cookie.parse(socket.request.headers.cookie);
-    return cookies['guid'];
-  };
+    let sid = cookieParser.signedCookie(cookies['connect.sid'], config.session.secret);
+    return sid;
+  }
 
-  getSession(socket) {
+  getSession(sid) {
     return new Promise((resolve, reject) => {
-      let cookies = cookie.parse(socket.request.headers.cookie);
-      let sid = cookieParser.signedCookie(cookies['connect.sid'], config.session.secret);
       express.sessionStore.get(sid)
         .then((session) => resolve(session))
         .catch((error) => reject(error));
     });
   };
+
+  getSocket(userId) {
+    return new Promise((resolve, reject) => {
+      for (let i = 0; i < this.sockets.length; i ++) {
+        let socket = this.sockets[i];
+        this.getSession(socket.sessionId)
+          .then((session) => {
+            if (session && session.userId == userId) {
+              resolve(socket);
+            }
+          })
+          .catch();
+      }
+    });
+  }
 }
 
 module.exports = new SocketManager();

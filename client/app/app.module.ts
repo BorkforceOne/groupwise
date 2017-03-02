@@ -44,6 +44,8 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
 import { AdminConfigurationComponent } from './admin-manage/admin-configuration/admin-configuration.component';
 import { AdminAttributesComponent } from './admin-manage/admin-attributes/admin-attributes.component';
 import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-reporting.component';
+import { ChatWindowComponent } from './chat/chat-window/chat-window.component';
+import {ChatService} from "./services/chat/chat.service";
 
 @NgModule({
   declarations: [
@@ -74,7 +76,8 @@ import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-re
     AgePipe,
     AdminConfigurationComponent,
     AdminAttributesComponent,
-    AdminReportingComponent
+    AdminReportingComponent,
+    ChatWindowComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,7 @@ import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-re
     CarouselModule.forRoot(),
     ReactiveFormsModule
   ],
-  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService, CookieService],
+  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService, CookieService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import * as io from "socket.io-client";
+import {CookieService} from "angular2-cookie/services/cookies.service";
 
 @Injectable()
 export class SocketService {
   private host: string = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
   socket: SocketIOClient.Socket;
 
-  constructor() {
+  constructor(private cookieService: CookieService) {
     this.socket = io.connect(this.host);
     this.socket.on("connect", () => this.connect());
     this.socket.on("disconnect", () => this.disconnect());
@@ -17,6 +18,10 @@ export class SocketService {
   }
 
   public emit(action, payload) {
+    let packedPayload = {
+      Payload: payload,
+      SID: this.cookieService.get('connect.sid')
+    };
     this.socket.emit(action, payload);
   }
 
