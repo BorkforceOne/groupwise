@@ -27,4 +27,10 @@ export class ConfigService extends BackendCommunicatorService {
       .toPromise()
       .catch(this.handleError.bind(this));
   }
+
+  handleError(error: any) {
+    if (error instanceof Response)
+      error = this.parseError(error);
+    return Promise.reject(error.message || error);
+  }
 }

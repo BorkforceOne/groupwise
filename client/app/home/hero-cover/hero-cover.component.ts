@@ -7,15 +7,17 @@ import {ConfigService} from "../../services/config/config.service";
   styleUrls: ['./hero-cover.component.scss']
 })
 export class HeroCoverComponent implements OnInit {
-  private bannerURL = "/assets/hero-cover-default.jpg";
-  private host: string = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+  private bannerURL = null;
+  private defaultBannerURL = "/assets/hero-cover-default.jpg";
 
   constructor(private configService: ConfigService) { }
 
   ngOnInit() {
     this.configService.getValue("BannerId")
       .subscribe(kvp => {
-        this.bannerURL = `${this.host}/api/v1/attachments/${kvp.Value}`;
+        this.bannerURL = `/api/v1/attachments/${kvp.Value}`;
+      }, err => {
+        this.bannerURL = this.defaultBannerURL;
       });
   }
 

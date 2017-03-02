@@ -1,3 +1,7 @@
+const ErrorModule = require('../error');
+const AppError = ErrorModule.AppError;
+const AppErrorTypes = ErrorModule.AppErrorTypes;
+
 module.exports = {};
 
 /**
@@ -44,7 +48,7 @@ module.exports.mapDataToEntity = mapDataToEntity;
 const mapDataToInstance = function(instance, data) {
   return new Promise((resolve, reject) => {
     if (instance == null)
-      reject("Instance cannot be null while mapping");
+      reject(new AppError("Cannot map null", AppErrorTypes.MAP_NULL_INSTANCE));
 
     const map = instance.getMap().inMap;
 
@@ -83,7 +87,7 @@ const mapInstanceToData = function(instance) {
   return new Promise((resolve, reject) => {
 
     if (instance == null)
-      reject("Instance cannot be null while mapping");
+      reject(new AppError("Cannot map null", AppErrorTypes.MAP_NULL_INSTANCE));
 
     const map = instance.getMap().outMap;
     const data = {};
