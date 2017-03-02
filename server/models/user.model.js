@@ -12,6 +12,7 @@ const ValidationToken = require('./validation-token.model');
 const AttributeStringValue = require('./attribute-string-value.model');
 const AttributeDateValue = require('./attribute-date-value.model');
 const UserPhoto = require('./user-photo.model');
+const Match = require('./match.model');
 
 module.exports = {};
 
@@ -124,6 +125,22 @@ User.UserPhotos = User.hasMany(UserPhoto, {
     allowNull: false
   },
   as: 'UserPhotos'
+});
+
+User.StudentMatches = User.hasMany(Match, {
+  foreignKey: {
+    name: 'StudentUserId',
+    allowNull: false
+  },
+  as: 'StudentMatches'
+});
+
+User.HostMatches = User.hasMany(Match, {
+  foreignKey: {
+    name: 'HostUserId',
+    allowNull: false
+  },
+  as: 'HostMatches'
 });
 
 
