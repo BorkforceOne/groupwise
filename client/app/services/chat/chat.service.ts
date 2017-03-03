@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {SocketService} from "../socket/socket.service";
 import {ChatMessage} from "./chat-message.model";
-import {UserService} from "../user/user.service";
+import {AuthService} from "../user/auth.service";
 
 export class Chat {
   UserId: number;
@@ -12,25 +12,26 @@ export class Chat {
 export class ChatService {
   public chats: Chat[] = [];
 
-  constructor(private socketService: SocketService, private userService: UserService) {
-    this.socketService.subscribe('on.message').subscribe((msg: any) => {
-      let message = new ChatMessage();
+  constructor(private socketService: SocketService, private authService: AuthService) {
+    this.socketService.getSocket().subscribe((socket) => {
+      this.socketService.subscribe(socket, 'on.message').subscribe((msg: any) => {
+        let message = new ChatMessage();
 
-      message.Message = msg.Message;
-      message.ReceivedAt = new Date(msg.Received);
-      message.UserId = msg.UserId;
+        message.Message = msg.Message;
+        message.ReceivedAt = new Date(msg.Received);
+        message.UserId = msg.UserId;
 
-      let chat = this.chats.find((c) => c.UserId == message.UserId);
+        let chat = this.chats.find((c) => c.UserId == message.UserId);
 
-      if (chat == null) {
-        chat = new Chat();
-        chat.UserId = message.UserId;
-        this.chats.push(chat);
-      }
+        if (chat == null) {
+          chat = new Chat();
+          chat.UserId = message.UserId;
+          this.chats.push(chat);
+        }
 
-      chat.Messages.push(message);
+        chat.Messages.push(message);
+      })
     });
-
   }
 
   sendMessage(chat: Chat, message: string) {
@@ -40,12 +41,15 @@ export class ChatService {
     };
     this.socketService.emit('message', packedMessage);
 
-    let chatMessage = new ChatMessage();
+    this.authService.getLoggedInUser()
+      .subscribe((user) => {
+        let chatMessage = new ChatMessage();
 
-    chatMessage.Message = message;
-    chatMessage.ReceivedAt = new Date();
-    chatMessage.UserId = this.userService.getLoggedInUser().Id;
-    chat.Messages.push(chatMessage);
+        chatMessage.Message = message;
+        chatMessage.ReceivedAt = new Date();
+        chatMessage.UserId = user.Id;
+        chat.Messages.push(chatMessage);
+      });
   }
 
   closeChat(chat: Chat) {

@@ -47,6 +47,7 @@ import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-re
 import { ChatWindowComponent } from './chat/chat-window/chat-window.component';
 import {ChatService} from "./services/chat/chat.service";
 import { RegisterAddonPageComponent } from './register/register-addon-page/register-addon-page.component';
+import {AuthService} from "./services/user/auth.service";
 
 @NgModule({
   declarations: [
@@ -96,7 +97,7 @@ import { RegisterAddonPageComponent } from './register/register-addon-page/regis
     CarouselModule.forRoot(),
     ReactiveFormsModule
   ],
-  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService, CookieService, ChatService],
+  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService, CookieService, ChatService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

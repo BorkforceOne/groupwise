@@ -16,6 +16,7 @@ import {AttributeEnum} from "../services/attributes/attribute-enum.model";
 import {AttributeEnumValue} from "../services/attributes/attribute-enum-value.model";
 import {CookieService} from "angular2-cookie/services/cookies.service";
 import {ChatService} from "../services/chat/chat.service";
+import {AuthService} from "../services/user/auth.service";
 //import {AttributeService} from "PATH";
 
 
@@ -52,7 +53,7 @@ export class UserProfilePageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private userService: UserService,
               private attributeService: AttributeService, private router: Router,
               private alertService: AlertService, private cookieService: CookieService,
-              private chatService: ChatService) {
+              private chatService: ChatService, private authService: AuthService) {
     this.querySub = this.route.params.subscribe(params => {
       this.attributes = [];
       this.stringAttributes = [];
@@ -63,8 +64,15 @@ export class UserProfilePageComponent implements OnInit {
 
       this.userId = +params["id"];
 
-      if (this.userService.getLoggedInUser().Id == this.userId)
-        this.isLoggedInUser = true;
+      this.authService.getLoggedInUser().subscribe((user) => {
+        if (user != null) {
+          if (user.Id == this.userId)
+            this.isLoggedInUser = true;
+        }
+        else {
+          this.isLoggedInUser = false;
+        }
+      });
 
       this.userService.getUserById(this.userId)
         .subscribe((user: User) => {

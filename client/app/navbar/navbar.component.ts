@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Routes, Route, Router } from '@angular/router';
 import { UserService } from "../services/user/user.service";
 import {User} from "../services/user/user";
+import {Observable} from "rxjs";
+import {AuthService} from "../services/user/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -9,11 +11,31 @@ import {User} from "../services/user/user";
   styleUrls: ['navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  public isCollapsed: boolean = true;
+  private isCollapsed: boolean = true;
+  private loggedInUser: Observable<User>;
+  private isLoggedIn: boolean;
+  private isAdmin: boolean;
+  private displayName: string;
+  private userId: number;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    this.loggedInUser = this.authService.getLoggedInUser();
+    this.loggedInUser.subscribe((user) => {
+        if (user != null) {
+          this.isLoggedIn = true;
+          this.isAdmin = this.userService.isAdmin(user);
+          this.displayName = this.userService.getUserDisplayName(user);
+          this.userId = user.Id;
+        }
+        else {
+          this.isLoggedIn = false;
+          this.isAdmin = false;
+          this.displayName = "";
+          this.userId = null;
+        }
+    });
   }
 
   isActiveRoute(route: string) {
@@ -21,25 +43,10 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout()
+    this.authService.logout()
+      .toPromise()
       .then(() => {
         this.router.navigate(['']);
       })
-  }
-
-  isLoggedIn() {
-    return this.userService.getLoggedInUser() !== null;
-  }
-
-  isAdmin() {
-    return this.userService.isAdmin(this.getLoggedInUser());
-  }
-
-  getUserDisplayName() {
-    return this.userService.getUserDisplayName(this.getLoggedInUser());
-  }
-
-  getLoggedInUser(): User{
-    return this.userService.getLoggedInUser();
   }
 }

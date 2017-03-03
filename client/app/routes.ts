@@ -18,7 +18,7 @@ import {RegisterAddonPageComponent} from "./register/register-addon-page/registe
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'contact', component: ContactComponent },
-  { path: 'user-profile/:id', component: UserProfilePageComponent, canActivate: [] },//Eventual Login guard
+  { path: 'user-profile/:id', component: UserProfilePageComponent, canActivate: [LoggedinGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [NotLoggedinGuard], canActivateChild: [NotLoggedinGuard],
     children: [
       { path: '', component: RegisterGeneralInformationComponent},

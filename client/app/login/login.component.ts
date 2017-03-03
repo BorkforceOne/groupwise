@@ -4,6 +4,7 @@ import { UserLogin } from "../services/user/user-login";
 import { Router } from '@angular/router'
 import {ModalDirective} from "ng2-bootstrap";
 import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
+import {AuthService} from "../services/user/auth.service";
 
 interface UserPasswordReset {
   Email: string
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   resetPasswordForm: FormGroup;
 
-  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder) { }
+  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder,
+              private authService: AuthService) { }
 
   ngOnInit() {
 
@@ -35,7 +37,8 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(user: UserLogin, valid: boolean) {
-    this.userService.login(user)
+    this.authService.login(user)
+      .toPromise()
       .then(() => {
         this.router.navigateByUrl('');
       });

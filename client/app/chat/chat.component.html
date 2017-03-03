@@ -1,4 +1,4 @@
-<div *ngIf="userService.isLoggedIn()" class="chat-container">
+<div *ngIf="isLoggedIn" class="chat-container">
   <ng-container *ngFor="let chat of chats">
     <app-chat-window [Chat]="chat"></app-chat-window>
   </ng-container>

@@ -19,6 +19,8 @@ class SocketManager {
 
       this.context.on('connection', (socket) => {
         this.sockets.push(socket);
+        console.log("[SOCKET] Incomming connection, total: " + this.sockets.length);
+
         let sid = this.getSessionId(socket);
         if (sid == null) {
           socket.disconnect();
@@ -28,16 +30,28 @@ class SocketManager {
         }
         socket.sessionId = sid;
 
+        let validSocket = true;
+
         this.getSession(sid)
           .then((session) => {
             if (session) {
+              console.log(session.userId);
               session.socketId = socket.id;
+            }
+            else {
+              validSocket = false;
             }
           })
           .catch((e) => {
-            this.removeSocket(socket);
-            console.error("[SOCKET]", e);
+            validSocket = false;
           });
+
+        if (validSocket == false) {
+          socket.disconnect();
+          console.log("[SOCKET] Removing socket due to invalid session");
+          this.removeSocket(socket);
+          return;
+        }
 
         const socketChat = require('./socket-chat-manager');
 
