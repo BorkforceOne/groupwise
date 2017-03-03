@@ -50,6 +50,8 @@
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.7.1",
     "ts-helpers": "^1.1.1",
+    "winston": "^2.3.1",
+    "winston-daily-rotate-file": "^1.4.4",
     "zone.js": "^0.7.2"
   },
   "devDependencies": {

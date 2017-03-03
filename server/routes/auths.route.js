@@ -7,6 +7,10 @@ const User = require('../models/user.model');
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 const encryptionManager = require('../user_modules/encryption-manager');
+const socketManager = require('../user_modules/socket-manager');
+const ErrorModule = require('../error');
+const AppError = ErrorModule.AppError;
+const AppErrorTypes = ErrorModule.AppErrorTypes;
 
 const routeName = '/auth';
 
@@ -47,6 +51,14 @@ router.post(routeName + '/login', function(req, res, next) {
 
 /* LOGOUT REQUEST */
 router.post(routeName + '/logout', function(req, res, next) {
+    socketManager.getSocket(req.session.userId)
+      .then(socket => {
+        if (socket != null) {
+          socket.disconnect();
+          socketManager.removeSocket(socket);
+        }
+      });
+
     req.session.destroy();
 
     restUtils.prepareResponse({}, [])
@@ -54,7 +66,7 @@ router.post(routeName + '/logout', function(req, res, next) {
         .catch(error => restUtils.catchErrors(error, req, res));
 });
 
-router.get(routeName, function(req, res, next) {
+router.post(routeName, function(req, res, next) {
   if (req.session.userId) {
     User.findOne({
       where: {
@@ -63,7 +75,7 @@ router.get(routeName, function(req, res, next) {
     })
       .then(user => {
         if (user === false)
-          throw "Could not find authenticated user"
+          throw new AppError("Could not find authenticated user", AppErrorTypes.NOT_FOUND, 403);
 
         return user;
       })

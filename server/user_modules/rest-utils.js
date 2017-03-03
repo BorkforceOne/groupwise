@@ -1,3 +1,6 @@
+const ErrorModule = require('../error');
+const AppError = ErrorModule.AppError;
+const AppErrorTypes = ErrorModule.AppErrorTypes;
 const User = require('../models/user.model');
 
 module.exports = {};
@@ -21,13 +24,27 @@ module.exports.prepareResponse = prepareResponse;
 const catchErrors = function(error, req, res) {
   return new Promise((resolve, reject) => {
     let message = "An internal server error occurred";
+
     if (error.message)
       message = error.message;
     else if (typeof error === "string")
       message = error;
-    console.log("Error: ", message);
 
-    res.status(500);
+    console.error(message);
+
+    let status = 500;
+
+    if (error.status != undefined)
+      status = error.status;
+    else
+      switch (error.type) {
+        case AppErrorTypes.MAP_NULL_INSTANCE:
+        case AppErrorTypes.NOT_FOUND:
+          status = 404;
+          break
+      }
+
+    res.status(status);
 
     prepareResponse({}, [message])
       .then(payload => sendResponse(payload, req, res))

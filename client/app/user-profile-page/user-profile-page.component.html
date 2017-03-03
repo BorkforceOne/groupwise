@@ -21,7 +21,7 @@
       </blockquote>
     </div>
     <div class="col-md-2 column">
-       <button class="btn btn-default btn-block" type="button" [disabled]="isLoggedInUser">Message</button>
+       <button class="btn btn-default btn-block" type="button" [disabled]="isLoggedInUser" (click)="startChat()">Message</button>
       <button class="btn btn-default btn-block" type="button" [disabled]="isLoggedInUser">Match</button>
     </div>
   </div>

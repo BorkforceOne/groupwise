@@ -13,15 +13,16 @@ import {ConsumeTokenPageComponent} from "./consume-token-page/consume-token-page
 import {UserProfilePageComponent} from "./user-profile-page/user-profile-page.component";
 import {StudentSearchPageComponent} from "./student-search-page/student-search-page.component";
 import {RegisterAttributesComponent} from "./register/register-attributes/register-attributes.component";
+import {RegisterAddonPageComponent} from "./register/register-addon-page/register-addon-page.component";
 
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'contact', component: ContactComponent },
-  { path: 'chat', component: ChatComponent, canActivate: [LoggedinGuard] },
-  { path: 'user-profile/:id', component: UserProfilePageComponent, canActivate: [] },//Eventual Login guard
+  { path: 'user-profile/:id', component: UserProfilePageComponent, canActivate: [LoggedinGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [NotLoggedinGuard], canActivateChild: [NotLoggedinGuard],
     children: [
       { path: '', component: RegisterGeneralInformationComponent},
+      { path: 'prescreen', component: RegisterAddonPageComponent},
       { path: 'attributes', component: RegisterAttributesComponent}
     ]},
   { path: 'login', component: LoginComponent, canActivate: [NotLoggedinGuard]},

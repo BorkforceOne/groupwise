@@ -1,32 +1,27 @@
 <ng-container *ngIf="isLoggedInUser()">
   <li class="right clearfix">
-    <span class="chat-img pull-right"><img alt="User Avatar" class="img-circle" src="http://placehold.it/50/FA6F57/fff&text=ME"></span>
+    <span class="chat-img pull-right"><img alt="User Avatar" class="img-circle" [src]="profileImage"></span>
     <div class="chat-body clearfix">
       <div class="header">
         <small class=" text-muted">
           <span class="glyphicon glyphicon-time"></span>{{message.ReceivedAt | amTimeAgo}}
         </small>
-        <strong class="pull-right primary-font">{{message.User.Firstname}} {{message.User.Lastname}}</strong>
       </div>
-      <p class="chat-message">{{message.Message}}</p>
+      <p class="chat-message-self">{{message.Message}}</p>
     </div>
   </li>
 </ng-container>
 
-
-
-
 <ng-container *ngIf="!isLoggedInUser()">
   <li class="left clearfix">
-    <span class="chat-img pull-left"><img alt="User Avatar" class="img-circle" src="http://placehold.it/50/55C1E7/fff&text=U"></span>
+    <span class="chat-img pull-left"><img alt="User Avatar" class="img-circle" [src]="profileImage"></span>
     <div class="chat-body clearfix">
       <div class="header">
-        <strong class="primary-font">{{message.User.Firstname}} {{message.User.Lastname}}</strong>
         <small class="pull-right text-muted">
           <span class="glyphicon glyphicon-time"></span>{{message.ReceivedAt | amTimeAgo}}
         </small>
       </div>
-      <p class="chat-message">{{message.Message}}</p>
+      <p class="chat-message-other">{{message.Message}}</p>
     </div>
   </li>
 </ng-container>

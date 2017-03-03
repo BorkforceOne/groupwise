@@ -18,6 +18,7 @@ class MailerManager {
       this.loadTemplate("welcome", "server/templates/welcome.html", "server/templates/welcome.text", "Welcome to FlagFriends!")
         .then(() => this.loadTemplate("validateEmail", "server/templates/validateEmail.html", "server/templates/validateEmail.text", "FlagFriends - Confirm Account Creation"))
         .then(() => this.loadTemplate("resetPasswordEmail", "server/templates/resetPasswordEmail.html", "server/templates/resetPasswordEmail.text", "FlagFriends - Password Reset"))
+        .then(() => this.loadTemplate("proposeMatch", "server/templates/proposeMatch.html", "server/templates/proposeMatch.text", "FlagFriends - New Match"))
         .then(resolve)
         .catch((err) => {
           console.error("[MAILER] Could not load template " + err);
