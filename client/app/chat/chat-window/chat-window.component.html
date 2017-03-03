@@ -23,11 +23,8 @@
       </ul>
     </div>
     <div class="panel-footer" *ngIf="!collapsed">
-      <div class="input-group">
-        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." [(ngModel)]="message"/>
-        <span class="input-group-btn">
-          <button class="btn btn-warning btn-sm" id="btn-chat" (click)="sendMessage()">Send</button>
-        </span>
+      <div class="input-group message-input-group">
+        <input type="text" id="message-input" class="form-control" placeholder="Type your message here..." [(ngModel)]="message" (keyup.enter)="sendMessage()"/>
       </div>
     </div>
   </div>

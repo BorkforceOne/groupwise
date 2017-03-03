@@ -16,6 +16,8 @@ export class ChatWindowComponent implements OnInit {
   private Chat: Chat;
   private Displayname: string;
   private message: string;
+  private lastPosition: number;
+  private lastScrollHeight: number;
 
   constructor(private chatService: ChatService, private userService: UserService) { }
 
@@ -24,7 +26,6 @@ export class ChatWindowComponent implements OnInit {
       .subscribe((user) => {
         this.Displayname = `${user.Firstname} ${user.Lastname}`;
       });
-    this.scrollToBottom();
   }
 
   ngAfterViewChecked() {
@@ -40,13 +41,19 @@ export class ChatWindowComponent implements OnInit {
   }
 
   sendMessage() {
-    this.chatService.sendMessage(this.Chat, this.message);
-    this.message = "";
+    if (this.message.trim() != "") {
+      this.chatService.sendMessage(this.Chat, this.message);
+      this.message = "";
+    }
   }
 
   scrollToBottom(): void {
     try {
-      this.body.nativeElement.scrollTop = this.body.nativeElement.scrollHeight;
+      if (this.lastScrollHeight == this.lastPosition && this.body.nativeElement.scrollHeight != this.lastScrollHeight) {
+        this.body.nativeElement.scrollTop = this.body.nativeElement.scrollHeight;
+      }
+      this.lastPosition = this.body.nativeElement.scrollTop + 250;
+      this.lastScrollHeight = this.body.nativeElement.scrollHeight
     } catch(err) { }
   }
 

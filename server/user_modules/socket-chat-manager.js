@@ -25,7 +25,7 @@ class SocketChatManager {
             otherSock.emit('on.message', {Message: message, UserId: user.Id, Received: received});
           })
           .catch((e) => {
-            console.error("Trying to send message to non-existent user");
+            console.error("Trying to send message to non-live user");
           });
       })
   }

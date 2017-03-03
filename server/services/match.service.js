@@ -1,4 +1,5 @@
 const serializer = require('../user_modules/serializer');
+const mailerManager = require('../user_modules/mailer-manager');
 
 const Match = require('../models/match.model');
 
@@ -32,9 +33,51 @@ class MatchService {
     });
   }
 
+  processMatch(entity) {
+    return new Promise((finalResolve, finalReject) => {
+      let hostUser;
+      let studentUser;
+      this.userService.getById(entity.HostUserId)
+        .then((user) => {
+          hostUser = user;
+        })
+        .then(() => this.userService.getById(entity.StudentUserId))
+        .then((user) => {
+          studentUser = user;
+        })
+        .then(() => {
+          switch (entity.Status) {
+            case "PROPOSED":
+              return new Promise((resolve, reject) => {
+                let mail = mailerManager.templates.proposeMatch;
+
+                let header = {
+                  to: studentUser.Email
+                };
+
+                let params = {
+                  Firstname: studentUser.Firstname,
+                  Lastname: studentUser.Lastname,
+                  MatchFirstname: hostUser.Firstname,
+                  MatchLastname: hostUser.Lastname
+                };
+
+                mailerManager.sendMail(mail, header, params)
+                  .then(resolve)
+                  .catch(reject);
+              });
+              break;
+          }
+        })
+        .then(finalResolve)
+        .catch(finalReject)
+    });
+  }
+
   addMatch(entity) {
     return new Promise((resolve, reject) => {
       this.validateMatch(entity)
+        .then(() => this.processMatch(entity))
         .then(() => entity.save())
         .then(() => resolve(entity))
         .catch(reject);

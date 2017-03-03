@@ -19,8 +19,13 @@ class SocketManager {
 
       this.context.on('connection', (socket) => {
         this.sockets.push(socket);
-
         let sid = this.getSessionId(socket);
+        if (sid == null) {
+          socket.disconnect();
+          console.log("[SOCKET] Removing socket due to no session");
+          this.removeSocket(socket);
+          return;
+        }
         socket.sessionId = sid;
 
         this.getSession(sid)
@@ -30,14 +35,15 @@ class SocketManager {
             }
           })
           .catch((e) => {
-            console.error(e);
+            this.removeSocket(socket);
+            console.error("[SOCKET]", e);
           });
 
         const socketChat = require('./socket-chat-manager');
 
         socket.on('disconnect', () => {
-          this.sockets.splice(this.sockets.indexOf(socketChat), 1);
           console.log("[SOCKET] Removing disconnected client");
+          this.removeSocket(socket);
         });
 
         socketChat.init(socket);
@@ -47,10 +53,16 @@ class SocketManager {
     });
   }
 
+  removeSocket(socket) {
+    this.sockets.splice(this.sockets.indexOf(socket), 1);
+  }
+
   getSessionId(socket) {
+    if (!socket.request.headers.cookie)
+      return null;
+
     let cookies = cookie.parse(socket.request.headers.cookie);
-    let sid = cookieParser.signedCookie(cookies['connect.sid'], config.session.secret);
-    return sid;
+    return cookieParser.signedCookie(cookies['connect.sid'], config.session.secret);
   }
 
   getSession(sid) {
@@ -63,16 +75,26 @@ class SocketManager {
 
   getSocket(userId) {
     return new Promise((resolve, reject) => {
+      let iterations = [];
+      let foundSocket = null;
+
       for (let i = 0; i < this.sockets.length; i ++) {
         let socket = this.sockets[i];
-        this.getSession(socket.sessionId)
+        let fn = this.getSession(socket.sessionId)
           .then((session) => {
             if (session && session.userId == userId) {
-              resolve(socket);
+              foundSocket = socket;
             }
-          })
-          .catch();
+          });
+        iterations.push(fn);
       }
+
+      Promise.all(iterations).then(() => {
+        if (foundSocket == null)
+          reject("Could not find socket for specified user");
+        else
+          resolve(foundSocket);
+      });
     });
   }
 }
