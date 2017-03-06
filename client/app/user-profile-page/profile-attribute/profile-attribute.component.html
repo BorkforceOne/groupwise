@@ -1,0 +1,54 @@
+<ng-container [ngSwitch]="attributeService.getAttributeType(Attribute)">
+  <ng-container *ngIf="isEditing">
+    <div *ngSwitchCase="'DATE'" class="col-md-12" (click)="onEdit()">
+      <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
+      <div class="col-md-6">
+        <input autoFocus (blur)="onBlur()" [(ngModel)]="Attribute.Value.Value" type="date" class="form-control"/>
+      </div>
+    </div>
+    <div *ngSwitchCase="'ENUM'" class="col-md-12" (click)="onEdit()">
+      <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
+      <div class="col-md-6">
+        <select autoFocus (blur)="onBlur()" class="form-control" [name]="Attribute.Type.Name" [(ngModel)]="Attribute.Value.Value">
+          <ng-container *ngFor="let option of Attribute.Type.Options">
+            <option [value]="option.Value">{{option.Display}}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+    <div *ngSwitchCase="'RANGE'" class="col-md-12" (click)="onEdit()">
+      <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
+      <div class="col-md-6">
+        <input autoFocus (blur)="onBlur()" [(ngModel)]="Attribute.Value.Value" [type]="Attribute.Type.isInt ? 'number' : null" [min]="Attribute.Type.Min" [max]="Attribute.Type.Max" (change)="onNumberChange($event)" class="form-control"/>
+      </div>
+    </div>
+    <div *ngSwitchCase="'STRING'" class="col-md-12" (click)="onEdit()">
+      <p>
+        <strong>{{Attribute.Type.Description}}</strong>
+        <br>
+        <textarea autoFocus (blur)="onBlur()" [(ngModel)]="Attribute.Value.Value" class="form-control"></textarea>
+      </p>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!isEditing">
+    <div *ngSwitchCase="'DATE'" class="col-md-12" [ngClass]="{'editable clickable': canEdit}" (click)="onEdit()">
+      <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
+      <div class="col-md-6">{{Attribute.Value?.Value | amDateFormat:'LL'}}</div>
+    </div>
+    <div *ngSwitchCase="'ENUM'" class="col-md-12" [ngClass]="{'editable clickable': canEdit}" (click)="onEdit()">
+      <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
+      <div class="col-md-6">{{findOption(Attribute.Type, Attribute.Value)?.Display}}</div>
+    </div>
+    <div *ngSwitchCase="'RANGE'" class="col-md-12" [ngClass]="{'editable clickable': canEdit}" (click)="onEdit()">
+      <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
+      <div class="col-md-6">{{Attribute.Value?.Value}}</div>
+    </div>
+    <div *ngSwitchCase="'STRING'" class="col-md-12" [ngClass]="{'editable clickable': canEdit}" (click)="onEdit()">
+      <p>
+        <strong>{{Attribute.Type.Description}}</strong>
+        <br>
+        {{Attribute.Value?.Value}}
+      </p>
+    </div>
+  </ng-container>
+</ng-container>

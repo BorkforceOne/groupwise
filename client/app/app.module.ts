@@ -48,6 +48,8 @@ import { ChatWindowComponent } from './chat/chat-window/chat-window.component';
 import {ChatService} from "./services/chat/chat.service";
 import { RegisterAddonPageComponent } from './register/register-addon-page/register-addon-page.component';
 import {AuthService} from "./services/user/auth.service";
+import { ProfileAttributeComponent } from './user-profile-page/profile-attribute/profile-attribute.component';
+import { AutoFocusDirective } from './auto-focus.directive';
 
 @NgModule({
   declarations: [
@@ -80,7 +82,9 @@ import {AuthService} from "./services/user/auth.service";
     AdminAttributesComponent,
     AdminReportingComponent,
     ChatWindowComponent,
-    RegisterAddonPageComponent
+    RegisterAddonPageComponent,
+    ProfileAttributeComponent,
+    AutoFocusDirective
   ],
   imports: [
     BrowserModule,
