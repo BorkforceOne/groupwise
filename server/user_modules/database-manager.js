@@ -40,7 +40,7 @@ class DatabaseManager {
 
       // Require all needed models
       require('../models');
-      this.sync(false);
+      this.sync(true);
 
       resolve();
     });
@@ -54,7 +54,6 @@ class DatabaseManager {
    * @returns {Promise}
    */
   sync(force) {
-      const User = require('../models/user.model');
       const seed = require('../seed');
 
       return new Promise((resolve, reject) => {

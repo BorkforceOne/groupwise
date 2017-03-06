@@ -45,13 +45,11 @@ class ExpressManager {
 
       // Set up XSRF token stuff
 
-      /*
       this.context.use(this.csrfProtection);
       this.context.use((req, res, next) => {
         res.cookie('XSRF-TOKEN', req.csrfToken());
         next();
       });
-      */
 
       // Set up the routes
       const routes = require('./../routes/index');
