@@ -29,7 +29,7 @@
     <tabset>
       <tab heading="About">
         <div class="row section">
-          <div class="col-md-8 column">
+          <div class="col-md-8">
             <div class="col-md-12">
               <legend>About Me</legend>
             </div>
@@ -65,24 +65,35 @@
       </tab>
       <tab heading="Photos">
         <div class="row section">
-          <div class="col-md-8">
+          <div [ngClass]="{'col-md-8': isLoggedInUser, 'col-md-12': !isLoggedInUser}">
+            <div class="col-md-12">
+              <legend>Photos</legend>
+            </div>
             <ng-container *ngFor="let photo of userPhotos;let i = index">
               <div class="col-md-12 img-gallery-wrapper">
                 <img (click)="inspectImage(i)" class="img-gallery clickable" [src]="photo.URL">
                 <span *ngIf="isLoggedInUser" class="img-delete glyphicon glyphicon-trash text-danger clickable" (click)="deleteUserPhoto(photo)"></span>
               </div>
             </ng-container>
+            <div *ngIf="userPhotos.length == 0" class="col-md-12 text-center text-muted">
+              <h4>There's nothing here!</h4>
+              <h4 *ngIf="isLoggedInUser">Why not upload an awesome photo of yourself?</h4>
+            </div>
           </div>
           <div class="col-md-4" *ngIf="isLoggedInUser">
-            <legend>Photo Management</legend>
-            <div ng2FileDrop
-                 [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                 (fileOver)="fileOverBase($event)"
-                 [uploader]="uploader"
-                 class="well my-drop-zone">
-              Drop photo here
+            <div class="col-md-12">
+              <legend>Photo Management</legend>
             </div>
-            <input type="file" ng2FileSelect [uploader]="uploader" />
+            <div class="col-md-12">
+              <div ng2FileDrop
+                   [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                   (fileOver)="fileOverBase($event)"
+                   [uploader]="uploader"
+                   class="well my-drop-zone">
+                Drop photo here
+              </div>
+              <input type="file" ng2FileSelect [uploader]="uploader" />
+            </div>
           </div>
         </div>
       </tab>
