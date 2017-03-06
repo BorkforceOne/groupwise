@@ -274,14 +274,21 @@ export class AttributeService extends BackendCommunicatorService{
       let attributes = data.filter((entry) => (entry.Type == "ATTRIBUTES"))[0].Data;
       let values = data.filter((entry) => (entry.Type == "VALUES"))[0].Data;
 
-      for (let i = 0; i < values.length; i ++) {
+      // Only grab the attributes for this type of person
+      attributes = attributes.filter((entry) => (entry.ForType == "BOTH" || entry.ForType == user.Type));
+
+      for (let i = 0; i < attributes.length; i ++) {
         let finalAttribute = new Attribute();
 
-        let value = values[i];
-        let attribute = attributes.filter((entry) => (entry.Id == value.AttributeId && this._isValueAndAttributeTypeMatch(value, entry)))[0];
+        let attribute = attributes[i];
+        let value = values.filter((entry) => (entry.AttributeId == attribute.Id && this._isValueAndAttributeTypeMatch(entry, attribute)))[0];
 
-        finalAttribute.Type = attribute;
-        finalAttribute.Value = value;
+        if (value == null)
+          finalAttribute = this.mapToAttribute(attribute)[0];
+        else {
+          finalAttribute.Type = attribute;
+          finalAttribute.Value = value;
+        }
 
         finalAttributes.push(finalAttribute);
       }

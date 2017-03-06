@@ -26,83 +26,78 @@
     </div>
   </div>
   <div class="row clearfix">
-    <div class="col-md-12 column">
-      <div>
-        <tabset>
-          <tab heading="About">
-            <div class="row clearfix">
-              <div class="col-md-8 column">
-                <ng-container *ngFor="let attribute of stringAttributes">
-                  <p><strong>{{attribute.Type.Description}}</strong><br>
-                    {{attribute.Value.Value}}</p>
-                  <hr>
-                </ng-container>
-              </div>
-              <div class="col-md-4 column">
-                <table class="table">
-                  <thead>
-                  <tr>
-                    <th>Details</th>
-                    <th></th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Last Online</td>
-                    <td>{{user.updatedAt | amTimeAgo}}</td>
-                  </tr>
-                  <ng-container *ngFor="let attribute of attributes">
-                    <ng-container [ngSwitch]="attributeService.getAttributeType(attribute)">
-                      <tr *ngSwitchCase="'DATE'">
-                        <td>{{attribute.Type.Description}}</td>
-                        <td>{{attribute.Value.Value | amDateFormat:'LL'}}</td>
-                      </tr>
-                      <tr *ngSwitchCase="'ENUM'">
-                        <td>{{attribute.Type.Description}}</td>
-                        <td>{{findOption(attribute.Type, attribute.Value).Display}}</td>
-                      </tr>
-                      <tr *ngSwitchCase="'RANGE'">
-                        <td>{{attribute.Type.Description}}</td>
-                        <td>{{attribute.Value.Value}}</td>
-                      </tr>
-                    </ng-container>
-                  </ng-container>
-                  <!---
-                  <tr>
-                    <td>Attribute name</td>
-                    <td>Value</td>
-                  </tr>
-                  -->
-                  </tbody>
-                </table>
-              </div>
+    <tabset>
+      <tab heading="About">
+        <div class="row section">
+          <div class="col-md-8">
+            <div class="col-md-12">
+              <legend>About Me</legend>
             </div>
-          </tab>
-          <tab heading="Photos">
-            <div class="row clearfix">
-              <div class="col-md-8">
-                <ng-container *ngFor="let photo of userPhotos;let i = index">
-                  <div class="col-md-12 img-gallery-wrapper">
-                    <img (click)="inspectImage(i)" class="img-gallery clickable" [src]="photo.URL">
-                    <span *ngIf="isLoggedInUser" class="img-delete glyphicon glyphicon-trash text-danger clickable" (click)="deleteUserPhoto(photo)"></span>
-                  </div>
-                </ng-container>
+            <ng-container *ngFor="let attribute of stringAttributes; let last = last;">
+              <app-profile-attribute [Attribute]="attribute" [canEdit]="isLoggedInUser" [forUser]="user"></app-profile-attribute>
+              <div *ngIf="!last" class="col-md-12">
+                <hr>
               </div>
-              <div class="col-md-4" *ngIf="isLoggedInUser">
-                <div ng2FileDrop
-                     [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                     (fileOver)="fileOverBase($event)"
-                     [uploader]="uploader"
-                     class="well my-drop-zone">
-                  Drop photo here
-                </div>
-                <input type="file" ng2FileSelect [uploader]="uploader" />
-              </div>
+            </ng-container>
+          </div>
+          <div class="col-md-4 column">
+
+            <div class="col-md-12">
+              <legend>Additional Details</legend>
             </div>
-          </tab>
-        </tabset>
-      </div>
-    </div>
+
+            <div class="col-md-12">
+              <div class="col-md-6"><b>Last Online</b></div>
+              <div class="col-md-6">{{user.updatedAt | amTimeAgo}}</div>
+            </div>
+            <div class="col-md-12">
+              <hr>
+            </div>
+
+            <ng-container *ngFor="let attribute of attributes; let last = last;">
+              <app-profile-attribute [Attribute]="attribute" [canEdit]="isLoggedInUser" [forUser]="user"></app-profile-attribute>
+              <div *ngIf="!last" class="col-md-12">
+                <hr>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Photos">
+        <div class="row section">
+          <div [ngClass]="{'col-md-8': isLoggedInUser, 'col-md-12': !isLoggedInUser}">
+            <div class="col-md-12">
+              <legend>Photos</legend>
+            </div>
+            <ng-container *ngFor="let photo of userPhotos;let i = index">
+              <div class="col-md-12 img-gallery-wrapper">
+                <img (click)="inspectImage(i)" class="img-gallery clickable" [src]="photo.URL">
+                <span *ngIf="isLoggedInUser" class="img-delete glyphicon glyphicon-trash text-danger clickable" (click)="deleteUserPhoto(photo)"></span>
+              </div>
+            </ng-container>
+            <div *ngIf="userPhotos.length == 0" class="col-md-12 text-center text-muted">
+              <h4>There's nothing here!</h4>
+              <h4 *ngIf="isLoggedInUser">Why not upload an awesome photo of yourself?</h4>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="isLoggedInUser">
+            <div class="col-md-12">
+              <legend>Photo Management</legend>
+            </div>
+            <div class="col-md-12">
+              <div ng2FileDrop
+                   [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                   (fileOver)="fileOverBase($event)"
+                   [uploader]="uploader"
+                   class="well my-drop-zone">
+                Drop photo here
+              </div>
+              <input type="file" ng2FileSelect [uploader]="uploader" />
+            </div>
+          </div>
+        </div>
+      </tab>
+    </tabset>
   </div>
 </div>
 
