@@ -53,6 +53,7 @@ import { AutoFocusDirective } from './auto-focus.directive';
 import {AdminGuard} from "./guards/admin-guard";
 import {StudentGuard} from "./guards/student-guard";
 import {HostGuard} from "./guards/host-guard";
+import {MatchService} from "./services/match/match.service";
 
 @NgModule({
   declarations: [
@@ -105,7 +106,7 @@ import {HostGuard} from "./guards/host-guard";
     ReactiveFormsModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard],
+    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

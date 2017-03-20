@@ -12,13 +12,11 @@ import {ModalDirective, CarouselComponent} from "ng2-bootstrap";
 import {FileUploader} from "ng2-file-upload";
 import {AlertService} from "../services/alert/alert.service";
 import {Alert} from "../services/alert/alert";
-import {AttributeEnum} from "../services/attributes/attribute-enum.model";
-import {AttributeEnumValue} from "../services/attributes/attribute-enum-value.model";
 import {CookieService} from "angular2-cookie/services/cookies.service";
 import {ChatService} from "../services/chat/chat.service";
 import {AuthService} from "../services/user/auth.service";
-//import {AttributeService} from "PATH";
-
+import {MatchService} from "../services/match/match.service";
+import {Match} from "../services/match/match.model";
 
 class UserPhotoView {
   Id: number;
@@ -44,16 +42,19 @@ export class UserProfilePageComponent implements OnInit {
   private photoURL: string = "/api/v1/user-photos";
   private querySub: Subscription = null;
   private user: User = new User();
+  private match: Match;
   private attributes: Attribute[] = [];
   private stringAttributes: Attribute[] = [];
   private userPhotos: UserPhotoView[] = [];
   private isLoggedInUser: boolean;
+  private loggedInUser: User;
   private userId: number;
 
   constructor(private route: ActivatedRoute, private userService: UserService,
               private attributeService: AttributeService, private router: Router,
               private alertService: AlertService, private cookieService: CookieService,
-              private chatService: ChatService, private authService: AuthService) {
+              private chatService: ChatService, private authService: AuthService,
+              private matchService: MatchService) {
     this.querySub = this.route.params.subscribe(params => {
       this.attributes = [];
       this.stringAttributes = [];
@@ -65,13 +66,21 @@ export class UserProfilePageComponent implements OnInit {
       this.userId = +params["id"];
 
       this.authService.getLoggedInUser().subscribe((user) => {
-        if (user != null) {
-          if (user.Id == this.userId)
+        this.loggedInUser = user;
+
+        if (user != null && user.Id == this.userId)
             this.isLoggedInUser = true;
-        }
-        else {
+        else
           this.isLoggedInUser = false;
-        }
+
+        this.matchService.getMatches()
+          .subscribe(matches => {
+            let foundMatches = matches.filter((entry: Match) => (entry.HostUserId == this.loggedInUser.Id || entry.HostUserId == this.userId) && (entry.StudentUserId == this.userId || entry.StudentUserId == this.loggedInUser.Id));
+            if (foundMatches.length > 0) {
+              foundMatches.sort((a, b) => a.Id > b.Id ? -1 : 1);
+              this.match = foundMatches[0];
+            }
+          });
       });
 
       this.userService.getUserById(this.userId)
@@ -124,6 +133,44 @@ export class UserProfilePageComponent implements OnInit {
       alert.Type = "danger";
       this.alertService.addAlert(alert);
     };
+  }
+
+  /**
+   * Propose a new match using the API
+   */
+  private proposeMatch() {
+    let match = new Match();
+    match.HostUserId = this.loggedInUser.Id;
+    match.StudentUserId = this.userId;
+    match.Status = "PROPOSED";
+
+    this.match = match;
+
+    this.matchService.createMatch(match).subscribe();
+  }
+
+  /**
+   * Accept a match using the API
+   */
+  private acceptMatch() {
+    this.match.Status = "APPROVED";
+    this.matchService.updateMatch(this.match).subscribe();
+  }
+
+  /**
+   * Reject a match using the API
+   */
+  private rejectMatch() {
+    this.match.Status = "REJECTED";
+    this.matchService.updateMatch(this.match).subscribe();
+  }
+
+  /**
+   * Unmatch an existing match using the API
+   */
+  private unmatchMatch() {
+    this.match.Status = "UNMATCHED";
+    this.matchService.updateMatch(this.match).subscribe();
   }
 
   private inspectImage(index: number) {
