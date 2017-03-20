@@ -50,6 +50,9 @@ import { RegisterAddonPageComponent } from './register/register-addon-page/regis
 import {AuthService} from "./services/user/auth.service";
 import { ProfileAttributeComponent } from './user-profile-page/profile-attribute/profile-attribute.component';
 import { AutoFocusDirective } from './auto-focus.directive';
+import {AdminGuard} from "./guards/admin-guard";
+import {StudentGuard} from "./guards/student-guard";
+import {HostGuard} from "./guards/host-guard";
 
 @NgModule({
   declarations: [
@@ -101,7 +104,8 @@ import { AutoFocusDirective } from './auto-focus.directive';
     CarouselModule.forRoot(),
     ReactiveFormsModule
   ],
-  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService, CookieService, ChatService, AuthService],
+  providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
+    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
