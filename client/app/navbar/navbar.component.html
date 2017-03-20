@@ -26,10 +26,10 @@
         <li [class.active]="isActiveRoute('/login')" *ngIf="!isLoggedIn">
           <a routerLink="/login">Login</a>
         </li>
-        <li [class.active]="isActiveRoute('/student-search')" *ngIf="isLoggedIn">
+        <li [class.active]="isActiveRoute('/student-search')" *ngIf="isLoggedIn && type == 'HOST'">
           <a routerLink="/student-search">Student Search</a>
         </li>
-        <li [class.active]="isActiveRoute('/admin-manage')" *ngIf="isLoggedIn && isAdmin">
+        <li [class.active]="isActiveRoute('/admin-manage')" *ngIf="isLoggedIn && type == 'ADMINISTRATOR'">
           <a routerLink="/admin-manage">Admin Manage</a>
         </li>
         <li class="btn-group" dropdown *ngIf="isLoggedIn">

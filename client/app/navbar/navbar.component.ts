@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   private isCollapsed: boolean = true;
   private loggedInUser: Observable<User>;
   private isLoggedIn: boolean;
-  private isAdmin: boolean;
+  private type: "ADMINISTRATOR" | "HOST" | "STUDENT";
   private displayName: string;
   private userId: number;
 
@@ -25,13 +25,13 @@ export class NavbarComponent implements OnInit {
     this.loggedInUser.subscribe((user) => {
         if (user != null) {
           this.isLoggedIn = true;
-          this.isAdmin = this.userService.isAdmin(user);
+          this.type = user.Type;
           this.displayName = this.userService.getUserDisplayName(user);
           this.userId = user.Id;
         }
         else {
           this.isLoggedIn = false;
-          this.isAdmin = false;
+          this.type = null;
           this.displayName = "";
           this.userId = null;
         }
