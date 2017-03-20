@@ -13,18 +13,16 @@ const Match = databaseManager.context.define('match', {
     autoIncrement: true
   },
   HostUserId: {
-    unique: 'User_Host_unique',
     allowNull: false,
     type:  Sequelize.INTEGER
   },
   StudentUserId: {
-    unique: 'User_Student_unique',
     allowNull: false,
     type:  Sequelize.INTEGER
   },
   Status: {
     allowNull: false,
-    type:  Sequelize.ENUM("PROPOSED", "APPROVED", "REJECTED")
+    type:  Sequelize.ENUM("PROPOSED", "APPROVED", "REJECTED", "UNMATCHED")
   }
 },{
   instanceMethods: {

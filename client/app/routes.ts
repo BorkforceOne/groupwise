@@ -1,6 +1,5 @@
 import {Routes} from "@angular/router";
 import {ContactComponent} from "./contact/contact.component";
-import {ChatComponent} from "./chat/chat.component";
 import {LoggedinGuard} from "./guards/loggedin-guard";
 import {RegisterComponent} from "./register/register.component";
 import {LoginComponent} from "./login/login.component";
@@ -14,6 +13,7 @@ import {UserProfilePageComponent} from "./user-profile-page/user-profile-page.co
 import {StudentSearchPageComponent} from "./student-search-page/student-search-page.component";
 import {RegisterAttributesComponent} from "./register/register-attributes/register-attributes.component";
 import {RegisterAddonPageComponent} from "./register/register-addon-page/register-addon-page.component";
+import {HostGuard} from "./guards/host-guard";
 
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -27,9 +27,8 @@ export const AppRoutes: Routes = [
     ]},
   { path: 'login', component: LoginComponent, canActivate: [NotLoggedinGuard]},
   { path: 'validate', component: ConsumeTokenPageComponent },
-  { path: 'student-search', component: StudentSearchPageComponent, canActivate: [LoggedinGuard] },
+  { path: 'student-search', component: StudentSearchPageComponent, canActivate: [HostGuard] },
   { path: 'admin-manage', component: AdminManageComponent },
   { path: 'home', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent }
-
 ];
