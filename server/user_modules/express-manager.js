@@ -34,6 +34,7 @@ class ExpressManager {
         upload: true
       });
 
+      this.context.use(express.static(path.join(__dirname, '..', 'public')));
       this.context.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
       this.context.use(cookieParser());
       this.context.use(session({
@@ -45,17 +46,17 @@ class ExpressManager {
 
       // Set up XSRF token stuff
 
+      /*
       this.context.use(this.csrfProtection);
       this.context.use((req, res, next) => {
         res.cookie('XSRF-TOKEN', req.csrfToken());
         next();
-      });
+      });*/
 
       // Set up the routes
       const routes = require('./../routes/index');
 
       this.context.use('/api/v1/', routes);
-      this.context.use(express.static(path.join(__dirname, '..', 'public')));
       this.context.use('', function(request, response, next) {
         response.sendfile(path.join(__dirname, '..', 'public', 'index.html'));
       });
