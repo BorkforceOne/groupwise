@@ -42,3 +42,5 @@ Thumbs.db
 /server/public
 /server/config.js
 db.sqlite
+
+/logs
