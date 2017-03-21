@@ -1,5 +1,5 @@
 <div>
-  <div class="row clearfix">
+  <div class="row">
     <legend>Update hero image</legend>
     <table class="table">
       <thead>
@@ -54,4 +54,16 @@
                 </span>
     </div>
   </div>
+  <div class="row">
+    <legend>Featured Attribute</legend>
+    <div class="form-group">
+      <label for="featured-attribute-sel">Featured Attribute:</label>
+      <select [(ngModel)]="featuredAttribute" class="form-control" id="featured-attribute-sel" (change)="onChangeFeaturedAttribute($event.target.value)">
+        <ng-container *ngFor="let attribute of attributes">
+          <option [value]="attribute.Type.Name">{{attribute.Type.Name}}</option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+
 </div>

@@ -4,7 +4,7 @@ import {UserService} from "../services/user/user.service";
 import {AttributeService} from "../services/attributes/attribute.service";
 import {Attribute} from "../services/attributes/attribute.model";
 import {AttributeEnum} from "../services/attributes/attribute-enum.model";
-import {UserPhoto} from "../services/user/user-photo";
+import {ConfigService} from "../services/config/config.service";
 
 @Component({
   selector: 'app-student-search-page',
@@ -17,9 +17,16 @@ export class StudentSearchPageComponent implements OnInit {
   private defaultPhotoURL: string = "/assets/profile-placeholder-default.png";
   private photoURL: string = "/api/v1/user-photos";
   private users: User[] = [];
+  private filteredUsers: User[] = [];
+  private currentUsers: User[] = [];
   private attributes: Attribute[] = [];
+  private currentPage: number = 1;
+  private itemsPerPage: number = 20;
+  private featuredAttribute: string;
+  private filter: string = "";
 
-  constructor(private userService: UserService, private attributeService: AttributeService) {}
+  constructor(private userService: UserService, private attributeService: AttributeService,
+              private configService: ConfigService) {}
 
   ngOnInit() {
     this.userService.getUsers()
@@ -34,29 +41,37 @@ export class StudentSearchPageComponent implements OnInit {
                   user.ProfileImage = this.defaultPhotoURL;
               })
           });
+
+          this.attributeService.getAllAttributesAndValues()
+            .subscribe(attributes => {
+              this.attributes = attributes;
+              this.onFilterChanged();
+            });
         }
       );
 
-    this.attributeService.getAllAttributesAndValues()
-      .subscribe(attributes => {
-        this.attributes = attributes;
-      });
-
+    this.configService.getValue('FeaturedAttribute').subscribe((config) => {
+      this.featuredAttribute = config.Value;
+    });
   }
 
-  getUserAttributeDisplay(name: String, user: User) {
+  private getUserAttributeDisplay(name: String, user: User) {
     let found = this.getUserAttribute(name, user);
-    if (found) {
-      if (found.Type instanceof AttributeEnum) {
-        return found.Type.Options.filter((entry) => {
-          return entry.Value == found.Value.Value
-        })[0].Display;
-      }
-      return found.Value.Value;
-    }
+    if (found)
+      return this._getAttributeDisplay(found);
+    return "";
   }
 
-  getUserAttribute(name: String, user: User) {
+  private _getAttributeDisplay(attribute) {
+    if (attribute.Type instanceof AttributeEnum) {
+      return attribute.Type.Options.filter((entry) => {
+        return entry.Value == attribute.Value.Value
+      })[0].Display;
+    }
+    return attribute.Value.Value;
+  }
+
+  private getUserAttribute(name: String, user: User) {
     let found = this.attributes.filter((entry) => {
       return (entry.Type.Name == name && entry.Value.UserId == user.Id);
     });
@@ -65,6 +80,25 @@ export class StudentSearchPageComponent implements OnInit {
       return null;
 
     return found[0];
+  }
+
+  private pageChanged(event: any): void {
+    this.currentUsers = this.filteredUsers.slice(event.itemsPerPage * (event.page - 1), event.itemsPerPage * event.page);
+  }
+
+  private onFilterChanged(): void {
+    let found = this.attributes.filter((entry) => {
+      return String(this._getAttributeDisplay(entry)).toUpperCase().includes(this.filter.toUpperCase());
+    });
+
+    let foundUsers = found.map((entry) => {
+      return this.users.find(user => user.Id == entry.Value.UserId);
+    });
+
+    this.filteredUsers = foundUsers.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+
+
+    this.currentUsers = this.filteredUsers.slice(this.itemsPerPage * (this.currentPage - 1), this.itemsPerPage * this.currentPage);
   }
 
 }
