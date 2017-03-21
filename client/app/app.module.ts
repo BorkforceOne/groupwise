@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes}   from '@angular/router';
-import {AlertModule, DropdownModule, CollapseDirective, TabsModule, ModalModule, CarouselModule} from 'ng2-bootstrap';
+import {
+  AlertModule, DropdownModule, CollapseModule, TabsModule, ModalModule, CarouselModule,
+  PaginationModule, AccordionModule
+} from 'ng2-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -71,7 +74,6 @@ import {MatchService} from "./services/match/match.service";
     ChatComponent,
     AdminManageComponent,
     AlertsComponent,
-    CollapseDirective,
     RegisterAttributesComponent,
     PageNotFoundComponent,
     RegisterGeneralInformationComponent,
@@ -97,7 +99,10 @@ import {MatchService} from "./services/match/match.service";
     RouterModule.forRoot(AppRoutes),
     AlertModule.forRoot(),
     DropdownModule.forRoot(),
+    PaginationModule.forRoot(),
     ModalModule.forRoot(),
+    AccordionModule.forRoot(),
+    CollapseModule.forRoot(),
     FileUploadModule,
     MyDatePickerModule,
     MomentModule,
