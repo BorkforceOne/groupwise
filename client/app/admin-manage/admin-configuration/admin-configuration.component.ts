@@ -3,6 +3,9 @@ import {FileUploader} from "ng2-file-upload";
 import {ConfigService} from "../../services/config/config.service";
 import {AttributeService} from "../../services/attributes/attribute.service";
 import {Attribute} from "../../services/attributes/attribute.model";
+import {CookieService} from "angular2-cookie/services/cookies.service";
+import {Alert} from "../../services/alert/alert";
+import {AlertService} from "../../services/alert/alert.service";
 
 @Component({
   selector: 'app-admin-configuration',
@@ -16,8 +19,10 @@ export class AdminConfigurationComponent implements OnInit {
   private uploader: FileUploader;
   private attributes: Attribute [];
   private featuredAttribute: string;
+  private selectedTab: number = 0;
 
-  constructor(private configService: ConfigService, private attributeService: AttributeService) { }
+  constructor(private configService: ConfigService, private attributeService: AttributeService, private cookieService: CookieService,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.attributeService.getAllAttributes()
@@ -30,21 +35,28 @@ export class AdminConfigurationComponent implements OnInit {
         this.featuredAttribute = config.Value;
       });
 
-    this.uploader = new FileUploader({url: this.URL});
+    this.uploader = new FileUploader({url: this.URL, autoUpload: true, authTokenHeader: 'X-XSRF-TOKEN', authToken: this.cookieService.get('XSRF-TOKEN')});
 
-    this.uploader.onCompleteItem = (item: any , response: any, headers: any) => {
+    this.uploader.onSuccessItem = (item: any , response: any, headers: any) => {
       response = JSON.parse(response);
       // Update the banner image with this new uploaded image
       this.configService.setValue('BannerId', response.Payload.Id);
     };
 
     this.uploader.onErrorItem = (item: any, response: any, headers: any) => {
-
+      let alert = new Alert();
+      alert.Text = "File upload failed";
+      alert.Type = "danger";
+      this.alertService.addAlert(alert);
     };
   }
 
-  onChangeFeaturedAttribute(value) {
-    this.configService.setValue('FeaturedAttribute', value);
+  onChangeFeaturedAttribute() {
+    this.configService.setValue('FeaturedAttribute', this.featuredAttribute);
+  }
+
+  selectTab(tab) {
+    this.selectedTab = tab;
   }
 
 }

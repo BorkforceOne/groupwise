@@ -1,0 +1,11 @@
+<div class="col-md-12">
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default" (click)="onSubmitContent()">Submit</button>
+    <button *ngIf="!isPreviewing" type="button" class="btn btn-default" (click)="onTogglePreview()">Preview</button>
+    <button *ngIf="isPreviewing" type="button" class="btn btn-default" (click)="onTogglePreview()">Edit</button>
+  </div>
+</div>
+<div class="col-md-12 editor">
+  <div *ngIf="!isPreviewing" [froalaEditor] [(froalaModel)]="content"></div>
+  <div *ngIf="isPreviewing" [froalaView]="content"></div>
+</div>
