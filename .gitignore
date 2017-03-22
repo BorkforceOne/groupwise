@@ -40,7 +40,7 @@ testem.log
 Thumbs.db
 
 /server/public
-/server/config.js
+/server/config.custom.js
 db.sqlite
 
 /logs

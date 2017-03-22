@@ -14,6 +14,10 @@ config.mailer = {
   }
 };
 
+config.express = {
+  XSRFProtection: true
+};
+
 config.general = {
   baseURL: 'http://localhost:4200'
 };
