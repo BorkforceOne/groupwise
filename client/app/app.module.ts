@@ -57,6 +57,8 @@ import {AdminGuard} from "./guards/admin-guard";
 import {StudentGuard} from "./guards/student-guard";
 import {HostGuard} from "./guards/host-guard";
 import {MatchService} from "./services/match/match.service";
+import {FroalaEditorModule, FroalaViewModule} from "angular2-froala-wysiwyg";
+import { PageEditorComponent } from './admin-manage/admin-configuration/page-editor/page-editor.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +92,8 @@ import {MatchService} from "./services/match/match.service";
     ChatWindowComponent,
     RegisterAddonPageComponent,
     ProfileAttributeComponent,
-    AutoFocusDirective
+    AutoFocusDirective,
+    PageEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +111,9 @@ import {MatchService} from "./services/match/match.service";
     MomentModule,
     TabsModule.forRoot(),
     CarouselModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
     CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService],
