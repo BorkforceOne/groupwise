@@ -11,9 +11,20 @@
   width: auto;
 }
 
-.my-drop-zone { border: dotted 3px lightgray; }
-.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
-.another-file-over-class { border: dotted 3px green; }
+.file-input {
+  display: none;
+}
+.drop-zone {
+  border: dotted 3px lightgray;
+  text-align: center;
+}
+.drop-zone:hover {
+  background-color: #ebebeb;
+}
+.nv-file-over { /* Default class applied to drop zones on over */
+  border: dotted 3px red;
+}
+
 .img-gallery-wrapper {
   position: relative;
   width: auto;

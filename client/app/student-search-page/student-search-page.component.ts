@@ -50,8 +50,8 @@ export class StudentSearchPageComponent implements OnInit {
         }
       );
 
-    this.configService.getValue('FeaturedAttribute').subscribe((config) => {
-      this.featuredAttribute = config.Value;
+    this.configService.getValue('FeaturedAttribute').subscribe((value) => {
+      this.featuredAttribute = value;
     });
   }
 

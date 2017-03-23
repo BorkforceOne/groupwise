@@ -17,6 +17,7 @@ export class ConfigService extends BackendCommunicatorService {
   getValue(key): Observable<any> {
     return this.http.get(`${this.configUrl}/${key}`)
       .map(this.extractData.bind(this, null))
+      .map((config: any) => config.Value)
       .catch(this.handleError.bind(this));
   }
 

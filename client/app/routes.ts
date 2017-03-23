@@ -14,10 +14,12 @@ import {StudentSearchPageComponent} from "./student-search-page/student-search-p
 import {RegisterAttributesComponent} from "./register/register-attributes/register-attributes.component";
 import {RegisterAddonPageComponent} from "./register/register-addon-page/register-addon-page.component";
 import {HostGuard} from "./guards/host-guard";
+import {FaqPageComponent} from "./faq-page/faq-page.component";
 
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'contact', component: ContactComponent },
+  { path: 'faq', component: FaqPageComponent },
   { path: 'user-profile/:id', component: UserProfilePageComponent, canActivate: [LoggedinGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [NotLoggedinGuard], canActivateChild: [NotLoggedinGuard],
     children: [

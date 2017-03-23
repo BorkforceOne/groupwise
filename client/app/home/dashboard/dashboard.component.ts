@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ConfigService} from "../../services/config/config.service";
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-dashboard',
