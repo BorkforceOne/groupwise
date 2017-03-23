@@ -14,8 +14,8 @@ export class HeroCoverComponent implements OnInit {
 
   ngOnInit() {
     this.configService.getValue("BannerId")
-      .subscribe(kvp => {
-        this.bannerURL = `/api/v1/attachments/${kvp.Value}`;
+      .subscribe(value => {
+        this.bannerURL = `/api/v1/attachments/${value}`;
       }, err => {
         this.bannerURL = this.defaultBannerURL;
       });

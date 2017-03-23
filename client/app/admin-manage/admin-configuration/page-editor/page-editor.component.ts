@@ -18,8 +18,8 @@ export class PageEditorComponent implements OnInit {
 
   ngOnInit() {
     this.configService.getValue(this.ConfigEntry)
-      .subscribe((config) => {
-        this.content = config.Value;
+      .subscribe((value) => {
+        this.content = value;
       });
   }
 

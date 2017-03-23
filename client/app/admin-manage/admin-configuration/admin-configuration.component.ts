@@ -31,8 +31,8 @@ export class AdminConfigurationComponent implements OnInit {
       });
 
     this.configService.getValue('FeaturedAttribute')
-      .subscribe((config) => {
-        this.featuredAttribute = config.Value;
+      .subscribe((value) => {
+        this.featuredAttribute = value;
       });
 
     this.uploader = new FileUploader({url: this.URL, autoUpload: true, authTokenHeader: 'X-XSRF-TOKEN', authToken: this.cookieService.get('XSRF-TOKEN')});
