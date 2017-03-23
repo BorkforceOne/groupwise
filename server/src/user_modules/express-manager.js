@@ -4,7 +4,6 @@ const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bb = require('express-busboy');
-const uuid = require('node-uuid');
 const csurf = require('csurf');
 const database = require('./database-manager');
 const config = require('./../config');
