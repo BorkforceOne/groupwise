@@ -22,7 +22,7 @@ export class RemoteHtmlContentComponent implements OnInit {
       .subscribe((value) => {
         this.content = this.sanitizer.bypassSecurityTrustHtml(value);
         this.loaded = true;
-      });
+      }, () => this.loaded = true);
   }
 
 }

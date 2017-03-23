@@ -34,7 +34,7 @@ export class PageEditorComponent implements OnInit {
       .subscribe((value) => {
         this.content = value;
         this.loaded = true;
-      });
+      }, () => this.loaded = true);
   }
 
   onSubmitContent() {
