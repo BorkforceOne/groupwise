@@ -20,6 +20,8 @@ export class AdminConfigurationComponent implements OnInit {
   private attributes: Attribute [];
   private featuredAttribute: string;
   private selectedTab: number = 0;
+  private bannerURL: string;
+  private defaultBannerURL = "/assets/hero-cover-default.jpg";
 
   constructor(private configService: ConfigService, private attributeService: AttributeService, private cookieService: CookieService,
               private alertService: AlertService) { }
@@ -35,12 +37,15 @@ export class AdminConfigurationComponent implements OnInit {
         this.featuredAttribute = value;
       });
 
+    this.refreshBanner();
+
     this.uploader = new FileUploader({url: this.URL, autoUpload: true, authTokenHeader: 'X-XSRF-TOKEN', authToken: this.cookieService.get('XSRF-TOKEN')});
 
     this.uploader.onSuccessItem = (item: any , response: any, headers: any) => {
       response = JSON.parse(response);
       // Update the banner image with this new uploaded image
-      this.configService.setValue('BannerId', response.Payload.Id);
+      this.configService.setValue('BannerId', response.Payload.Id)
+        .then(() => this.refreshBanner())
     };
 
     this.uploader.onErrorItem = (item: any, response: any, headers: any) => {
@@ -49,6 +54,15 @@ export class AdminConfigurationComponent implements OnInit {
       alert.Type = "danger";
       this.alertService.addAlert(alert);
     };
+  }
+
+  private refreshBanner() {
+    this.configService.getValue("BannerId")
+      .subscribe(value => {
+        this.bannerURL = `/api/v1/attachments/${value}`;
+      }, () => {
+        this.bannerURL = this.defaultBannerURL;
+      });
   }
 
   onChangeFeaturedAttribute() {

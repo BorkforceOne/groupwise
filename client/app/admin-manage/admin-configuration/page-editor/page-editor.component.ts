@@ -13,6 +13,19 @@ export class PageEditorComponent implements OnInit {
   private content: string = "";
   private isPreviewing: boolean = false;
   private ConfigEntry: string;
+  private loaded: boolean = false;
+
+  private options: Object = {
+    placeholderText: "Enter page content here",
+    heightMin: 250,
+    toolbarButtons: ['fullscreen', 'print', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',
+      'fontFamily', 'fontSize', '|', 'specialCharacters', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', '|',
+      'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', '-', 'insertLink',
+      'insertImage', 'insertVideo', 'insertTable', 'undo', 'redo', 'clearFormatting', 'selectAll'],
+    toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'paragraphStyle',
+      'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', 'insertLink', 'insertImage',
+      'insertVideo', 'insertTable', 'undo', 'redo', 'clearFormatting']
+  };
 
   constructor(private configService: ConfigService) { }
 
@@ -20,6 +33,7 @@ export class PageEditorComponent implements OnInit {
     this.configService.getValue(this.ConfigEntry)
       .subscribe((value) => {
         this.content = value;
+        this.loaded = true;
       });
   }
 

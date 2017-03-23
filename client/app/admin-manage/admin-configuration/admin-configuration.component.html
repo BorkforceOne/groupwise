@@ -10,21 +10,30 @@
       <li [class.active]="selectedTab == 2">
         <a class="clickable" (click)="selectTab(2)">Dashboard Content</a>
       </li>
+      <li [class.active]="selectedTab == 3">
+        <a class="clickable" (click)="selectTab(3)">FAQ Content</a>
+      </li>
     </ul>
   </div>
   <div class="col-md-9">
     <ng-container [ngSwitch]="selectedTab">
       <ng-container *ngSwitchCase="0">
-        <legend>Update hero image</legend>
+        <legend>Hero Banner</legend>
         <div class="col-md-12">
-          <div ng2FileDrop
-               [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-               (fileOver)="fileOverBase($event)"
-               [uploader]="uploader"
-               class="well my-drop-zone">
-            Drop image here
+          <div class="col-md-12">
+            <div class="section">
+              <img [src]="bannerURL" class="img-responsive img-center">
+            </div>
+            <div ng2FileDrop
+                 [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                 (fileOver)="fileOverBase($event)"
+                 [uploader]="uploader"
+                 class="well drop-zone clickable"
+                 (click)="fileInput.click()">
+              <b>Drop image here (or click)</b>
+              <input #fileInput class="file-input" type="file" ng2FileSelect [uploader]="uploader"/>
+            </div>
           </div>
-          <input type="file" ng2FileSelect [uploader]="uploader" />
         </div>
       </ng-container>
       <ng-container *ngSwitchCase="1">
@@ -41,6 +50,10 @@
       <ng-container *ngSwitchCase="2">
         <legend>Dashboard Content</legend>
         <app-page-editor ConfigEntry="DashboardContent"></app-page-editor>
+      </ng-container>
+      <ng-container *ngSwitchCase="3">
+        <legend>FAQ Content</legend>
+        <app-page-editor ConfigEntry="FAQContent"></app-page-editor>
       </ng-container>
     </ng-container>
   </div>

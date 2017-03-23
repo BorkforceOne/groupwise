@@ -8,15 +8,10 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
   styleUrls: ['dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  private dashboardContent: SafeHtml = "";
 
-  constructor(private configService: ConfigService, private sanitizer: DomSanitizer) { }
+  constructor() { }
 
   ngOnInit() {
-    this.configService.getValue('DashboardContent')
-      .subscribe((value) => {
-        this.dashboardContent = this.sanitizer.bypassSecurityTrustHtml(value);
-      });
   }
 
 }
