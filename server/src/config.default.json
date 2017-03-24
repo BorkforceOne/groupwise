@@ -8,7 +8,8 @@
       }
   },
   "express": {
-    "XSRFProtection": true
+    "XSRFProtection": true,
+    "port": 4300
   },
   "general": {
     "baseURL": "http://localhost:4200"
