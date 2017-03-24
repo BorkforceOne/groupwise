@@ -30,7 +30,7 @@ npm-debug.log
 Thumbs.db
 
 /public
-/src/config.custom.js
+config.json
 db.sqlite
 
 /logs

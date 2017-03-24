@@ -1,8 +1,14 @@
-/**
- * This is to be used as a template for each install/development machine
- */
-const config = require('./config.default');
-const configCustom = require('./config.custom');
+const fs = require('fs');
+const path = require('path');
 const _ = require('lodash');
 
-module.exports = _.merge(config, configCustom);
+let config = require('./config.default.json');
+
+let configCustomFile = path.join(__dirname, '..', 'config.json');
+
+if (fs.existsSync(configCustomFile)) {
+  let configCustom = require(configCustomFile);
+  config = _.merge(config, configCustom);
+}
+
+module.exports = config;

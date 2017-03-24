@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bb = require('express-busboy');
@@ -17,6 +16,7 @@ class ExpressManager {
 
   init() {
     return new Promise((resolve, reject) => {
+      const wwwRoot = path.join(__dirname, '..', '..', 'www');
       this.context = express();
       this.csrfProtection = csurf();
 
@@ -33,8 +33,7 @@ class ExpressManager {
         upload: true
       });
 
-      this.context.use(express.static(path.join(__dirname, '..', 'public')));
-      this.context.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
+      this.context.use(express.static(wwwRoot));
       this.context.use(cookieParser());
       this.context.use(session({
         secret: config.session.secret,
@@ -60,7 +59,7 @@ class ExpressManager {
 
       this.context.use('/api/v1/', routes);
       this.context.use('', function(request, response, next) {
-        response.sendfile(path.join(__dirname, '..', 'public', 'index.html'));
+        response.sendfile(path.join(wwwRoot, 'index.html'));
       });
 
       // catch 404 and forward to error handler
