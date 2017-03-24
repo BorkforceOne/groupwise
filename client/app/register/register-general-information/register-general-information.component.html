@@ -67,7 +67,7 @@
   <div class="form-group required">
     <label class="col-md-2 control-label">Phone</label>
     <div class="col-md-9">
-      <input formControlName="Phone" class="form-control" placeholder="Phone" type="tel" required>
+      <input formControlName="Phone" class="form-control" tooltip="1234567890" placement="right" placeholder="1234567890" maxlength="10" type="tel" required>
       <div [hidden]="userRegistrationForm.controls.Phone.valid || userRegistrationForm.controls.Phone.pristine" class="alert alert-danger">
         Phone number is required
       </div>
