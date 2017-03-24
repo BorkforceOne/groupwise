@@ -65,7 +65,7 @@ class HttpManager {
     let bind = typeof addr === 'string'
       ? 'pipe ' + addr
       : 'port ' + addr.port;
-    console.log('Listening on ' + bind);
+    console.log('[HTTP] Listening on ' + bind);
   }
 
   /**
