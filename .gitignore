@@ -3,9 +3,11 @@
 # compiled output
 /dist
 /tmp
+/client/dist
 
 # dependencies
-/node_modules
+server/node_modules
+client/node_modules
 
 # IDEs and editors
 /.idea
@@ -23,18 +25,23 @@
 !.vscode/extensions.json
 
 # misc
-/.sass-cache
-/connect.lock
-/coverage/*
-/libpeerconnection.log
+/client/.sass-cache
+/client/connect.lock
+/client/coverage/*
+/client/libpeerconnection.log
 npm-debug.log
 testem.log
-/typings
+/client/typings
 
 # e2e
-/e2e/*.js
-/e2e/*.map
+/client/e2e/*.js
+/client/e2e/*.map
 
 #System Files
 .DS_Store
 Thumbs.db
+
+#Server Files
+/server/config.json
+/server/logs
+/server/secret-token.txt
