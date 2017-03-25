@@ -26,6 +26,7 @@
     "angular2-cookie": "^1.2.6",
     "angular2-froala-wysiwyg": "^2.5.1-1",
     "angular2-moment": "^1.2.0",
+    "angular2-text-mask": "^7.0.0",
     "bcrypt": "^0.8.7",
     "bootstrap": "^3.3.7",
     "connect-session-sequelize": "^4.1.0-beta.1",
