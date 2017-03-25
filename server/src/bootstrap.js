@@ -9,6 +9,7 @@ function bootstrap() {
   const mailerManager = require('./user_modules/mailer-manager');
   const notificationsManager = require('./user_modules/notifications-manager');
   const loggingManager = require('./user_modules/logging-manager');
+  const setupManager = require('./user_modules/setup-manager');
 
   const services = require('./services');
 
@@ -19,6 +20,7 @@ function bootstrap() {
 
   // Initialize Logging
   loggingManager.init()
+    .then(() => setupManager.init())
     // Initialize Database
     .then(() => databaseManager.init())
     // Initialize Services

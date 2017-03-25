@@ -1,0 +1,9 @@
+{
+  "database": {
+    "host": "localhost",
+    "databaseName": "groupwise",
+    "user": "groupwise-app",
+    "password": "abc123",
+    "dialect": "mysql"
+  }
+}

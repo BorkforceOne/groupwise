@@ -54,7 +54,7 @@ const User = databaseManager.context.define('user', {
   },
   Password: {
     allowNull: false,
-    type: Sequelize.STRING
+    type: Sequelize.STRING(512)
   },
   Salt: {
     allowNull: false,

@@ -1,6 +1,6 @@
 const http = require('http');
 const express = require('./express-manager');
-const debug = require('debug')('groupwise:server');
+const config = require('../config');
 
 class HttpManager {
 
@@ -13,15 +13,14 @@ class HttpManager {
     return new Promise((resolve, reject) => {
       // Get port from environment and store in Express.
 
-      const port = this._normalizePort(process.env.PORT || '4300');
-      this.port = port;
-      express.context.set('port', port);
+      this.port = this._normalizePort(config.express.port);
+      express.context.set('port', this.port);
 
       // Create HTTP server.
       this.context = http.createServer(express.context);
 
       // Bind to the port
-      this.context.listen(port);
+      this.context.listen(this.port);
 
       // Add listeners
       this.context.on('error', this._onError.bind(this));
@@ -46,11 +45,11 @@ class HttpManager {
     // handle specific listen errors with friendly messages
     switch (error.code) {
       case 'EACCES':
-        console.error(bind + ' requires elevated privileges');
+        console.error(`[HTTP] ${bind} requires elevated privileges`);
         process.exit(1);
         break;
       case 'EADDRINUSE':
-        console.error(bind + ' is already in use');
+        console.error(`[HTTP] ${bind} is already in use`);
         process.exit(1);
         break;
       default:
@@ -66,7 +65,7 @@ class HttpManager {
     let bind = typeof addr === 'string'
       ? 'pipe ' + addr
       : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    console.log('[HTTP] Listening on ' + bind);
   }
 
   /**
