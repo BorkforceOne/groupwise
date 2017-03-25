@@ -62,6 +62,8 @@ import { PageEditorComponent } from './admin-manage/admin-configuration/page-edi
 import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-content.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { TooltipModule } from 'ng2-bootstrap/tooltip';
+import {TextMaskModule} from "angular2-text-mask";
 
 @NgModule({
   declarations: [
@@ -104,6 +106,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
   imports: [
     BrowserModule,
     FormsModule,
+    TextMaskModule,
     HttpModule,
     RouterModule.forRoot(AppRoutes),
     AlertModule.forRoot(),
@@ -119,7 +122,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     CarouselModule.forRoot(),
     ReactiveFormsModule,
     FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    FroalaViewModule.forRoot(),
+    TooltipModule.forRoot()
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
     CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService],

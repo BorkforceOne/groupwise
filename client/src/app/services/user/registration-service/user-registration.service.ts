@@ -34,7 +34,7 @@ export class UserRegistrationService extends BackendCommunicatorService{
       Firstname: ['', [<any>Validators.required]],
       Lastname: ['', [<any>Validators.required]],
       Birthday: ['', [<any>Validators.required]],
-      Phone: ['', [<any>Validators.required, <any>Validators.pattern("[0-9]{10}")]],
+      Phone: ['', [<any>Validators.required, <any>Validators.pattern(/\([1-9]\d{2}\) \d{3}\-\d{4}/)]],
       Gender: ['', [<any>Validators.required]],
       Type: ['', [<any>Validators.required]]
     }, {validator: this.matchingPasswords('Password', 'PasswordVerify')});

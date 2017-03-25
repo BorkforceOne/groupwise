@@ -12,6 +12,8 @@ import {FormGroup} from "@angular/forms";
 })
 export class RegisterGeneralInformationComponent implements OnInit {
   userRegistrationForm: FormGroup;
+  public phoneModel = '';
+  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
   constructor(private userRegistrationService: UserRegistrationService) {
     this.userRegistrationForm = this.userRegistrationService.userRegistrationForm;
