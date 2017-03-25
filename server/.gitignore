@@ -34,3 +34,4 @@ config.json
 db.sqlite
 
 /logs
+secret-token.txt
