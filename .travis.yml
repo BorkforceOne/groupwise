@@ -17,7 +17,7 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-script: ng test --watch=false
+script: cd client && ng test --watch=false
 
 notifications:
   slack: nau-476-flagfriends:HYZ8QP4LuWCHAVkUclD3Fw5v

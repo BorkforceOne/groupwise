@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 class EncryptionManager {
 
@@ -31,10 +31,10 @@ class EncryptionManager {
    */
   generateHash(string, salt) {
     return new Promise((resolve, reject) => {
-      bcrypt.hash(string, salt, (err, stringHash) => {
+      crypto.pbkdf2(string, salt, 100000, 256, 'sha256', (err, stringHash) => {
         if (err)
           reject(err);
-        resolve(stringHash);
+        resolve(stringHash.toString('hex'));
       })
     });
   };
@@ -44,11 +44,7 @@ class EncryptionManager {
    */
   generateSalt() {
     return new Promise((resolve, reject) => {
-      bcrypt.genSalt(10, (err, salt) => {
-        if (err)
-          reject(err);
-        resolve(salt);
-      })
+      resolve(crypto.randomBytes(16).toString('hex'));
     });
   };
 }

@@ -1,0 +1,36 @@
+{
+  "mailer": {
+      "default": "no-reply",
+      "accounts": {
+          "no-reply": {
+
+          }
+      }
+  },
+  "express": {
+    "XSRFProtection": true,
+    "port": 4300
+  },
+  "general": {
+    "baseURL": "http://localhost:4200"
+  },
+  "database": {
+    "host": "localhost",
+    "databaseName": "groupwise",
+    "user": "groupwise-app",
+    "password": "abc123",
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "idle": 10000
+    },
+    "logging": false,
+    "dialect": "sqlite",
+    "storage": "db.sqlite"
+  },
+  "session": {
+    "secret": "changeme",
+    "resave": false,
+    "saveUninitialized": true
+  }
+}
