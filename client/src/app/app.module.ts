@@ -62,6 +62,7 @@ import { PageEditorComponent } from './admin-manage/admin-configuration/page-edi
 import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-content.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { SetupPageComponent } from './setup-page/setup-page.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     PageEditorComponent,
     RemoteHtmlContentComponent,
     FaqPageComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SetupPageComponent
   ],
   imports: [
     BrowserModule,

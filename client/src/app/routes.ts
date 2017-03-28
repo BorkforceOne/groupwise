@@ -15,9 +15,11 @@ import {RegisterAttributesComponent} from "./register/register-attributes/regist
 import {RegisterAddonPageComponent} from "./register/register-addon-page/register-addon-page.component";
 import {HostGuard} from "./guards/host-guard";
 import {FaqPageComponent} from "./faq-page/faq-page.component";
+import {SetupPageComponent} from "./setup-page/setup-page.component";
 
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
+  { path: 'setup', component: SetupPageComponent},
   { path: 'contact', component: ContactComponent },
   { path: 'faq', component: FaqPageComponent },
   { path: 'user-profile/:id', component: UserProfilePageComponent, canActivate: [LoggedinGuard] },
