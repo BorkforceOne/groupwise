@@ -63,8 +63,8 @@ import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-co
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
-import {TextMaskModule} from "angular2-text-mask";
-import { AdminApprovalQueueComponent } from './src/app/admin-manage/admin-approval-queue/admin-approval-queue/admin-approval-queue.component';
+import {TextMaskModule} from 'angular2-text-mask';
+import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 
 @NgModule({
   declarations: [
