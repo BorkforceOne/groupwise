@@ -64,6 +64,7 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import {TextMaskModule} from "angular2-text-mask";
+import { MyMatchesPageComponent } from './my-matches-page/my-matches-page.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import {TextMaskModule} from "angular2-text-mask";
     PageEditorComponent,
     RemoteHtmlContentComponent,
     FaqPageComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    MyMatchesPageComponent
   ],
   imports: [
     BrowserModule,
