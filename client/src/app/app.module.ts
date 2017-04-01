@@ -65,6 +65,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import {TextMaskModule} from 'angular2-text-mask';
 import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
+import {ListService} from "./services/list/list.service";
 
 @NgModule({
   declarations: [
@@ -128,7 +129,7 @@ import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue
     TooltipModule.forRoot()
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService],
+    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
