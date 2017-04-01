@@ -40,6 +40,18 @@ router.post(routeName, function(req, res, next) {
     .catch(error => restUtils.catchErrors(error, req, res));
 });
 
+/* PUT */
+router.put(`${routeName}/:id`, function(req, res, next) {
+  let data = req.body;
+  data.Id = req.params.id;
+
+  usersService.update(data)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
 /* POST Forgot Password */
 router.post(`${routeName}/forgot-password`, function(req, res, next) {
 

@@ -63,8 +63,8 @@ import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-co
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
-import {TextMaskModule} from "angular2-text-mask";
-import { MyMatchesPageComponent } from './my-matches-page/my-matches-page.component';
+import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
+import {TextMaskModule} from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -103,6 +103,7 @@ import { MyMatchesPageComponent } from './my-matches-page/my-matches-page.compon
     RemoteHtmlContentComponent,
     FaqPageComponent,
     SpinnerComponent,
+    AdminApprovalQueueComponent,
     MyMatchesPageComponent
   ],
   imports: [

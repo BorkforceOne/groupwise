@@ -15,6 +15,7 @@ import {RegisterAttributesComponent} from "./register/register-attributes/regist
 import {RegisterAddonPageComponent} from "./register/register-addon-page/register-addon-page.component";
 import {HostGuard} from "./guards/host-guard";
 import {FaqPageComponent} from "./faq-page/faq-page.component";
+import {AdminGuard} from "./guards/admin-guard";
 import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
 
 export const AppRoutes: Routes = [
@@ -31,8 +32,8 @@ export const AppRoutes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotLoggedinGuard]},
   { path: 'validate', component: ConsumeTokenPageComponent },
   { path: 'student-search', component: StudentSearchPageComponent, canActivate: [HostGuard] },
+  { path: 'admin-manage', component: AdminManageComponent, canActivate: [AdminGuard] },
   { path: 'my-matches', component: MyMatchesPageComponent },
-  { path: 'admin-manage', component: AdminManageComponent },
   { path: 'home', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
