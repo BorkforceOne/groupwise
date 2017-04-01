@@ -50,9 +50,12 @@ export class StudentSearchPageComponent implements OnInit {
         }
       );
 
-    this.configService.getValue('FeaturedAttribute').subscribe((value) => {
-      this.featuredAttribute = value;
-    });
+    this.configService.getValue("FeaturedAttribute")
+      .subscribe(value => {
+        this.featuredAttribute = value;
+      }, err => {
+        this.featuredAttribute = "";
+      });
   }
 
   private getUserAttributeDisplay(name: String, user: User) {
@@ -87,16 +90,20 @@ export class StudentSearchPageComponent implements OnInit {
   }
 
   private onFilterChanged(): void {
-    let found = this.attributes.filter((entry) => {
-      return String(this._getAttributeDisplay(entry)).toUpperCase().includes(this.filter.toUpperCase());
-    });
+    if (this.filter != "") {
+      let found = this.attributes.filter((entry) => {
+        return String(this._getAttributeDisplay(entry)).toUpperCase().includes(this.filter.toUpperCase());
+      });
 
-    let foundUsers = found.map((entry) => {
-      return this.users.find(user => user.Id == entry.Value.UserId);
-    });
+      let foundUsers = found.map((entry) => {
+        return this.users.find(user => user.Id == entry.Value.UserId);
+      });
 
-    this.filteredUsers = foundUsers.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
-
+      this.filteredUsers = foundUsers.filter((user) => user != undefined);
+    }
+    else {
+      this.filteredUsers = this.users;
+    }
 
     this.currentUsers = this.filteredUsers.slice(this.itemsPerPage * (this.currentPage - 1), this.itemsPerPage * this.currentPage);
   }
