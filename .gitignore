@@ -45,3 +45,5 @@ Thumbs.db
 /server/config.json
 /server/logs
 /server/secret-token.txt
+/server/db.sqlite
+/server/www

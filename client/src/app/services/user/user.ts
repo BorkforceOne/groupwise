@@ -9,6 +9,7 @@ export class User extends Serializable{
   "Birthday": string;
   "Gender": "MALE" | "FEMALE" | "OTHER";
   "Phone": string;
+  "Status": "ACTIVE" | "BANNED" | "PENDING_REVIEW";
   "ReceiveGeneralNotifications": boolean;
   "ReceiveNewMatchNotifications": boolean;
   "ReceiveMessageNotifications": boolean;
