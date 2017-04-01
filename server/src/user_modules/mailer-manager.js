@@ -68,14 +68,15 @@ class MailerManager {
     return new Promise((resolve, reject) => {
       console.log("[MAILER] Sending email to " + header.to);
 
-      mail(header, params, (error) => {
+      /*mail(header, params, (error) => {
         if (error) {
           console.error("[MAILER] Could not dispatch email message, error: " + error);
           reject(error);
         }
         else
           resolve();
-      })
+      })*/
+      resolve();
     })
   }
 }
