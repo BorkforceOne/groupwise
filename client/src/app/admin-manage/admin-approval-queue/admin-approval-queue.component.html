@@ -1,3 +1,89 @@
-<p>
-  admin-approval-queue works!
-</p>
+<div>
+  <h3>Users Pending Review</h3>
+  <ng-container *ngIf="users.length == 0">
+    <h4>There are no users to review</h4>
+  </ng-container>
+  <ng-container *ngIf="users.length > 0">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let user of users">
+        <tr>
+          <td>
+            {{user.Firstname}}
+          </td>
+          <td>
+            {{user.Lastname}}
+          </td>
+          <td>
+            {{user.Email}}
+          </td>
+          <td>
+            {{user.Phone}}
+          </td>
+          <td>
+            <a class="btn btn-default" [routerLink]="['/user-profile', user.Id]">View Profile</a>
+          </td>
+          <td>
+            <span class="glyphicon glyphicon-remove text-danger" tooltip="Reject User" (click)="banUser(user)"></span>
+            <span class="glyphicon glyphicon-check clickable" tooltip="Approve User" (click)="approveUser(user)"></span>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </ng-container>
+</div>
+
+
+<div>
+  <h3>Banned Users</h3>
+  <ng-container *ngIf="bannedUsers.length == 0">
+    <h4>There are no banned users at this time</h4>
+  </ng-container>
+  <ng-container *ngIf="bannedUsers.length > 0">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let user of bannedUsers">
+        <tr>
+          <td>
+            {{user.Firstname}}
+          </td>
+          <td>
+            {{user.Lastname}}
+          </td>
+          <td>
+            {{user.Email}}
+          </td>
+          <td>
+            {{user.Phone}}
+          </td>
+          <td>
+            <a class="btn btn-default" [routerLink]="['/user-profile', user.Id]">View Profile</a>
+          </td>
+          <td>
+            <span class="glyphicon glyphicon-check clickable" tooltip="Approve user" (click)="approveUserFromBan(user)"></span>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </ng-container>
+</div>
+
+

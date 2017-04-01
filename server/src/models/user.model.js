@@ -66,7 +66,7 @@ const User = databaseManager.context.define('user', {
   },
   Status: {
     allowNull: false,
-    type: Sequelize.ENUM('BANNED', 'ACTIVE', 'PENDING_REVIEW', 'REJECTED'),
+    type: Sequelize.ENUM('BANNED', 'ACTIVE', 'PENDING_REVIEW'),
     defaultValue: 'PENDING_REVIEW'
   },
   ReceiveGeneralNotifications: {
