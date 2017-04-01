@@ -42,17 +42,9 @@
                 <p><i class="glyphicon glyphicon-gift"></i> {{ user.Birthday | date }}</p><!-- Split button -->
               </div>
               <div class="col-md-5">
-                <div class="btn-group pull-right">
+                <div class="btn-group-vertical pull-right">
                   <a class="btn btn-primary" [routerLink]="['/user-profile',user.Id]">View Profile</a>
-                </div>
-              </div>
-              <div class="col-md-5">
-                <div class="btn-group pull-right">
                   <a class="btn btn-success" >Accept Match</a>
-                </div>
-              </div>
-              <div class="col-md-5">
-                <div class="btn-group pull-right">
                   <a class="btn btn-danger" >Reject Match</a>
                 </div>
               </div>
