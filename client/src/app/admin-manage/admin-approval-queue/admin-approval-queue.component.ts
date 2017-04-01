@@ -26,20 +26,19 @@ export class AdminApprovalQueueComponent implements OnInit {
       });
   }
 
-  approveUser(user:User){
-    user.Status = "ACTIVE";
-    this.users.splice(this.users.indexOf(user), 1);
+  changeStatus(user: User, toStatus: "ACTIVE" | "BANNED") {
+    user.Status = toStatus;
+    this.userService.updateUser(user)
+      .toPromise()
+      .then(() => {
+        if (toStatus == 'ACTIVE') {
+          this.users.splice(this.users.indexOf(user), 1);
+          this.bannedUsers.splice(this.bannedUsers.indexOf(user), 1);
+        }
+        if (toStatus == 'BANNED') {
+          this.users.splice(this.users.indexOf(user), 1);
+          this.bannedUsers.push(user);
+        }
+      })
   }
-
-  banUser(user:User){
-    user.Status = "BANNED";
-    this.users.splice(this.users.indexOf(user), 1);
-    this.bannedUsers.push(user);
-  }
-
-  approveUserFromBan(user:User){
-    user.Status = "ACTIVE";
-    this.bannedUsers.splice(this.bannedUsers.indexOf(user), 1);
-  }
-
 }

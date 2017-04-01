@@ -77,7 +77,7 @@ class UserService {
     return new Promise((resolve, reject) => {
       //TODO: Validation
 
-      resolve();
+      resolve(entity);
     });
   }
 

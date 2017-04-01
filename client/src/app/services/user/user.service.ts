@@ -32,6 +32,13 @@ export class UserService extends BackendCommunicatorService{
       .catch(this.handleError.bind(this));
   }
 
+  updateUser(user: User): Observable<User> {
+    return this
+      .http.put(`${this.usersUrl}/${user.Id}`, JSON.stringify(user), {headers: this.headers})
+      .map(this.extractData.bind(this, User))
+      .catch(this.handleError.bind(this));
+  }
+
   resetPassword(email: string): Promise<{}> {
     let query = {
       Email: email
