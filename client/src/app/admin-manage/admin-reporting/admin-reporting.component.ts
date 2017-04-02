@@ -15,9 +15,35 @@ export class AdminReportingComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(users => {
-      this.users = users;
-    });
+    this.userService.getUsers()
+      .subscribe(users => {
+        this.users = users;
+        console.log(this.dataToCSV(users));
+      });
   }
 
+  dataToCSV(data) {
+    let keys = Object.keys(data[0]);
+    let columnDelimiter = ',';
+    let lineDelimiter = '\n';
+
+    let result = '';
+    result += keys.join(columnDelimiter);
+    result += lineDelimiter;
+
+    let ctr = 0;
+    data.forEach((item) => {
+      ctr = 0;
+      keys.forEach((key) => {
+        if (ctr > 0) result += columnDelimiter;
+
+        result += item[key];
+        ctr++;
+      });
+
+      result += lineDelimiter;
+    });
+
+    return result;
+  }
 }
