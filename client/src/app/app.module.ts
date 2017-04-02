@@ -42,7 +42,6 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
-import {CookieService} from "angular2-cookie/services/cookies.service";
 import { AdminConfigurationComponent } from './admin-manage/admin-configuration/admin-configuration.component';
 import { AdminAttributesComponent } from './admin-manage/admin-attributes/admin-attributes.component';
 import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-reporting.component';
@@ -69,6 +68,10 @@ import {ChartsModule} from "ng2-charts";
 import {ReportUserAcquisitionComponent} from "./admin-manage/admin-reporting/report-user-acquisition/report-user-acquisition.component";
 import { ReportUserTotalComponent } from './admin-manage/admin-reporting/report-user-total/report-user-total.component';
 import { ReportMatchActivityComponent } from './admin-manage/admin-reporting/report-match-activity/report-match-activity.component';
+import { ReportEntityTableComponent } from './admin-manage/admin-reporting/report-entity-table/report-entity-table.component';
+import {Ng2TableModule} from "ng2-table";
+import { ReportUsersTableComponent } from './admin-manage/admin-reporting/report-users-table/report-users-table.component';
+import { BaseCookieOptions, CookieService, CookieOptions } from 'angular2-cookie/core';
 
 @NgModule({
   declarations: [
@@ -110,7 +113,9 @@ import { ReportMatchActivityComponent } from './admin-manage/admin-reporting/rep
     MyMatchesPageComponent,
     ReportUserAcquisitionComponent,
     ReportUserTotalComponent,
-    ReportMatchActivityComponent
+    ReportMatchActivityComponent,
+    ReportEntityTableComponent,
+    ReportUsersTableComponent
   ],
   imports: [
     BrowserModule,
@@ -133,10 +138,11 @@ import { ReportMatchActivityComponent } from './admin-manage/admin-reporting/rep
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     TooltipModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    Ng2TableModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService],
+    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, { provide: CookieOptions, useClass: BaseCookieOptions }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,6 +14,7 @@
               <option [value]="'USER_ACQUISITION'">User Acquisition</option>
               <option [value]="'USER_TOTAL'">Total Users</option>
               <option [value]="'MATCH_ACTIVITY'">Match Activity</option>
+              <option [value]="'USERS_ALL'">All Users</option>
             </select>
           </div>
         </accordion-group>
@@ -21,19 +22,12 @@
     </div>
   </div>
   <div class="col-md-9">
-    <div class="col-md-6">
-      <p>Total Users: 4</p>
-      <p>Total Students: 3</p>
-      <p>Total Hosts: 1</p>
-    </div>
-    <div class="col-md-6">
-      <p>Total Attributes: 14</p>
-    </div>
     <div class="col-md-12">
       <ng-container [ngSwitch]="reportType">
         <app-report-user-acquisition *ngSwitchCase="'USER_ACQUISITION'" [usersData]="users"></app-report-user-acquisition>
         <app-report-user-total *ngSwitchCase="'USER_TOTAL'" [usersData]="users"></app-report-user-total>
         <app-report-match-activity *ngSwitchCase="'MATCH_ACTIVITY'" [matchesData]="matches"></app-report-match-activity>
+        <app-report-users-table *ngSwitchCase="'USERS_ALL'" [usersData]="users" [matchesData]="matches"></app-report-users-table>
       </ng-container>
     </div>
   </div>
