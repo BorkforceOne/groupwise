@@ -42,7 +42,6 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
-import { AgePipe } from './age.pipe';
 import {CookieService} from "angular2-cookie/services/cookies.service";
 import { AdminConfigurationComponent } from './admin-manage/admin-configuration/admin-configuration.component';
 import { AdminAttributesComponent } from './admin-manage/admin-attributes/admin-attributes.component';
@@ -63,8 +62,9 @@ import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-co
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
-import {TextMaskModule} from 'angular2-text-mask';
 import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
+import {TextMaskModule} from 'angular2-text-mask';
+import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
 
 @NgModule({
   declarations: [
@@ -91,7 +91,6 @@ import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue
     RegisterAttributeFieldComponent,
     DateSelectComponent,
     ChatMessageComponent,
-    AgePipe,
     AdminConfigurationComponent,
     AdminAttributesComponent,
     AdminReportingComponent,
@@ -103,7 +102,8 @@ import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue
     RemoteHtmlContentComponent,
     FaqPageComponent,
     SpinnerComponent,
-    AdminApprovalQueueComponent
+    AdminApprovalQueueComponent,
+    MyMatchesPageComponent
   ],
   imports: [
     BrowserModule,

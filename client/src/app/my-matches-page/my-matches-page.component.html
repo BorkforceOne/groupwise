@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="col-md-3">
+    <div class="col-md-12">
+      <accordion>
+        <accordion-group #group [isOpen]="true">
+          <div accordion-heading>
+            Search & Filter
+            <i class="pull-right float-xs-right glyphicon"
+               [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+          </div>
+          <div class="form-group">
+            <label for="search">Search:</label>
+            <input [(ngModel)]="filter" type="text" class="form-control" id="search" (input)="onFilterChanged()">
+          </div>
+          <hr/>
+          <div class="form-group">
+            <label for="results-per-page">Results per page:</label>
+            <select [(ngModel)]="itemsPerPage" class="form-control" id="results-per-page">
+              <option [value]="10">10</option>
+              <option [value]="20">20</option>
+              <option [value]="30">30</option>
+            </select>
+          </div>
+        </accordion-group>
+      </accordion>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="col-md-12" *ngFor="let result of currentResults">
+      <div class="well well-sm">
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <img alt="" class="img-responsive" [src]="result.User.ProfileImage">
+          </div>
+          <div class="col-sm-6 col-md-8">
+            <div class="row">
+              <div class="col-md-7">
+                <h4>{{result.User.Firstname}} {{result.User.Lastname}}</h4>
+                <p class="text-muted">{{result.User.Gender}}, {{today | amDifference: result.User.Birthday: 'years': false}}</p>
+                <span class="label label-default">
+                  {{result.Match.Status}}
+                </span>
+              </div>
+              <div class="col-md-5 btn-group-vertical pull-right">
+                <a class="btn btn-primary btn-block" [routerLink]="['/user-profile',result.User.Id]">View Profile</a>
+                <button class="btn btn-default btn-block" type="button" (click)="startChat(result.User)">Message</button>
+                <br/><br/>
+                <ng-container *ngIf="result.Match.StudentUserId == loggedInUser.Id">
+                  <button class="btn btn-success btn-block" type="button" *ngIf="result.Match.Status == 'PROPOSED'" (click)="acceptMatch(result.Match)">Accept Match</button>
+                  <button class="btn btn-danger btn-block" type="button" *ngIf="result.Match.Status == 'PROPOSED'" (click)="rejectMatch(result.Match)">Reject Match</button>
+                </ng-container>
+                <ng-container *ngIf="result.Match.HostUserId == loggedInUser.Id">
+                  <button class="btn btn-default btn-block" type="button" *ngIf="result.Match.Status == 'PROPOSED'" [disabled]="true">Awaiting Match Response</button>
+                  <button class="btn btn-danger btn-block" type="button" *ngIf="result.Match.Status == 'PROPOSED'" (click)="rejectMatch(result.Match)">Reject Match</button>
+                </ng-container>
+                <button class="btn btn-danger btn-block" type="button" *ngIf="result.Match.Status == 'APPROVED'" (click)="unmatchMatch(result.Match)">Unmatch</button>
+              </div>
+            </div>
+            <div class="row">
+              <p *ngIf="result.Match.Status === 'APPROVED'">
+                Phone: {{result.User.Phone}}
+                <br>
+                Email: {{result.User.Email}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row text-center">
+    <pagination [totalItems]="currentResults.length" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+</div>

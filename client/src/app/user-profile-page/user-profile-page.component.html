@@ -15,22 +15,23 @@
       </ng-container>
 
     </div>
-    <div class="col-md-8 column">
+    <div class="col-md-7 column">
       <blockquote>
-        <p>{{user.Firstname}} {{user.Lastname}}</p><small>{{user.Birthday | age}} / {{user.Gender}} / {{user.Type}} </small>
+        <p>{{user.Firstname}} {{user.Lastname}}</p><small>{{today | amDifference: user.Birthday: 'years': false}} / {{user.Gender}} / {{user.Type}} </small>
       </blockquote>
     </div>
-    <div class="col-md-2 column">
+    <div class="col-md-3 btn-group-vertical">
       <button class="btn btn-default btn-block" type="button" [disabled]="isLoggedInUser" (click)="startChat()">Message</button>
+      <br/><br/>
       <ng-container *ngIf="match != null">
         <ng-container *ngIf="match.HostUserId == userId">
-          <button class="btn btn-default btn-block" type="button" *ngIf="match.Status == 'PROPOSED'" [disabled]="isLoggedInUser" (click)="acceptMatch()">Accept Match</button>
-          <button class="btn btn-default btn-block" type="button" *ngIf="match.Status == 'PROPOSED'" [disabled]="isLoggedInUser" (click)="rejectMatch()">Reject Match</button>
+          <button class="btn btn-success btn-block" type="button" *ngIf="match.Status == 'PROPOSED'" [disabled]="isLoggedInUser" (click)="acceptMatch()">Accept Match</button>
+          <button class="btn btn-danger btn-block" type="button" *ngIf="match.Status == 'PROPOSED'" [disabled]="isLoggedInUser" (click)="rejectMatch()">Reject Match</button>
         </ng-container>
         <ng-container *ngIf="match.HostUserId == loggedInUser.Id">
           <button class="btn btn-default btn-block" type="button" *ngIf="match.Status == 'PROPOSED'" [disabled]="true" (click)="unmatchMatch()">Awaiting Match Response</button>
         </ng-container>
-        <button class="btn btn-default btn-block" type="button" *ngIf="match.Status == 'APPROVED'" [disabled]="isLoggedInUser" (click)="unmatchMatch()">Unmatch</button>
+        <button class="btn btn-danger btn-block" type="button" *ngIf="match.Status == 'APPROVED'" [disabled]="isLoggedInUser" (click)="unmatchMatch()">Unmatch</button>
       </ng-container>
       <button class="btn btn-default btn-block" type="button" *ngIf="loggedInUser.Type == 'HOST' && (match == null || match.Status == 'REJECTED' || match.Status == 'UNMATCHED')" [disabled]="isLoggedInUser" (click)="proposeMatch()">Propose Match</button>
     </div>
