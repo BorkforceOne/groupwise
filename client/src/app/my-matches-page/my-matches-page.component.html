@@ -25,33 +25,42 @@
       </accordion>
     </div>
   </div>
-  <div class="col-md-9" *ngFor="let user of currentUsers">
-    <div class="col-md-12">
+  <div class="col-md-9">
+    <div class="col-md-12" *ngFor="let result of currentResults">
       <div class="well well-sm">
         <div class="row">
           <div class="col-sm-6 col-md-4">
-            <img alt="" class="img-responsive" [src]="user.ProfileImage">
+            <img alt="" class="img-responsive" [src]="result.User.ProfileImage">
           </div>
           <div class="col-sm-6 col-md-8">
             <div class="row">
               <div class="col-md-7">
-                <h4>{{user.Firstname}} {{user.Lastname}}</h4>
-                <small>
-                  <cite title="{{user.Gender}}">{{user.Gender}}, {{getUserAttributeDisplay("AcademicStatus", user)}}</cite>
-                </small>
-                <p><i class="glyphicon glyphicon-gift"></i> {{ user.Birthday | date }}</p><!-- Split button -->
+                <h4>{{result.User.Firstname}} {{result.User.Lastname}}</h4>
+                <p class="text-muted">{{result.User.Gender}}, {{today | amDifference: result.User.Birthday: 'years': false}}</p>
+                <span class="label label-default">
+                  {{result.Match.Status}}
+                </span>
               </div>
-              <div class="col-md-5">
-                <div class="btn-group-vertical pull-right">
-                  <a class="btn btn-primary" [routerLink]="['/user-profile',user.Id]">View Profile</a>
-                  <a class="btn btn-success" >Accept Match</a>
-                  <a class="btn btn-danger" >Reject Match</a>
-                </div>
+              <div class="col-md-5 btn-group-vertical pull-right">
+                <a class="btn btn-primary btn-block" [routerLink]="['/user-profile',result.User.Id]">View Profile</a>
+                <button class="btn btn-default btn-block" type="button" (click)="startChat(result.User)">Message</button>
+                <br/><br/>
+                <ng-container *ngIf="result.Match.StudentUserId == loggedInUser.Id">
+                  <button class="btn btn-success btn-block" type="button" *ngIf="result.Match.Status == 'PROPOSED'" (click)="acceptMatch(result.Match)">Accept Match</button>
+                  <button class="btn btn-danger btn-block" type="button" *ngIf="result.Match.Status == 'PROPOSED'" (click)="rejectMatch(result.Match)">Reject Match</button>
+                </ng-container>
+                <ng-container *ngIf="result.Match.HostUserId == loggedInUser.Id">
+                  <button class="btn btn-default btn-block" type="button" *ngIf="result.Match.Status == 'PROPOSED'" [disabled]="true">Awaiting Match Response</button>
+                  <button class="btn btn-danger btn-block" type="button" *ngIf="result.Match.Status == 'PROPOSED'" (click)="rejectMatch(result.Match)">Reject Match</button>
+                </ng-container>
+                <button class="btn btn-danger btn-block" type="button" *ngIf="result.Match.Status == 'APPROVED'" (click)="unmatchMatch(result.Match)">Unmatch</button>
               </div>
             </div>
             <div class="row">
-              <p>
-                {{getUserAttributeDisplay(featuredAttribute, user)}}
+              <p *ngIf="result.Match.Status === 'APPROVED'">
+                Phone: {{result.User.Phone}}
+                <br>
+                Email: {{result.User.Email}}
               </p>
             </div>
           </div>
@@ -60,6 +69,6 @@
     </div>
   </div>
   <div class="row text-center">
-    <pagination [totalItems]="currentUsers.length" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+    <pagination [totalItems]="currentResults.length" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
   </div>
 </div>

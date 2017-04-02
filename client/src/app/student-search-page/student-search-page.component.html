@@ -25,8 +25,8 @@
       </accordion>
     </div>
   </div>
-  <div class="col-md-9" *ngFor="let user of currentUsers">
-    <div class="col-md-12">
+  <div class="col-md-9">
+    <div class="col-md-12" *ngFor="let user of currentUsers">
       <div class="well well-sm">
         <div class="row">
           <div class="col-sm-6 col-md-4">
@@ -36,14 +36,11 @@
             <div class="row">
               <div class="col-md-7">
                 <h4>{{user.Firstname}} {{user.Lastname}}</h4>
-                <small>
-                  <cite title="{{user.Gender}}">{{user.Gender}}, {{getUserAttributeDisplay("AcademicStatus", user)}}</cite>
-                </small>
-                <p><i class="glyphicon glyphicon-gift"></i> {{ user.Birthday | date }}</p><!-- Split button -->
+                <p class="text-muted">{{user.Gender}}, {{today | amDifference: user.Birthday: 'years': false}}</p>
               </div>
               <div class="col-md-5">
-                <div class="btn-group pull-right">
-                  <a class="btn btn-primary" [routerLink]="['/user-profile',user.Id]">View Profile</a>
+                <div class="pull-right">
+                  <a class="btn btn-primary btn-block" [routerLink]="['/user-profile',user.Id]">View Profile</a>
                 </div>
               </div>
             </div>

@@ -8,6 +8,13 @@ import {ConfigService} from "../services/config/config.service";
 import {AuthService} from "../services/user/auth.service";
 import {MatchService} from "../services/match/match.service";
 import {Match} from "../services/match/match.model";
+import {ChatService} from "../services/chat/chat.service";
+
+class Result {
+  User: User;
+  Match: Match;
+}
+
 @Component({
   selector: 'app-my-matches-page',
   templateUrl: './my-matches-page.component.html',
@@ -18,43 +25,63 @@ import {Match} from "../services/match/match.model";
 export class MyMatchesPageComponent implements OnInit {
   private defaultPhotoURL: string = "/assets/profile-placeholder-default.png";
   private photoURL: string = "/api/v1/user-photos";
-  private users: User[] = [];
-  private filteredUsers: User[] = [];
-  private currentUsers: User[] = [];
+  private results: Result[] = [];
+  private filteredResults: Result[] = [];
+  private currentResults: Result[] = [];
   private attributes: Attribute[] = [];
   private currentPage: number = 1;
   private itemsPerPage: number = 20;
-  private featuredAttribute: string;
+  private loggedInUser: User;
   private filter: string = "";
+
   constructor(private userService: UserService, private attributeService: AttributeService,
-              private configService: ConfigService, private authService: AuthService, private matchService: MatchService) {}
+              private chatService: ChatService, private authService: AuthService, private matchService: MatchService) {}
+
   ngOnInit() {
     this.authService.getLoggedInUser()
       .subscribe((loggedInUser: User) => {
+        this.loggedInUser = loggedInUser;
+
         this.matchService.getMatches()
           .subscribe((matches) => {
             matches = matches.filter((match: Match) => {
-              if (loggedInUser.Type == 'HOST')
-                return match.HostUserId == loggedInUser.Id;
+              if (this.loggedInUser.Type == 'HOST')
+                return match.HostUserId == this.loggedInUser.Id;
               else
-                return match.StudentUserId == loggedInUser.Id;
+                return match.StudentUserId == this.loggedInUser.Id;
             });
             this.userService.getUsers()
-              .subscribe(users => {
-                this.users = matches.map((match: Match) => {
-                  if (loggedInUser.Type == 'HOST')
-                    return users.find((user) => match.StudentUserId == user.Id);
+              .subscribe((users) => {
+                this.results = matches.map((match: Match) => {
+                  let foundUser = null;
+                  if (this.loggedInUser.Type == 'HOST')
+                    foundUser = users.find((user) => match.StudentUserId == user.Id);
                   else
-                    return users.find((user) => match.HostUserId == user.Id);
+                    foundUser = users.find((user) => match.HostUserId == user.Id);
+
+                  let result: Result = new Result();
+
+                  result.User = foundUser;
+                  result.Match = match;
+
+                  return result;
                 });
 
-                this.users.map((user: any) => {
-                  this.userService.getUserPhotosByUserId(user.Id)
+                this.results = this.results.filter((result: Result, i, ar) => {
+                  let foundResults = this.results.filter((innerResult) => result.User === innerResult.User);
+                  foundResults.sort((a, b) => a.Match.Id > b.Match.Id ? -1 : 1);
+                  if (foundResults.length > 1)
+                    return foundResults.indexOf(result) == 0;
+                  return true;
+                });
+
+                this.results.map((result: any) => {
+                  this.userService.getUserPhotosByUserId(result.User.Id)
                     .subscribe((photos) => {
                       if (photos.length > 0)
-                        user.ProfileImage = this.photoURL + `/${photos[0].Id}`;
+                        result.User.ProfileImage = this.photoURL + `/${photos[0].Id}`;
                       else
-                        user.ProfileImage = this.defaultPhotoURL;
+                        result.User.ProfileImage = this.defaultPhotoURL;
                     })
                 });
 
@@ -67,20 +94,46 @@ export class MyMatchesPageComponent implements OnInit {
               );
           });
     });
-
-    this.configService.getValue("FeaturedAttribute")
-      .subscribe(value => {
-        this.featuredAttribute = value;
-      }, err => {
-        this.featuredAttribute = "";
-      });
   }
+
+  /**
+   * Accept a match using the API
+   */
+  private acceptMatch(match: Match) {
+    match.Status = "APPROVED";
+    this.matchService.updateMatch(match)
+      .subscribe();
+  }
+
+  /**
+   * Reject a match using the API
+   */
+  private rejectMatch(match: Match) {
+    match.Status = "REJECTED";
+    this.matchService.updateMatch(match)
+      .subscribe();
+  }
+
+  /**
+   * Unmatch an existing match using the API
+   */
+  private unmatchMatch(match) {
+    match.Status = "UNMATCHED";
+    this.matchService.updateMatch(match)
+      .subscribe();
+  }
+
+  private startChat(user) {
+    this.chatService.addChat(user.Id);
+  }
+
   private getUserAttributeDisplay(name: String, user: User) {
     let found = this.getUserAttribute(name, user);
     if (found)
       return this._getAttributeDisplay(found);
     return "";
   }
+
   private _getAttributeDisplay(attribute) {
     if (attribute.Type instanceof AttributeEnum) {
       return attribute.Type.Options.filter((entry) => {
@@ -89,6 +142,7 @@ export class MyMatchesPageComponent implements OnInit {
     }
     return attribute.Value.Value;
   }
+
   private getUserAttribute(name: String, user: User) {
     let found = this.attributes.filter((entry) => {
       return (entry.Type.Name == name && entry.Value.UserId == user.Id);
@@ -97,9 +151,11 @@ export class MyMatchesPageComponent implements OnInit {
       return null;
     return found[0];
   }
+
   private pageChanged(event: any): void {
-    this.currentUsers = this.filteredUsers.slice(event.itemsPerPage * (event.page - 1), event.itemsPerPage * event.page);
+    this.currentResults = this.filteredResults.slice(event.itemsPerPage * (event.page - 1), event.itemsPerPage * event.page);
   }
+
   private onFilterChanged(): void {
     if (this.filter != "") {
       let found = this.attributes.filter((entry) => {
@@ -107,15 +163,15 @@ export class MyMatchesPageComponent implements OnInit {
       });
 
       let foundUsers = found.map((entry) => {
-        return this.users.find(user => user.Id == entry.Value.UserId);
+        return this.results.find(result => result.User.Id == entry.Value.UserId);
       });
 
-      this.filteredUsers = foundUsers.filter((user) => user != undefined);
+      this.filteredResults = foundUsers.filter((user) => user != undefined);
     }
     else {
-      this.filteredUsers = this.users;
+      this.filteredResults = this.results;
     }
 
-    this.currentUsers = this.filteredUsers.slice(this.itemsPerPage * (this.currentPage - 1), this.itemsPerPage * this.currentPage);
+    this.currentResults = this.filteredResults.slice(this.itemsPerPage * (this.currentPage - 1), this.itemsPerPage * this.currentPage);
   }
 }

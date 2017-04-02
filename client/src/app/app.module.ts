@@ -42,7 +42,6 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
-import { AgePipe } from './age.pipe';
 import {CookieService} from "angular2-cookie/services/cookies.service";
 import { AdminConfigurationComponent } from './admin-manage/admin-configuration/admin-configuration.component';
 import { AdminAttributesComponent } from './admin-manage/admin-attributes/admin-attributes.component';
@@ -92,7 +91,6 @@ import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.componen
     RegisterAttributeFieldComponent,
     DateSelectComponent,
     ChatMessageComponent,
-    AgePipe,
     AdminConfigurationComponent,
     AdminAttributesComponent,
     AdminReportingComponent,
