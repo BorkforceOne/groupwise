@@ -10,6 +10,25 @@
     <h4>Total Attributes: 14</h4>
   </div>
   <div class="col-md-12">
-    <pre>{{users | json}}</pre>
+    <legend>New Users</legend>
+    <div style="display: block;">
+      <canvas *ngIf="newUserChartData.length > 0"
+              baseChart
+              [datasets]="newUserChartData"
+              [labels]="newUserLabels"
+              [options]="newUserOptions"
+              [legend]="newUserLegend"
+              [chartType]="newUserType"></canvas>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <legend>Total Users</legend>
+    <div style="display: block;">
+      <canvas *ngIf="usersChartData.length > 0"
+              baseChart
+              [data]="usersChartData"
+              [labels]="usersLabels"
+              [chartType]="usersType"></canvas>
+    </div>
   </div>
 </div>

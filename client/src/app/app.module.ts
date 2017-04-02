@@ -65,6 +65,7 @@ import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 import {TextMaskModule} from 'angular2-text-mask';
 import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.componen
     ReactiveFormsModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    ChartsModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
     CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService],
