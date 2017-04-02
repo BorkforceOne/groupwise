@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import {User} from "../../services/user/user";
 import {UserService} from "../../services/user/user.service";
+import * as moment from 'moment';
+import {MatchService} from "../../services/match/match.service";
+import {Match} from "../../services/match/match.model";
 
 @Component({
   selector: 'app-admin-reporting',
@@ -10,14 +13,21 @@ import {UserService} from "../../services/user/user.service";
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class AdminReportingComponent implements OnInit {
-  private users: User[];
+  private reportType: 'USER_ACQUISITION' | 'USER_TOTAL' | 'MATCH_ACTIVITY' | 'USERS_ALL' = 'USER_ACQUISITION';
+  private users: User[] = [];
+  private matches: Match[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private matchService: MatchService) { }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(users => {
-      this.users = users;
-    });
-  }
+    this.userService.getUsers()
+      .subscribe(users => {
+        this.users = users;
+      });
 
+    this.matchService.getMatches()
+      .subscribe(matches => {
+        this.matches = matches;
+      });
+  }
 }

@@ -12,7 +12,7 @@ import {ModalDirective, CarouselComponent} from "ng2-bootstrap";
 import {FileUploader} from "ng2-file-upload";
 import {AlertService} from "../services/alert/alert.service";
 import {Alert} from "../services/alert/alert";
-import {CookieService} from "angular2-cookie/services/cookies.service";
+import {CookieService} from "angular2-cookie/services";
 import {ChatService} from "../services/chat/chat.service";
 import {AuthService} from "../services/user/auth.service";
 import {MatchService} from "../services/match/match.service";
