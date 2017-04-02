@@ -1,34 +1,40 @@
 <div class="container">
-  <h4>Reporting</h4>
-  <h4>General Statistics</h4>
-  <div class="col-md-6">
-    <h4>Total Users: 4</h4>
-    <h4>Total Students: 3</h4>
-    <h4>Total Hosts: 1</h4>
-  </div>
-  <div class="col-md-6">
-    <h4>Total Attributes: 14</h4>
-  </div>
-  <div class="col-md-12">
-    <legend>New Users</legend>
-    <div style="display: block;">
-      <canvas *ngIf="newUserChartData.length > 0"
-              baseChart
-              [datasets]="newUserChartData"
-              [labels]="newUserLabels"
-              [options]="newUserOptions"
-              [legend]="newUserLegend"
-              [chartType]="newUserType"></canvas>
+  <div class="col-md-3">
+    <div class="col-md-12">
+      <accordion>
+        <accordion-group #group [isOpen]="true">
+          <div accordion-heading>
+            Report Tools
+            <i class="pull-right float-xs-right glyphicon"
+               [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+          </div>
+          <div class="form-group">
+            <label for="report-type-select">Report Type:</label>
+            <select [(ngModel)]="reportType" class="form-control" id="report-type-select">
+              <option [value]="'USER_ACQUISITION'">User Acquisition</option>
+              <option [value]="'USER_TOTAL'">Total Users</option>
+              <option [value]="'MATCH_ACTIVITY'">Match Activity</option>
+            </select>
+          </div>
+        </accordion-group>
+      </accordion>
     </div>
   </div>
-  <div class="col-md-12">
-    <legend>Total Users</legend>
-    <div style="display: block;">
-      <canvas *ngIf="usersChartData.length > 0"
-              baseChart
-              [data]="usersChartData"
-              [labels]="usersLabels"
-              [chartType]="usersType"></canvas>
+  <div class="col-md-9">
+    <div class="col-md-6">
+      <p>Total Users: 4</p>
+      <p>Total Students: 3</p>
+      <p>Total Hosts: 1</p>
+    </div>
+    <div class="col-md-6">
+      <p>Total Attributes: 14</p>
+    </div>
+    <div class="col-md-12">
+      <ng-container [ngSwitch]="reportType">
+        <app-report-user-acquisition *ngSwitchCase="'USER_ACQUISITION'" [usersData]="users"></app-report-user-acquisition>
+        <app-report-user-total *ngSwitchCase="'USER_TOTAL'" [usersData]="users"></app-report-user-total>
+        <app-report-match-activity *ngSwitchCase="'MATCH_ACTIVITY'" [matchesData]="matches"></app-report-match-activity>
+      </ng-container>
     </div>
   </div>
 </div>

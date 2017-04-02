@@ -66,6 +66,9 @@ import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue
 import {TextMaskModule} from 'angular2-text-mask';
 import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
 import {ChartsModule} from "ng2-charts";
+import {ReportUserAcquisitionComponent} from "./admin-manage/admin-reporting/report-user-acquisition/report-user-acquisition.component";
+import { ReportUserTotalComponent } from './admin-manage/admin-reporting/report-user-total/report-user-total.component';
+import { ReportMatchActivityComponent } from './admin-manage/admin-reporting/report-match-activity/report-match-activity.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +107,10 @@ import {ChartsModule} from "ng2-charts";
     FaqPageComponent,
     SpinnerComponent,
     AdminApprovalQueueComponent,
-    MyMatchesPageComponent
+    MyMatchesPageComponent,
+    ReportUserAcquisitionComponent,
+    ReportUserTotalComponent,
+    ReportMatchActivityComponent
   ],
   imports: [
     BrowserModule,

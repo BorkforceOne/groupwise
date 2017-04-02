@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@
 import {User} from "../../services/user/user";
 import {UserService} from "../../services/user/user.service";
 import * as moment from 'moment';
+import {MatchService} from "../../services/match/match.service";
+import {Match} from "../../services/match/match.model";
 
 @Component({
   selector: 'app-admin-reporting',
@@ -11,98 +13,29 @@ import * as moment from 'moment';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class AdminReportingComponent implements OnInit {
-  private users: User[];
-  private newUserChartData: Array<any> = [];
-  private newUserLabels: Array<any> = [];
-  private newUserOptions: any = {
+  private reportType: 'USER_ACQUISITION' | 'USER_TOTAL' | 'MATCH_ACTIVITY' = 'USER_ACQUISITION';
+  private users: User[] = [];
+  private matches: Match[] = [];
+
+  private chartData: Array<any> = [];
+  private chartLabels: Array<any> = [];
+  private chartOptions: any = {
     responsive: true
   };
-  private newUserLegend: boolean = true;
-  private newUserType: string = 'bar';
+  private chartType: string = 'bar';
 
-  private usersChartData: Array<any> = [];
-  private usersLabels: Array<any> = [];
-  private usersOptions: any = {
-    responsive: true
-  };
-  private usersLegend: boolean = true;
-  private usersType: string = 'pie';
-
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private matchService: MatchService) { }
 
   ngOnInit() {
     this.userService.getUsers()
       .subscribe(users => {
         this.users = users;
-        this.generateNewStudentChart();
-        this.generateUsersChart();
       });
-  }
 
-  generateNewStudentChart() {
-    let studentData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    let hostData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-    let collectionFunction = (user, collection) => {
-      let current = moment();
-      let createdAt = moment(user.createdAt);
-      if (current.diff(createdAt, 'years') <= 1)
-        collection[11 - current.diff(createdAt, 'months')] += 1;
-    };
-
-    let chartLabelFunction = () => {
-      let chartLabels = [];
-
-      for (let i = 11; i >= 0; i --)
-        chartLabels.push(moment().subtract(i, 'months').format('MMMM YYYY'));
-
-      return chartLabels;
-    };
-
-    this.users
-      .filter((user) => user.Type === 'STUDENT')
-      .forEach((user) => collectionFunction(user, studentData));
-
-    this.users
-      .filter((user) => user.Type === 'HOST')
-      .forEach((user) => collectionFunction(user, hostData));
-
-    this.newUserLabels = chartLabelFunction();
-
-    this.newUserChartData = [
-      {
-        data: studentData,
-        label: 'New Students'
-      },
-      {
-        data: hostData,
-        label: 'New Hosts'
-      }
-    ];
-  }
-
-  generateUsersChart() {
-    let data = [0, 0, 0];
-
-    let collectionFunction = (user: User, collection: any[]) => {
-      if (user.Type === 'HOST')
-        collection[0] += 1;
-      if (user.Type === 'STUDENT')
-        collection[1] += 1;
-      if (user.Type === 'ADMINISTRATOR')
-        collection[2] += 1;
-    };
-
-    let chartLabelFunction = () => {
-      return ['Hosts', 'Students', 'Administrators'];
-    };
-
-    this.users
-      .forEach((user) => collectionFunction(user, data));
-
-    this.usersLabels = chartLabelFunction();
-
-    this.usersChartData = data;
+    this.matchService.getMatches()
+      .subscribe(matches => {
+        this.matches = matches;
+      });
   }
 
   dataToCSV(data) {
