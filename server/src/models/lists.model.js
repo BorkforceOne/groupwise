@@ -31,6 +31,13 @@ const Lists = databaseManager.context.define('list', {
     },
 });
 
+/**
+ * Figures out how to serialize and deserialize this model
+ * @returns {Object}
+ */
+Lists.getMap = function () {
+    return listMap;
+};
 
 module.exports = Lists;
 

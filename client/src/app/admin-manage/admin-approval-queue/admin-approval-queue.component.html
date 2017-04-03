@@ -86,4 +86,58 @@
   </ng-container>
 </div>
 
+<div bsModal #addWhiteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add email to the Whitelist</h4>
+        <button type="button" class="close pull-right" (click)="addWhiteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Profile Representation</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="editingAttribute.Description" name="WhiteListEmail" class="form-control" placeholder="*@domain.com" required>
+            </div>
+          </div>
+          <div class="btn-toolbar pull-right">
+            <button class="btn btn-primary" (click)="addWhiteModal.hide()">Close</button>
+            <button class="btn btn-primary" (click)="submitWhiteList()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #addBlackModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add email to the Whitelist</h4>
+        <button type="button" class="close pull-right" (click)="addBlackModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Profile Representation</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="editingAttribute.Description" name="BlackListEmail" class="form-control" placeholder="*@domain.com" required>
+            </div>
+          </div>
+          <div class="btn-toolbar pull-right">
+            <button class="btn btn-primary" (click)="addBlackModal.hide()">Close</button>
+            <button class="btn btn-primary" (click)="submitBlackList()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 

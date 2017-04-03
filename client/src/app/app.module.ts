@@ -66,6 +66,7 @@ import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import {TextMaskModule} from 'angular2-text-mask';
 import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 import {ListService} from "./services/list/list.service";
+import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-editor/lists-editor.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import {ListService} from "./services/list/list.service";
     RemoteHtmlContentComponent,
     FaqPageComponent,
     SpinnerComponent,
-    AdminApprovalQueueComponent
+    AdminApprovalQueueComponent,
+    ListsEditorComponent
   ],
   imports: [
     BrowserModule,

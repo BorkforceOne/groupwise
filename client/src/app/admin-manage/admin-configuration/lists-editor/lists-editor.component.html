@@ -1,0 +1,94 @@
+<h3>Whitelist</h3>
+<div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Date Added</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngIf="whitelist.length == 0">
+      <tr>
+        <td>None</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="whitelist.length > 0">
+      <ng-container *ngFor="let item of whitelist">
+        <tr>
+          <td>{{item.Email}}</td>
+          <td>
+                      <span class="label label-default">
+                        {{item.createdAt}}
+                      </span>
+          </td>
+          <td>
+            <span class="glyphicon glyphicon-remove text-danger clickable" (click)="removeFromList(item)"></span>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+
+    <tr>
+      <td>
+        <button class="btn btn-success" (click)="addWhitelist()">
+          <span class="glyphicon glyphicon-plus"></span>
+          Add
+        </button>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<h3>Blacklist</h3>
+<div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Date Added</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngIf="blacklist.length == 0">
+      <tr>
+        <td>None</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="blacklist.length > 0">
+      <ng-container *ngFor="let item of blacklist">
+        <tr>
+          <td>{{item.Email}}</td>
+          <td>
+            <span class="label label-default">
+              {{item.createdAt}}
+            </span>
+          </td>
+          <td>
+            <span class="glyphicon glyphicon-remove text-danger clickable" (click)="removeFromList(item)"></span>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+
+    <tr>
+      <td>
+        <button class="btn btn-success" (click)="addBlacklist()">
+          <span class="glyphicon glyphicon-plus"></span>
+          Add
+        </button>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

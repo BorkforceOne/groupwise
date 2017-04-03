@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ViewChild} from '@angular/core';
 import {FileUploader} from "ng2-file-upload";
 import {ConfigService} from "../../services/config/config.service";
 import {AttributeService} from "../../services/attributes/attribute.service";
@@ -8,6 +8,7 @@ import {Alert} from "../../services/alert/alert";
 import {AlertService} from "../../services/alert/alert.service";
 import {List} from "../../services/list/list.model";
 import {ListService} from "../../services/list/list.service";
+import {ModalDirective} from "ng2-bootstrap";
 
 
 @Component({
@@ -18,6 +19,8 @@ import {ListService} from "../../services/list/list.service";
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class AdminConfigurationComponent implements OnInit {
+  @ViewChild('attributeEditModal') public addWhiteModal:ModalDirective;
+  @ViewChild('attributeEditModal') public addBlackModal:ModalDirective;
   private URL: string = "/api/v1/attachments";
   private uploader: FileUploader;
   private attributes: Attribute [];
@@ -96,4 +99,11 @@ export class AdminConfigurationComponent implements OnInit {
     console.log("Adding to Blacklist");
   }
 
+  submitWhiteList(){
+
+  }
+
+  submitBlackList(){
+
+  }
 }

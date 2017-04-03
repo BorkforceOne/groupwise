@@ -4,6 +4,9 @@ module.exports.inMap = {
 };
 
 module.exports.outMap = {
+    "Id":"Id",
     "List":"List",
-    "Email": "Email"
+    "Email": "Email",
+    "createdAt": "createdAt",
+    "updatedAt": "updatedAt"
 };
