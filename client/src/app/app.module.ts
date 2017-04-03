@@ -72,6 +72,7 @@ import { ReportEntityTableComponent } from './admin-manage/admin-reporting/repor
 import {Ng2TableModule} from "ng2-table";
 import { ReportUsersTableComponent } from './admin-manage/admin-reporting/report-users-table/report-users-table.component';
 import { BaseCookieOptions, CookieService, CookieOptions } from 'angular2-cookie/core';
+import {CsvService} from "./services/report/csv.service";
 
 @NgModule({
   declarations: [
@@ -142,7 +143,7 @@ import { BaseCookieOptions, CookieService, CookieOptions } from 'angular2-cookie
     Ng2TableModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, { provide: CookieOptions, useClass: BaseCookieOptions }],
+    CsvService, CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, { provide: CookieOptions, useClass: BaseCookieOptions }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

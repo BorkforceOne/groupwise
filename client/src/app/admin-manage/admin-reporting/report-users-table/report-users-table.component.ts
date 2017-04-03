@@ -2,6 +2,7 @@ import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {User} from "../../../services/user/user";
 import {Match} from "../../../services/match/match.model";
 import * as moment from 'moment';
+import {CsvService} from "../../../services/report/csv.service";
 
 @Component({
   selector: 'app-report-users-table',
@@ -15,7 +16,7 @@ export class ReportUsersTableComponent implements OnInit, OnChanges {
 
   private data: Array<any> = [];
 
-  constructor() { }
+  constructor(private csvService: CsvService) { }
 
   ngOnInit() {
     this.updateTable();
@@ -45,6 +46,10 @@ export class ReportUsersTableComponent implements OnInit, OnChanges {
 
       return result;
     });
+  }
+
+  downloadReport() {
+    this.csvService.download(this.data, `users-${moment().format('YY-MM-DD-H.m')}.csv`);
   }
 
   ngOnChanges(changes: SimpleChanges) {
