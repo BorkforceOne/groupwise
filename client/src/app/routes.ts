@@ -33,7 +33,7 @@ export const AppRoutes: Routes = [
   { path: 'validate', component: ConsumeTokenPageComponent },
   { path: 'student-search', component: StudentSearchPageComponent, canActivate: [HostGuard] },
   { path: 'admin-manage', component: AdminManageComponent, canActivate: [AdminGuard] },
-  { path: 'my-matches', component: MyMatchesPageComponent },
+  { path: 'my-matches', component: MyMatchesPageComponent, canActivate: [LoggedinGuard]},
   { path: 'home', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

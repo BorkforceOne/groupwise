@@ -16,7 +16,9 @@ export class NavbarComponent implements OnInit {
   private type: "ADMINISTRATOR" | "HOST" | "STUDENT";
   private displayName: string;
   private userId: number;
+
   constructor(private userService: UserService, private router: Router, private authService: AuthService) { }
+
   ngOnInit() {
     this.loggedInUser = this.authService.getLoggedInUser();
     this.loggedInUser.subscribe((user) => {
@@ -34,9 +36,11 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+
   isActiveRoute(route: string) {
     return this.router.url == route;
   }
+
   logout() {
     this.authService.logout()
       .toPromise()

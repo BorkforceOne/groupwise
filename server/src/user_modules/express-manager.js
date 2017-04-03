@@ -12,10 +12,22 @@ class ExpressManager {
   constructor() {
     this.context = null;
     this.sessionStore = null;
+
+    this.loggedInGuard = (req, res, next) => {
+      if (req.user === null) {
+        res.status(403);
+        res.send();
+      }
+      else {
+        next();
+      }
+    };
   }
 
   init() {
     return new Promise((resolve, reject) => {
+      const usersService = require('../services/users.service');
+
       const wwwRoot = path.join(__dirname, '..', '..', 'www');
       this.context = express();
       this.csrfProtection = csurf();
@@ -53,6 +65,21 @@ class ExpressManager {
       } else {
         console.warn("[EXPRESS] XSRF Protection is disabled!")
       }
+
+      // Append the user
+      this.context.use((req, res, next) => {
+        req.user = null;
+
+        if (req.session.userId)
+          usersService.getById(req.session.userId)
+            .then(user => {
+                req.user = user;
+                next();
+              }
+            );
+        else
+          next();
+      });
 
       // Set up the routes
       const routes = require('./../routes/index');

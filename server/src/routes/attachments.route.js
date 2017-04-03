@@ -5,6 +5,7 @@ const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 const fs = require('fs');
 const mime = require('mime');
+const expressManager = require('../user_modules/express-manager');
 
 const routeName = '/attachments';
 
@@ -46,7 +47,7 @@ router.get(routeName + '/:id', function(req, res, next) {
 });
 
 /* Add a new entity */
-router.post(routeName, function(req, res, next) {
+router.post(routeName, expressManager.loggedInGuard, function(req, res, next) {
   restUtils.authenticate(req)
     .then(user => {
       let data = {

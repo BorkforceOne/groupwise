@@ -47,7 +47,7 @@
               <img src="http://placehold.it/32x32" class="profile-image img-circle"> {{displayName}} <b class="caret"></b>
             </button>
             <ul dropdownMenu role="menu" aria-labelledby="single-button">
-              <li role="menuitem"><a class="dropdown-item " [routerLink]="['/user-profile', userId]">View Profile</a></li>
+              <li role="menuitem"><a class="dropdown-item " [routerLink]="['/user-profile', userId]" *ngIf="type !== 'ADMINISTRATOR'">View Profile</a></li>
               <li role="menuitem"><a class="dropdown-item ">Account</a></li>
               <li role="menuitem"><a class="dropdown-item clickable" (click)="logout()">Sign-out</a></li>
             </ul>

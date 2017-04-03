@@ -3,6 +3,7 @@ const router = express.Router();
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 const attributesService = require('../services/attributes.service');
+const expressManager = require('../user_modules/express-manager');
 
 const AttributeString = require('../models/attribute-string.model');
 const AttributeStringValue = require('../models/attribute-string-value.model');
@@ -13,12 +14,62 @@ const AttributeRangeValue = require('../models/attribute-range-value.model');
 const AttributeEnum = require('../models/attribute-enum.model');
 const AttributeEnumValue = require('../models/attribute-enum-value.model');
 
-
 let routeName;
 
 // Attribute Strings
 
 routeName = '/attribute-strings';
+
+let canEdit = (getAttribute, req, res, next) => {
+  if (req.user.Type === 'ADMINISTRATOR') {
+    next();
+    return;
+  }
+
+  getAttribute(req.params.id)
+    .then((model) => {
+      if (model === null) {
+        res.status(404);
+        res.send();
+        return;
+      }
+
+      if (req.body.UserId !== req.user.Id || req.body.UserId !== model.UserId)
+        return restUtils.rejectRequest();
+
+      next();
+    })
+    .catch((e) => {
+      res.status(400);
+      res.send();
+    });
+};
+
+let canAdd = (req, res, next) => {
+  if (req.user.Type === 'ADMINISTRATOR') {
+    next();
+    return;
+  }
+
+  if (req.body.UserId !== req.user.Id)
+    return restUtils.rejectRequest();
+
+  next();
+};
+
+let adminCanAdd = (req, res, next) => {
+  if (req.user.Type === 'ADMINISTRATOR')
+    return next();
+
+  return restUtils.rejectRequest();
+};
+
+let adminCanEdit = (req, res, next) => {
+  if (req.user.Type === 'ADMINISTRATOR')
+    return next();
+
+  return restUtils.rejectRequest();
+};
 
 /* GET attribute-string listings. */
 router.get(routeName, function(req, res, next) {
@@ -30,7 +81,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* POST attribute-string. */
-router.post(routeName, function(req, res, next) {
+router.post(routeName, expressManager.loggedInGuard, adminCanAdd, function(req, res, next) {
   let data = req.body;
 
   serializer.mapDataToEntity(AttributeString, data)
@@ -42,7 +93,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT attribute-string. */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, adminCanEdit, function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
@@ -54,7 +105,7 @@ router.put(`${routeName}/:id`, function(req, res, next) {
 });
 
 /* DELETE attribute-string. */
-router.delete(`${routeName}/:id`, function(req, res, next) {
+router.delete(`${routeName}/:id`, expressManager.loggedInGuard, function(req, res, next) {
   let id = req.params.id;
 
   attributesService.deleteAttributeString(id)
@@ -67,7 +118,7 @@ router.delete(`${routeName}/:id`, function(req, res, next) {
 routeName = '/attribute-string-values';
 
 /* GET attribute-string-value listings. */
-router.get(routeName, function(req, res, next) {
+router.get(routeName, expressManager.loggedInGuard, function(req, res, next) {
   attributesService.getAllAttributeStringValues()
     .then(serializer.serializeModels)
     .then(restUtils.prepareResponse)
@@ -76,7 +127,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* GET attribute-string-value listings. */
-router.get(`${routeName}/:userId`, function(req, res, next) {
+router.get(`${routeName}/:userId`, expressManager.loggedInGuard, function(req, res, next) {
   let userId = req.params.userId;
 
   attributesService.getAllAttributeStringValues(userId)
@@ -99,7 +150,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT attribute-string-value. */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, canEdit.bind(this, attributesService.getAttributeStringValue), function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
@@ -124,7 +175,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* POST attribute-date. */
-router.post(routeName, function(req, res, next) {
+router.post(routeName, expressManager.loggedInGuard, adminCanAdd, function(req, res, next) {
   let data = req.body;
 
   serializer.mapDataToEntity(AttributeDate, data)
@@ -136,7 +187,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT attribute-date. */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, adminCanEdit, function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
@@ -148,7 +199,7 @@ router.put(`${routeName}/:id`, function(req, res, next) {
 });
 
 /* DELETE attribute-date. */
-router.delete(`${routeName}/:id`, function(req, res, next) {
+router.delete(`${routeName}/:id`, expressManager.loggedInGuard, function(req, res, next) {
   let id = req.params.id;
 
   attributesService.deleteAttributeDate(id)
@@ -161,7 +212,7 @@ router.delete(`${routeName}/:id`, function(req, res, next) {
 routeName = '/attribute-date-values';
 
 /* GET attribute-date-value listings. */
-router.get(routeName, function(req, res, next) {
+router.get(routeName, expressManager.loggedInGuard, function(req, res, next) {
   attributesService.getAllAttributeDateValues()
     .then(serializer.serializeModels)
     .then(restUtils.prepareResponse)
@@ -170,7 +221,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* GET attribute-date-value listings. */
-router.get(`${routeName}/:userId`, function(req, res, next) {
+router.get(`${routeName}/:userId`, expressManager.loggedInGuard, function(req, res, next) {
   let userId = req.params.userId;
 
   attributesService.getAllAttributeDateValues(userId)
@@ -193,7 +244,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT attribute-date-value. */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, canEdit.bind(this, attributesService.getAttributeDateValue), function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
@@ -218,7 +269,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* POST attribute-range. */
-router.post(routeName, function(req, res, next) {
+router.post(routeName, expressManager.loggedInGuard, adminCanAdd, function(req, res, next) {
   let data = req.body;
 
   serializer.mapDataToEntity(AttributeRange, data)
@@ -230,7 +281,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT attribute-range. */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, adminCanEdit, function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
@@ -242,7 +293,7 @@ router.put(`${routeName}/:id`, function(req, res, next) {
 });
 
 /* DELETE attribute-range. */
-router.delete(`${routeName}/:id`, function(req, res, next) {
+router.delete(`${routeName}/:id`, expressManager.loggedInGuard, function(req, res, next) {
   let id = req.params.id;
 
   attributesService.deleteAttributeRange(id)
@@ -255,7 +306,7 @@ router.delete(`${routeName}/:id`, function(req, res, next) {
 routeName = '/attribute-range-values';
 
 /* GET attribute-range-value listings. */
-router.get(routeName, function(req, res, next) {
+router.get(routeName, expressManager.loggedInGuard, function(req, res, next) {
   attributesService.getAllAttributeRangeValues()
     .then(serializer.serializeModels)
     .then(restUtils.prepareResponse)
@@ -264,7 +315,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* GET attribute-range-value listings. */
-router.get(`${routeName}/:userId`, function(req, res, next) {
+router.get(`${routeName}/:userId`, expressManager.loggedInGuard, function(req, res, next) {
   let userId = req.params.userId;
 
   attributesService.getAllAttributeRangeValues(userId)
@@ -287,7 +338,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT attribute-range-value. */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, canEdit.bind(this, attributesService.getAttributeRangeValue), function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
@@ -312,7 +363,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* POST attribute-enum. */
-router.post(routeName, function(req, res, next) {
+router.post(routeName, expressManager.loggedInGuard, adminCanAdd, function(req, res, next) {
   let data = req.body;
 
   serializer.mapDataToEntity(AttributeEnum, data)
@@ -324,7 +375,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT attribute-enum. */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, adminCanEdit, function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
@@ -336,7 +387,7 @@ router.put(`${routeName}/:id`, function(req, res, next) {
 });
 
 /* DELETE attribute-enum. */
-router.delete(`${routeName}/:id`, function(req, res, next) {
+router.delete(`${routeName}/:id`, expressManager.loggedInGuard, function(req, res, next) {
   let id = req.params.id;
 
   attributesService.deleteAttributeEnum(id)
@@ -349,7 +400,7 @@ router.delete(`${routeName}/:id`, function(req, res, next) {
 routeName = '/attribute-enum-values';
 
 /* GET attribute-enum-value listings. */
-router.get(routeName, function(req, res, next) {
+router.get(routeName, expressManager.loggedInGuard, function(req, res, next) {
   attributesService.getAllAttributeEnumValues()
     .then(serializer.serializeModels)
     .then(restUtils.prepareResponse)
@@ -358,7 +409,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* GET attribute-enum-value listings. */
-router.get(`${routeName}/:userId`, function(req, res, next) {
+router.get(`${routeName}/:userId`, expressManager.loggedInGuard, function(req, res, next) {
   let userId = req.params.userId;
 
   attributesService.getAllAttributeEnumValues(userId)
@@ -381,7 +432,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT attribute-enum-value. */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, canEdit.bind(this, attributesService.getAttributeEnumValue), function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
