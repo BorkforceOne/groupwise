@@ -5,17 +5,38 @@ const router = express.Router();
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 const userService = require('../services/users.service');
+const expressManager = require('../user_modules/express-manager');
 
 const UserPhoto = require('../models/user-photo.model');
 
 let routeName;
 
-// Attribute Strings
+let canEdit = (req, res, next) => {
+  if (req.user.Type === 'ADMINISTRATOR')
+    return next();
+
+  userService.getUserPhotoById(req.params.id)
+    .then((model) => {
+      if (model === null) {
+        res.status(404);
+        res.send();
+        return;
+      }
+
+      if (model.UserId !== req.user.Id)
+        return restUtils.rejectRequest();
+      return next();
+    })
+    .catch((e) => {
+      res.status(400);
+      res.send();
+    });
+};
 
 routeName = '/user-photos';
 
 /* GET */
-router.get(`${routeName}/user/:id`, function(req, res, next) {
+router.get(`${routeName}/user/:id`, expressManager.loggedInGuard, function(req, res, next) {
   let id = req.params.id;
 
   userService.getUserPhotosByUserId(id)
@@ -26,7 +47,7 @@ router.get(`${routeName}/user/:id`, function(req, res, next) {
 });
 
 /* GET */
-router.get(routeName, function(req, res, next) {
+router.get(routeName, expressManager.loggedInGuard, function(req, res, next) {
   userService.getAllUserPhotos()
     .then(serializer.serializeModels)
     .then(restUtils.prepareResponse)
@@ -34,7 +55,7 @@ router.get(routeName, function(req, res, next) {
     .catch(error => restUtils.catchErrors(error, req, res));
 });
 
-router.get(`${routeName}/:id`, function(req, res, next) {
+router.get(`${routeName}/:id`, expressManager.loggedInGuard, function(req, res, next) {
   let id = req.params.id;
 
   // Send a JSON response if one is requested
@@ -57,9 +78,8 @@ router.get(`${routeName}/:id`, function(req, res, next) {
   }
 });
 
-
 /* POST */
-router.post(routeName, function(req, res, next) {
+router.post(routeName, expressManager.loggedInGuard, function(req, res, next) {
   restUtils.authenticate(req)
     .then(user => {
       return {
@@ -78,7 +98,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* DELETE */
-router.delete(`${routeName}/:id`, function(req, res, next) {
+router.delete(`${routeName}/:id`, expressManager.loggedInGuard, canEdit, function(req, res, next) {
   let id = req.params.id;
 
   userService.deleteUserPhoto(id)
