@@ -11,8 +11,8 @@ import {ModalDirective} from "ng2-bootstrap";
 export class ListsEditorComponent implements OnInit {
   @ViewChild('whitelistEditModal') public whitelistEditModal:ModalDirective;
   @ViewChild('blacklistEditModal') public blacklistEditModal:ModalDirective;
-  private whitelist: List [];
-  private blacklist: List [];
+  private whitelist: List [] = [];
+  private blacklist: List [] = [];
   private editingList: List = new List();
 
   constructor(private listService: ListService) { }

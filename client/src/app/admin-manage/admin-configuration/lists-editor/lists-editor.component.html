@@ -46,6 +46,7 @@
     </tbody>
   </table>
 </div>
+
 <h3>Blacklist</h3>
 <div>
   <table class="table">
@@ -113,9 +114,16 @@
               <input [(ngModel)]="editingList.Email" name="WhiteListEmail" class="form-control" placeholder="*@domain.com" required>
             </div>
           </div>
-          <div class="btn-toolbar pull-right">
-            <button class="btn btn-primary" (click)="whitelistEditModal.hide()">Close</button>
-            <button class="btn btn-primary" (click)="submitWhiteList()">Submit</button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="btn-toolbar pull-right">
+              <button class="btn btn-primary" (click)="whitelistEditModal.hide()">Close</button>
+              <button class="btn btn-primary" (click)="submitWhiteList()">Submit</button>
+            </div>
           </div>
         </div>
       </div>
@@ -140,9 +148,16 @@
               <input [(ngModel)]="editingList.Email" name="BlackListEmail" class="form-control" placeholder="*@domain.com" required>
             </div>
           </div>
-          <div class="btn-toolbar pull-right">
-            <button class="btn btn-primary" (click)="blacklistEditModal.hide()">Close</button>
-            <button class="btn btn-primary" (click)="submitBlackList()">Submit</button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="btn-toolbar pull-right">
+              <button class="btn btn-primary" (click)="blacklistEditModal.hide()">Close</button>
+              <button class="btn btn-primary" (click)="submitBlackList()">Submit</button>
+            </div>
           </div>
         </div>
       </div>
