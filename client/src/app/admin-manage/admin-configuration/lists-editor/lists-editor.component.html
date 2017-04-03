@@ -21,12 +21,13 @@
         <tr>
           <td>{{item.Email}}</td>
           <td>
-                      <span class="label label-default">
-                        {{item.createdAt}}
-                      </span>
+            <span class="label label-default">
+              {{item.createdAt | amDateFormat:'LL'}}
+            </span>
           </td>
           <td>
             <span class="glyphicon glyphicon-remove text-danger clickable" (click)="removeFromList(item)"></span>
+            <span class="glyphicon glyphicon-pencil clickable" (click)="editItem(item)"></span>
           </td>
         </tr>
       </ng-container>
@@ -74,6 +75,7 @@
           </td>
           <td>
             <span class="glyphicon glyphicon-remove text-danger clickable" (click)="removeFromList(item)"></span>
+            <span class="glyphicon glyphicon-pencil clickable" (click)="editItem(item)"></span>
           </td>
         </tr>
       </ng-container>
@@ -91,4 +93,59 @@
     </tr>
     </tbody>
   </table>
+</div>
+
+
+<div bsModal #whitelistEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add email to the Whitelist</h4>
+        <button type="button" class="close pull-right" (click)="whitelistEditModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Profile Representation</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="editingList.Email" name="WhiteListEmail" class="form-control" placeholder="*@domain.com" required>
+            </div>
+          </div>
+          <div class="btn-toolbar pull-right">
+            <button class="btn btn-primary" (click)="whitelistEditModal.hide()">Close</button>
+            <button class="btn btn-primary" (click)="submitWhiteList()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #blacklistEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add email to the Whitelist</h4>
+        <button type="button" class="close pull-right" (click)="blacklistEditModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Profile Representation</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="editingList.Email" name="BlackListEmail" class="form-control" placeholder="*@domain.com" required>
+            </div>
+          </div>
+          <div class="btn-toolbar pull-right">
+            <button class="btn btn-primary" (click)="blacklistEditModal.hide()">Close</button>
+            <button class="btn btn-primary" (click)="submitBlackList()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

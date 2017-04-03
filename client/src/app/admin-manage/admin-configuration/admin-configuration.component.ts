@@ -6,9 +6,7 @@ import {Attribute} from "../../services/attributes/attribute.model";
 import {CookieService} from "angular2-cookie/services/cookies.service";
 import {Alert} from "../../services/alert/alert";
 import {AlertService} from "../../services/alert/alert.service";
-import {List} from "../../services/list/list.model";
-import {ListService} from "../../services/list/list.service";
-import {ModalDirective} from "ng2-bootstrap";
+
 
 
 @Component({
@@ -19,20 +17,16 @@ import {ModalDirective} from "ng2-bootstrap";
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class AdminConfigurationComponent implements OnInit {
-  @ViewChild('attributeEditModal') public addWhiteModal:ModalDirective;
-  @ViewChild('attributeEditModal') public addBlackModal:ModalDirective;
   private URL: string = "/api/v1/attachments";
   private uploader: FileUploader;
   private attributes: Attribute [];
-  private whitelist: List [];
-  private blacklist: List [];
   private featuredAttribute: string;
   private selectedTab: number = 0;
   private bannerURL: string;
   private defaultBannerURL = "/assets/hero-cover-default.jpg";
 
   constructor(private configService: ConfigService, private attributeService: AttributeService, private cookieService: CookieService,
-              private alertService: AlertService, private listService: ListService) { }
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.attributeService.getAllAttributes()
@@ -45,15 +39,7 @@ export class AdminConfigurationComponent implements OnInit {
         this.featuredAttribute = value;
       });
 
-    this.listService.getLists()
-      .subscribe(whitelist => {
-        this.whitelist = whitelist.filter((entry) => entry.List == "WHITELIST");
-      });
 
-    this.listService.getLists()
-      .subscribe(blacklist => {
-        this.blacklist = blacklist.filter((entry) => entry.List == "BLACKLIST");
-      });
 
     this.refreshBanner();
 
@@ -91,19 +77,4 @@ export class AdminConfigurationComponent implements OnInit {
     this.selectedTab = tab;
   }
 
-  addWhitelist(){
-    console.log("Adding to Whitelist");
-  }
-
-  addBlacklist(){
-    console.log("Adding to Blacklist");
-  }
-
-  submitWhiteList(){
-
-  }
-
-  submitBlackList(){
-
-  }
 }
