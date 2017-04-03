@@ -86,3 +86,10 @@ const authenticate = function(req) {
   })
 };
 module.exports.authenticate = authenticate;
+
+
+const rejectRequest = (res) => {
+  res.status(403);
+  res.send();
+};
+module.exports.rejectRequest = rejectRequest;
