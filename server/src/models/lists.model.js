@@ -14,6 +14,12 @@ module.exports = {};
  * @type {*}
  */
 const Lists = databaseManager.context.define('list', {
+    Id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    },
     Type: {
         type: Sequelize.ENUM("WHITELIST", "BLACKLIST"),
         allowNull: false

@@ -58,6 +58,11 @@ class ListService {
       let entity;
 
       this.getList(id)
+        .then(_entity => {
+            entity = _entity;
+
+            return entity;
+        })
         .then(() => entity.destroy())
         .then(() => resolve(entity))
         .catch(reject);
