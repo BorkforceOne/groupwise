@@ -14,7 +14,7 @@ module.exports = {};
  * @type {*}
  */
 const Lists = databaseManager.context.define('list', {
-    Lists: {
+    Type: {
         type: Sequelize.ENUM("WHITELIST", "BLACKLIST"),
         allowNull: false
     },
