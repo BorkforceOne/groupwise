@@ -20,4 +20,24 @@ export class ListService extends BackendCommunicatorService{
       .catch(this.handleError.bind(this));
   }
 
+  createList(list: List): Observable<List> {
+    return this
+      .http.post(this.remoteUrlBase, JSON.stringify(list), {headers: this.headers})
+      .map(this.extractData.bind(this, List))
+      .catch(this.handleError.bind(this));
+  }
+
+  updateMatch(list: List): Observable<List> {
+    return this
+      .http.put(`${this.remoteUrlBase}/${list.Id}`, JSON.stringify(list), {headers: this.headers})
+      .map(this.extractData.bind(this, List))
+      .catch(this.handleError.bind(this));
+  }
+
+  deleteMatch(list: List): Observable<List> {
+    return this
+      .http.delete(`${this.remoteUrlBase}/${list.Id}`)
+      .map(this.extractData.bind(this, List))
+      .catch(this.handleError.bind(this));
+  }
 }
