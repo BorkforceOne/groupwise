@@ -4,6 +4,7 @@ import {UserService} from "../../services/user/user.service";
 import * as moment from 'moment';
 import {MatchService} from "../../services/match/match.service";
 import {Match} from "../../services/match/match.model";
+import {CsvService} from "../../services/report/csv.service";
 
 @Component({
   selector: 'app-admin-reporting',
@@ -17,7 +18,7 @@ export class AdminReportingComponent implements OnInit {
   private users: User[] = [];
   private matches: Match[] = [];
 
-  constructor(private userService: UserService, private matchService: MatchService) { }
+  constructor(private userService: UserService, private matchService: MatchService) {}
 
   ngOnInit() {
     this.userService.getUsers()
