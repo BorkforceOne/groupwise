@@ -2,6 +2,10 @@ const serializer = require('../user_modules/serializer');
 const encryptionManager = require('../user_modules/encryption-manager');
 const mailerManager = require('../user_modules/mailer-manager');
 const config = require('../config');
+const listsService = require('./lists.service');
+const ErrorModule = require('../error');
+const AppError = ErrorModule.AppError;
+const AppErrorTypes = ErrorModule.AppErrorTypes;
 
 const User = require('../models/user.model');
 const UserPhoto = require('../models/user-photo.model');
@@ -52,11 +56,35 @@ class UserService {
 
   add(entity) {
     return new Promise((resolve, reject) => {
-      this.validate(entity)
-        .then(() => this.changePassword(entity, entity.Password))
-        .then(() => entity.save())
-        .then(() => resolve(entity))
-        .catch(reject);
+      listsService.getAllLists()
+        .then(lists => {
+          let rejected = false;
+          let whitelists = lists.filter((list) => list.Type === 'WHITELIST');
+          let blacklists = lists.filter((list) => list.Type === 'BLACKLIST');
+
+          // Check if blacklisted
+          blacklists.forEach((list) => {
+            if (entity.Email.indexOf(list.Email) !== -1) {
+              reject(new AppError("This email has been blacklisted", AppErrorTypes.OTHER, 400));
+              rejected = true;
+              return;
+            }
+          });
+
+          whitelists.forEach((list) => {
+            if (entity.Email.indexOf(list.Email) !== -1) {
+              entity.Status = 'ACTIVE';
+              return;
+            }
+          });
+
+          if (!rejected)
+            this.validate(entity)
+              .then(() => this.changePassword(entity, entity.Password))
+              .then(() => entity.save())
+              .then(() => resolve(entity))
+              .catch(reject);
+        });
     });
   }
 
