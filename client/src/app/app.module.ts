@@ -61,7 +61,6 @@ import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-co
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
-import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 import {TextMaskModule} from 'angular2-text-mask';
 import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
 import {ChartsModule} from "ng2-charts";
@@ -115,7 +114,6 @@ import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-e
     SpinnerComponent,
     AdminApprovalQueueComponent,
     ListsEditorComponent,
-    AdminApprovalQueueComponent,
     MyMatchesPageComponent,
     ReportUserAcquisitionComponent,
     ReportUserTotalComponent,
@@ -149,7 +147,7 @@ import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-e
     Ng2TableModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService],
+    ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
