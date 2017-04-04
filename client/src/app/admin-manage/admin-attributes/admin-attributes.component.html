@@ -23,8 +23,8 @@
           </span>
         </td>
         <td>
-          <span class="glyphicon glyphicon-remove text-danger clickable" (click)="deleteAttribute(attribute)"></span>
-          <span class="glyphicon glyphicon-pencil clickable" (click)="editAttribute(attribute)"></span>
+          <span class="glyphicon glyphicon-remove text-danger clickable" tooltip="Remove"(click)="deleteAttribute(attribute)"></span>
+          <span class="glyphicon glyphicon-pencil clickable" tooltip="Edit" (click)="editAttribute(attribute)"></span>
         </td>
       </tr>
     </ng-container>
@@ -160,7 +160,7 @@
                           <input [(ngModel)]="option.Display" name="Option" placeholder="Option" class="form-control">
                         </td>
                         <td>
-                          <span class="glyphicon glyphicon-remove text-danger clickable" (click)="deleteEnum(option)"></span>
+                          <span class="glyphicon glyphicon-remove text-danger clickable" tooltip="Remove" (click)="deleteEnum(option)"></span>
                         </td>
                       </tr>
                     </ng-container>
