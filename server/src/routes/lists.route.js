@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
+const expressManager = require('../user_modules/express-manager');
 
 const listsService = require('../services/lists.service');
 
@@ -9,12 +10,17 @@ const Lists = require('../models/lists.model');
 
 let routeName;
 
-// Attribute Strings
+let adminCanGuard = (req, res, next) => {
+  if (req.user.Type === 'ADMINISTRATOR')
+    return next();
+
+  return restUtils.rejectRequest();
+};
 
 routeName = '/lists';
 
 /* GET */
-router.get(routeName, function(req, res, next) {
+router.get(routeName, expressManager.loggedInGuard, adminCanGuard, function(req, res, next) {
   listsService.getAllLists()
     .then(serializer.serializeModels)
     .then(restUtils.prepareResponse)
@@ -23,7 +29,7 @@ router.get(routeName, function(req, res, next) {
 });
 
 /* POST */
-router.post(routeName, function(req, res, next) {
+router.post(routeName, expressManager.loggedInGuard, adminCanGuard, function(req, res, next) {
   let data = req.body;
 
   serializer.mapDataToEntity(Lists, data)
@@ -35,7 +41,7 @@ router.post(routeName, function(req, res, next) {
 });
 
 /* PUT */
-router.put(`${routeName}/:id`, function(req, res, next) {
+router.put(`${routeName}/:id`, expressManager.loggedInGuard, adminCanGuard, function(req, res, next) {
   let data = req.body;
   data.Id = req.params.id;
 
@@ -47,7 +53,7 @@ router.put(`${routeName}/:id`, function(req, res, next) {
 });
 
 /* DELETE */
-router.delete(`${routeName}/:id`, function(req, res, next) {
+router.delete(`${routeName}/:id`, expressManager.loggedInGuard, adminCanGuard, function(req, res, next) {
   let id = req.params.id;
 
   listsService.deleteList(id)
