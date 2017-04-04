@@ -4,6 +4,9 @@ const Config = require('../models/config.model');
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
 const expressManager = require('../user_modules/express-manager');
+const ErrorModule = require('../error');
+const AppError = ErrorModule.AppError;
+const AppErrorTypes = ErrorModule.AppErrorTypes;
 
 const routeName = '/configs';
 
@@ -30,6 +33,12 @@ router.get(`${routeName}/:key`, function(req, res, next) {
       Key: req.params.key
     }
   })
+    .then((model) => {
+      if (model === null)
+        throw new AppError("Config value not found", AppErrorTypes.NOT_FOUND, 404);
+
+      return model;
+    })
     .then(serializer.serializeModel)
     .then(restUtils.prepareResponse)
     .then(payload => restUtils.sendResponse(payload, req, res))

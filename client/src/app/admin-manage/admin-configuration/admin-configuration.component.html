@@ -13,6 +13,9 @@
       <li [class.active]="selectedTab == 3">
         <a class="clickable" (click)="selectTab(3)">FAQ Content</a>
       </li>
+      <li [class.active]="selectedTab == 4">
+        <a class="clickable" (click)="selectTab(4)">White/Black Lists</a>
+      </li>
     </ul>
   </div>
   <div class="col-md-9">
@@ -54,6 +57,10 @@
       <ng-container *ngSwitchCase="3">
         <legend>FAQ Content</legend>
         <app-page-editor ConfigEntry="FAQContent"></app-page-editor>
+      </ng-container>
+      <ng-container *ngSwitchCase="4">
+        <legend>Whitelist & Blacklist</legend>
+        <app-lists-editor></app-lists-editor>
       </ng-container>
     </ng-container>
   </div>

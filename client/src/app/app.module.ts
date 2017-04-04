@@ -61,7 +61,6 @@ import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-co
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
-import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 import {TextMaskModule} from 'angular2-text-mask';
 import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
 import {ChartsModule} from "ng2-charts";
@@ -73,6 +72,9 @@ import {Ng2TableModule} from "ng2-table";
 import { ReportUsersTableComponent } from './admin-manage/admin-reporting/report-users-table/report-users-table.component';
 import { CookieModule } from 'ngx-cookie';
 import {CsvService} from "./services/report/csv.service";
+import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
+import {ListService} from "./services/list/list.service";
+import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-editor/lists-editor.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +113,7 @@ import {CsvService} from "./services/report/csv.service";
     FaqPageComponent,
     SpinnerComponent,
     AdminApprovalQueueComponent,
+    ListsEditorComponent,
     MyMatchesPageComponent,
     ReportUserAcquisitionComponent,
     ReportUserTotalComponent,
@@ -144,7 +147,7 @@ import {CsvService} from "./services/report/csv.service";
     Ng2TableModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    CsvService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService],
+    ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ViewChild} from '@angular/core';
 import {FileUploader} from "ng2-file-upload";
 import {ConfigService} from "../../services/config/config.service";
 import {AttributeService} from "../../services/attributes/attribute.service";
@@ -6,6 +6,8 @@ import {Attribute} from "../../services/attributes/attribute.model";
 import { CookieService } from 'ngx-cookie';
 import {Alert} from "../../services/alert/alert";
 import {AlertService} from "../../services/alert/alert.service";
+
+
 
 @Component({
   selector: 'app-admin-configuration',
@@ -36,6 +38,8 @@ export class AdminConfigurationComponent implements OnInit {
       .subscribe((value) => {
         this.featuredAttribute = value;
       });
+
+
 
     this.refreshBanner();
 

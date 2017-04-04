@@ -17,49 +17,50 @@ const routeName = '/auth';
 /* LOGIN REQUEST */
 router.post(routeName + '/login', function(req, res, next) {
     let foundUser = null;
+
     User.findOne({
-        where: {
-            Email: req.body.Email
-        },
-        include: [User.ValidationTokens]
+      where: {
+        Email: req.body.Email
+      },
+      include: [User.ValidationTokens]
     })
-        .then(user => {
-            if (user === null)
-                throw "Invalid email or password";
-            foundUser = user;
-            return user;
-        })
-        .then(user => encryptionManager.validiateHash(req.body.Password, user.Salt, user.Password))
-        .then(result => {
-            if (result === false)
-                throw "Invalid email or password";
+      .then(user => {
+        if (user === null)
+          throw "Invalid email or password";
+        foundUser = user;
+        return user;
+      })
+      .then(user => encryptionManager.validiateHash(req.body.Password, user.Salt, user.Password))
+      .then(result => {
+        if (result === false)
+          throw new AppError("Invalid email or password", AppErrorTypes.OTHER, 403);
 
-          foundUser.ValidationTokens.map((validationToken) => {
-            if (validationToken.Type === 'REGISTRATION')
-              throw "You must confirm you email address before logging in";
-          });
+        // Check if user still needs to validate their email
+        if (foundUser.ValidationTokens.find((token) => token.Type === 'REGISTRATION'))
+          throw new AppError("You must confirm you email address before logging in", AppErrorTypes.OTHER, 403);
 
-          req.session.userId = foundUser.Id;
+        // Check if user is banned
+        if (foundUser.Status === 'BANNED')
+          throw new AppError("Your account has been banned or rejected", AppErrorTypes.OTHER, 403);
 
-            return foundUser;
-        })
-        .then(serializer.serializeModel)
-        .then(restUtils.prepareResponse)
-        .then(payload => restUtils.sendResponse(payload, req, res))
-        .catch(error => restUtils.catchErrors(error, req, res));
+        // Check if user is pending review
+        if (foundUser.Status === 'PENDING_REVIEW')
+          throw new AppError("Your account is pending administrator review, we'll let you know when that review has been completed", AppErrorTypes.OTHER, 403);
+
+        // Everything's good, log em in
+        req.session.userId = foundUser.Id;
+
+        return foundUser;
+      })
+      .then(serializer.serializeModel)
+      .then(restUtils.prepareResponse)
+      .then(payload => restUtils.sendResponse(payload, req, res))
+      .catch(error => restUtils.catchErrors(error, req, res));
 });
 
 /* LOGOUT REQUEST */
 router.post(routeName + '/logout', function(req, res, next) {
-    socketManager.getSocket(req.session.userId)
-      .then(socket => {
-        if (socket != null) {
-          socket.disconnect();
-          socketManager.removeSocket(socket);
-        }
-      });
-
-    req.session.destroy();
+    req.session.userId = undefined;
 
     restUtils.prepareResponse({}, [])
         .then(payload => restUtils.sendResponse(payload, req, res))
