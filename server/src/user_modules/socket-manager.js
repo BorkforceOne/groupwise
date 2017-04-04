@@ -22,7 +22,7 @@ class SocketManager {
         console.log("[SOCKET] Incomming connection, total: " + this.sockets.length);
 
         let sid = this.getSessionId(socket);
-        if (sid == null) {
+        if (sid === null) {
           socket.disconnect();
           console.log("[SOCKET] Removing socket due to no session");
           this.removeSocket(socket);
@@ -35,7 +35,7 @@ class SocketManager {
         this.getSession(sid)
           .then((session) => {
             if (session) {
-              console.log(session.userId);
+              console.log(`[SOCKET] Established for session ${session.id} (UserID: ${session.userId})`);
               session.socketId = socket.id;
             }
             else {
@@ -46,7 +46,7 @@ class SocketManager {
             validSocket = false;
           });
 
-        if (validSocket == false) {
+        if (validSocket === false) {
           socket.disconnect();
           console.log("[SOCKET] Removing socket due to invalid session");
           this.removeSocket(socket);
