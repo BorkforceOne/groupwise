@@ -30,18 +30,19 @@ const catchErrors = function(error, req, res) {
     else if (typeof error === "string")
       message = error;
 
-    console.error(message);
-
     let status = 500;
 
-    if (error.status != undefined)
+    if (error.type !== AppErrorTypes.NOT_FOUND && error.type !== AppErrorTypes.MAP_NULL_INSTANCE)
+      console.error(message);
+
+    if (error.status !== undefined)
       status = error.status;
     else
       switch (error.type) {
         case AppErrorTypes.MAP_NULL_INSTANCE:
         case AppErrorTypes.NOT_FOUND:
           status = 404;
-          break
+          break;
       }
 
     res.status(status);
