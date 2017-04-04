@@ -42,8 +42,6 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { DateSelectComponent } from './date-select/date-select.component';
 import { ChatMessageComponent } from './chat/chat-message/chat-message.component';
 import {MomentModule} from "angular2-moment";
-import { AgePipe } from './age.pipe';
-import {CookieService} from "angular2-cookie/services/cookies.service";
 import { AdminConfigurationComponent } from './admin-manage/admin-configuration/admin-configuration.component';
 import { AdminAttributesComponent } from './admin-manage/admin-attributes/admin-attributes.component';
 import { AdminReportingComponent } from './admin-manage/admin-reporting/admin-reporting.component';
@@ -63,7 +61,18 @@ import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-co
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
+import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 import {TextMaskModule} from 'angular2-text-mask';
+import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
+import {ChartsModule} from "ng2-charts";
+import {ReportUserAcquisitionComponent} from "./admin-manage/admin-reporting/report-user-acquisition/report-user-acquisition.component";
+import { ReportUserTotalComponent } from './admin-manage/admin-reporting/report-user-total/report-user-total.component';
+import { ReportMatchActivityComponent } from './admin-manage/admin-reporting/report-match-activity/report-match-activity.component';
+import { ReportEntityTableComponent } from './admin-manage/admin-reporting/report-entity-table/report-entity-table.component';
+import {Ng2TableModule} from "ng2-table";
+import { ReportUsersTableComponent } from './admin-manage/admin-reporting/report-users-table/report-users-table.component';
+import { CookieModule } from 'ngx-cookie';
+import {CsvService} from "./services/report/csv.service";
 import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 import {ListService} from "./services/list/list.service";
 import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-editor/lists-editor.component';
@@ -93,7 +102,6 @@ import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-e
     RegisterAttributeFieldComponent,
     DateSelectComponent,
     ChatMessageComponent,
-    AgePipe,
     AdminConfigurationComponent,
     AdminAttributesComponent,
     AdminReportingComponent,
@@ -106,7 +114,14 @@ import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-e
     FaqPageComponent,
     SpinnerComponent,
     AdminApprovalQueueComponent,
-    ListsEditorComponent
+    ListsEditorComponent,
+    AdminApprovalQueueComponent,
+    MyMatchesPageComponent,
+    ReportUserAcquisitionComponent,
+    ReportUserTotalComponent,
+    ReportMatchActivityComponent,
+    ReportEntityTableComponent,
+    ReportUsersTableComponent
   ],
   imports: [
     BrowserModule,
@@ -128,10 +143,13 @@ import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-e
     ReactiveFormsModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    CookieModule.forRoot(),
+    ChartsModule,
+    Ng2TableModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService],
+    CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

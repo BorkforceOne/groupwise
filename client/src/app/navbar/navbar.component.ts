@@ -4,7 +4,6 @@ import { UserService } from "../services/user/user.service";
 import {User} from "../services/user/user";
 import {Observable} from "rxjs";
 import {AuthService} from "../services/user/auth.service";
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -23,18 +22,18 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.loggedInUser = this.authService.getLoggedInUser();
     this.loggedInUser.subscribe((user) => {
-        if (user != null) {
-          this.isLoggedIn = true;
-          this.type = user.Type;
-          this.displayName = this.userService.getUserDisplayName(user);
-          this.userId = user.Id;
-        }
-        else {
-          this.isLoggedIn = false;
-          this.type = null;
-          this.displayName = "";
-          this.userId = null;
-        }
+      if (user != null) {
+        this.isLoggedIn = true;
+        this.type = user.Type;
+        this.displayName = this.userService.getUserDisplayName(user);
+        this.userId = user.Id;
+      }
+      else {
+        this.isLoggedIn = false;
+        this.type = null;
+        this.displayName = "";
+        this.userId = null;
+      }
     });
   }
 

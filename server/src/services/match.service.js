@@ -21,6 +21,25 @@ class MatchService {
     });
   }
 
+  getUserMatches(userId) {
+    return new Promise((resolve, reject) => {
+      Match.findAll({
+        where: {
+          $or: [
+            {
+              HostUserId: userId
+            },
+            {
+              StudentUserId: userId
+            }
+          ]
+        }
+      })
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
   getMatch(id) {
     return new Promise((resolve, reject) => {
       Match.findOne({

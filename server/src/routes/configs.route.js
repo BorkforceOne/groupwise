@@ -3,17 +3,25 @@ const router = express.Router();
 const Config = require('../models/config.model');
 const serializer = require('../user_modules/serializer');
 const restUtils = require('../user_modules/rest-utils');
+const expressManager = require('../user_modules/express-manager');
 
 const routeName = '/configs';
 
-/* GET all listing. */
+let adminCanAdd = (req, res, next) => {
+  if (req.user.Type === 'ADMINISTRATOR')
+    return next();
+
+  return restUtils.rejectRequest();
+};
+
+/* GET all listing.
 router.get(routeName, function(req, res, next) {
   Config.findAll()
     .then(serializer.serializeModels)
     .then(restUtils.prepareResponse)
     .then(payload => restUtils.sendResponse(payload, req, res))
     .catch(error => restUtils.catchErrors(error, req, res));
-});
+});*/
 
 /* GET single listing. */
 router.get(`${routeName}/:key`, function(req, res, next) {
@@ -29,7 +37,7 @@ router.get(`${routeName}/:key`, function(req, res, next) {
 });
 
 /* Add a new config */
-router.post(`${routeName}/:key`, function(req, res, next) {
+router.post(`${routeName}/:key`, expressManager.loggedInGuard, adminCanAdd, function(req, res, next) {
 
   let data = {
     'Key': req.params.key,
