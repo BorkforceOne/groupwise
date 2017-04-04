@@ -39,16 +39,19 @@ export class ListsEditorComponent implements OnInit {
     if(this.editingList.Id !== undefined){
       this.listService.updateList(this.editingList)
         .subscribe(list =>{
+          let origList = this.whitelist.find((l) => l.Id === this.editingList.Id);
+
+          origList.Email = list.Email;
+
           this.whitelistEditModal.hide()
         });
     }else {
       this.editingList.Type = "WHITELIST";
       this.listService.createList(this.editingList)
-        .subscribe(list=>{
+        .subscribe(list => {
           this.whitelistEditModal.hide();
           this.whitelist.push(list);
         });
-
     }
   }
 
@@ -56,9 +59,14 @@ export class ListsEditorComponent implements OnInit {
     if(this.editingList.Id !== undefined){
       this.listService.updateList(this.editingList)
         .subscribe(list =>{
+          let origList = this.blacklist.find((l) => l.Id === this.editingList.Id);
+
+          origList.Email = list.Email;
+
           this.blacklistEditModal.hide()
         });
-    }else {
+    }
+    else {
       this.editingList.Type = "BLACKLIST";
       this.listService.createList(this.editingList)
         .subscribe(list=>{
@@ -70,12 +78,13 @@ export class ListsEditorComponent implements OnInit {
   }
 
   removeFromList(item){
-    if(item.Type === "BLACKLIST"){
+    if(item.Type === "BLACKLIST") {
       this.listService.deleteList(item)
-        .subscribe(list =>{
+        .subscribe(list => {
           this.blacklist.splice(this.blacklist.indexOf(item), 1);
         });
-    }else if(item.Type === "WHITELIST") {
+    }
+    else if(item.Type === "WHITELIST") {
       this.listService.deleteList(item)
         .subscribe(list => {
           this.whitelist.splice(this.whitelist.indexOf(item), 1);
@@ -84,12 +93,15 @@ export class ListsEditorComponent implements OnInit {
   }
 
   editItem(item){
-    this.editingList = item;
-    if(item.Type === "BLACKLIST"){
+    this.editingList = new List();
+    this.editingList.Id = item.Id;
+    this.editingList.Type = item.Type;
+    this.editingList.Email = item.Email;
+
+    if(item.Type === "BLACKLIST")
       this.blacklistEditModal.show();
-    }else if(item.Type === "WHITELIST") {
+    else if(item.Type === "WHITELIST")
       this.whitelistEditModal.show();
-    }
   }
 
 }

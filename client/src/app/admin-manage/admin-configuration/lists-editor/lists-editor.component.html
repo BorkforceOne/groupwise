@@ -26,8 +26,8 @@
             </span>
           </td>
           <td>
-            <span class="glyphicon glyphicon-remove text-danger clickable" (click)="removeFromList(item)"></span>
-            <span class="glyphicon glyphicon-pencil clickable" (click)="editItem(item)"></span>
+            <span class="glyphicon glyphicon-remove text-danger clickable" tooltip="Remove" (click)="removeFromList(item)"></span>
+            <span class="glyphicon glyphicon-pencil clickable" tooltip="Edit" (click)="editItem(item)"></span>
           </td>
         </tr>
       </ng-container>
@@ -75,8 +75,8 @@
             </span>
           </td>
           <td>
-            <span class="glyphicon glyphicon-remove text-danger clickable" (click)="removeFromList(item)"></span>
-            <span class="glyphicon glyphicon-pencil clickable" (click)="editItem(item)"></span>
+            <span class="glyphicon glyphicon-remove text-danger clickable" tooltip="Remove" (click)="removeFromList(item)"></span>
+            <span class="glyphicon glyphicon-pencil clickable" tooltip="Edit" (click)="editItem(item)"></span>
           </td>
         </tr>
       </ng-container>
@@ -101,7 +101,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Add email to the Whitelist</h4>
+        <h4 class="modal-title pull-left">Add email to the blacklist</h4>
         <button type="button" class="close pull-right" (click)="whitelistEditModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -109,7 +109,7 @@
       <div class="modal-body">
         <div class="form-horizontal">
           <div class="form-group">
-            <label class="col-md-2 control-label">Profile Representation</label>
+            <label class="col-md-2 control-label">Email</label>
             <div class="col-md-9">
               <input [(ngModel)]="editingList.Email" name="WhiteListEmail" class="form-control" placeholder="*@domain.com" required>
             </div>
@@ -135,7 +135,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Add email to the Whitelist</h4>
+        <h4 class="modal-title pull-left">Add email to the blacklist</h4>
         <button type="button" class="close pull-right" (click)="blacklistEditModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -143,7 +143,7 @@
       <div class="modal-body">
         <div class="form-horizontal">
           <div class="form-group">
-            <label class="col-md-2 control-label">Profile Representation</label>
+            <label class="col-md-2 control-label">Email</label>
             <div class="col-md-9">
               <input [(ngModel)]="editingList.Email" name="BlackListEmail" class="form-control" placeholder="*@domain.com" required>
             </div>
