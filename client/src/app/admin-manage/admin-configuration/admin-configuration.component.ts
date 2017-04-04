@@ -3,7 +3,7 @@ import {FileUploader} from "ng2-file-upload";
 import {ConfigService} from "../../services/config/config.service";
 import {AttributeService} from "../../services/attributes/attribute.service";
 import {Attribute} from "../../services/attributes/attribute.model";
-import { CookieService } from 'angular2-cookie/services';
+import { CookieService } from 'ngx-cookie';
 import {Alert} from "../../services/alert/alert";
 import {AlertService} from "../../services/alert/alert.service";
 

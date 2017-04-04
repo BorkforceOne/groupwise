@@ -29,7 +29,8 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/froala-editor/js/froala_editor.pkgd.min.js",
-        "../node_modules/chart.js/dist/Chart.min.js"
+        "../node_modules/chart.js/dist/Chart.min.js",
+        "../node_modules/ngx-cookie/bundles/ngx-cookie.umd.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

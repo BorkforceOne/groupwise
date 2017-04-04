@@ -71,7 +71,7 @@ import { ReportMatchActivityComponent } from './admin-manage/admin-reporting/rep
 import { ReportEntityTableComponent } from './admin-manage/admin-reporting/report-entity-table/report-entity-table.component';
 import {Ng2TableModule} from "ng2-table";
 import { ReportUsersTableComponent } from './admin-manage/admin-reporting/report-users-table/report-users-table.component';
-import { BaseCookieOptions, CookieService, CookieOptions } from 'angular2-cookie/core';
+import { CookieModule } from 'ngx-cookie';
 import {CsvService} from "./services/report/csv.service";
 
 @NgModule({
@@ -139,11 +139,12 @@ import {CsvService} from "./services/report/csv.service";
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     TooltipModule.forRoot(),
+    CookieModule.forRoot(),
     ChartsModule,
     Ng2TableModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    CsvService, CookieService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, { provide: CookieOptions, useClass: BaseCookieOptions }],
+    CsvService, ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
