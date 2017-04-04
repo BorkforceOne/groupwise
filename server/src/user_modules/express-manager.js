@@ -56,7 +56,7 @@ class ExpressManager {
 
       // Set up XSRF token stuff
 
-      if (config.XSRFProtection) {
+      if (config.express.XSRFProtection) {
         this.context.use(this.csrfProtection);
         this.context.use((req, res, next) => {
           res.cookie('XSRF-TOKEN', req.csrfToken());
