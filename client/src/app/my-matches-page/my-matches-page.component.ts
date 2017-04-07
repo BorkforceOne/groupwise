@@ -33,11 +33,14 @@ export class MyMatchesPageComponent implements OnInit {
   private itemsPerPage: number = 20;
   private loggedInUser: User;
   private filter: string = "";
+  private isLoading: boolean;
 
   constructor(private userService: UserService, private attributeService: AttributeService,
               private chatService: ChatService, private authService: AuthService, private matchService: MatchService) {}
 
   ngOnInit() {
+    this.isLoading = true;
+
     this.authService.getLoggedInUser()
       .subscribe((loggedInUser: User) => {
         this.loggedInUser = loggedInUser;
@@ -90,6 +93,8 @@ export class MyMatchesPageComponent implements OnInit {
                     this.attributes = attributes;
                     this.onFilterChanged();
                   });
+
+                  this.isLoading = false;
                 }
               );
           });

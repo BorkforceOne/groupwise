@@ -24,11 +24,14 @@ export class StudentSearchPageComponent implements OnInit {
   private itemsPerPage: number = 20;
   private featuredAttribute: string;
   private filter: string = "";
+  private isLoading: boolean;
 
   constructor(private userService: UserService, private attributeService: AttributeService,
               private configService: ConfigService) {}
 
   ngOnInit() {
+    this.isLoading = true;
+
     this.userService.getUsers()
       .subscribe(users => {
           this.users = users.filter((entry) => entry.Type == "STUDENT");
@@ -46,6 +49,7 @@ export class StudentSearchPageComponent implements OnInit {
             .subscribe(attributes => {
               this.attributes = attributes;
               this.onFilterChanged();
+              this.isLoading = false;
             });
         }
       );
