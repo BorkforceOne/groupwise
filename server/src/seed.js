@@ -21,7 +21,7 @@ const attributeSeedData = [
       "Type": "ADMINISTRATOR",
       "Status": "ACTIVE",
       "Password": "1234",
-      "Phone": "555-555-5555",
+      "Phone": "(555) 555-5555",
       "Gender": "FEMALE",
       "Birthday": "1995-01-14T00:00:00Z"
     }
@@ -35,7 +35,7 @@ const attributeSeedData = [
       "Type": "HOST",
       "Status": "PENDING_REVIEW",
       "Password": "1234",
-      "Phone": "555-555-5555",
+      "Phone": "(555) 555-5555",
       "Gender": "MALE",
       "Birthday": "1995-01-14T00:00:00Z"
     }
@@ -49,7 +49,7 @@ const attributeSeedData = [
       "Type": "STUDENT",
       "Status": "PENDING_REVIEW",
       "Password": "1234",
-      "Phone": "555-555-5555",
+      "Phone": "(555) 555-5555",
       "Gender": "FEMALE",
       "Birthday": "1996-01-14T00:00:00Z"
     }
