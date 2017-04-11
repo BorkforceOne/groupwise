@@ -76,6 +76,7 @@ import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue
 import {ListService} from "./services/list/list.service";
 import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-editor/lists-editor.component';
 import { AdminUserManageComponent } from './admin-manage/admin-configuration/admin-user-manage/admin-user-manage.component';
+import { AccountPageComponent } from './account-page/account-page.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import { AdminUserManageComponent } from './admin-manage/admin-configuration/adm
     ReportMatchActivityComponent,
     ReportEntityTableComponent,
     ReportUsersTableComponent,
-    AdminUserManageComponent
+    AdminUserManageComponent,
+    AccountPageComponent
   ],
   imports: [
     BrowserModule,
