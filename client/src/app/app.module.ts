@@ -75,6 +75,7 @@ import {CsvService} from "./services/report/csv.service";
 import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 import {ListService} from "./services/list/list.service";
 import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-editor/lists-editor.component';
+import { AdminUserManageComponent } from './admin-manage/admin-configuration/admin-user-manage/admin-user-manage.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-e
     ReportUserTotalComponent,
     ReportMatchActivityComponent,
     ReportEntityTableComponent,
-    ReportUsersTableComponent
+    ReportUsersTableComponent,
+    AdminUserManageComponent
   ],
   imports: [
     BrowserModule,
