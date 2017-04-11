@@ -19,9 +19,6 @@ export class AdminApprovalQueueComponent implements OnInit {
     this.userService.getUsers()
       .subscribe(users => {
         this.users = users.filter((entry) => entry.Status == "PENDING_REVIEW");
-      });
-    this.userService.getUsers()
-      .subscribe(users => {
         this.bannedUsers = users.filter((entry) => entry.Status == "BANNED");
       });
   }
