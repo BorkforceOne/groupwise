@@ -20,7 +20,7 @@
           {{user.Lastname}}
         </td>
         <td>
-          {{user.Email}}
+          <a [href]="'mailto:'+user.Email">{{user.Email}}</a>
         </td>
         <td>
           {{user.Phone}}
@@ -62,7 +62,7 @@
           {{user.Lastname}}
         </td>
         <td>
-          {{user.Email}}
+          <a [href]="'mailto:'+user.Email">{{user.Email}}</a>
         </td>
         <td>
           {{user.Phone}}
