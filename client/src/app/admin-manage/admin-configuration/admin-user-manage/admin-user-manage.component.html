@@ -21,7 +21,7 @@
           {{user.Lastname}}
         </td>
         <td>
-          {{user.Email}}
+          <a [href]="'mailto:'+user.Email">{{user.Email}}</a>
         </td>
         <td>
           {{user.Phone}}
@@ -79,7 +79,7 @@
             </div>
           </div>
 
-          <div class="form-group required">
+          <div class="form-group">
             <label class="col-md-2 control-label">Password</label>
             <div class="col-md-9">
               <input formControlName="Password" type="password" class="form-control" placeholder="Password" required>
@@ -89,7 +89,7 @@
             </div>
           </div>
 
-          <div class="form-group required">
+          <div class="form-group">
             <label class="col-md-2 control-label">Password Verify</label>
             <div class="col-md-9">
               <input formControlName="PasswordVerify" type="password" class="form-control" placeholder="Password Verify" required>
@@ -128,6 +128,9 @@
               <app-date-select formControlName="Birthday" required></app-date-select>
               <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine" class="alert alert-danger">
                 Birthday required
+              </div>
+              <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine || !userForm.controls.Birthday.errors.notOldEnough" class="alert alert-danger">
+                Must be 18 or older
               </div>
             </div>
           </div>
