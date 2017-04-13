@@ -5,10 +5,12 @@
       <button *ngIf="!isPreviewing" type="button" class="btn btn-default" (click)="onTogglePreview()">Preview</button>
       <button *ngIf="isPreviewing" type="button" class="btn btn-default" (click)="onTogglePreview()">Edit</button>
     </div>
-  </div>
-  <div class="col-md-12 editor">
-    <div *ngIf="!isPreviewing" [froalaEditor]="options" [(froalaModel)]="content"></div>
-    <div *ngIf="isPreviewing" [froalaView]="content"></div>
+    <div class="col-md-12 editor">
+      <div *ngIf="!isPreviewing">
+        <textarea htmlEditor [(ngModel)]="content"></textarea>
+      </div>
+      <div [innerHTML]="content" *ngIf="isPreviewing"></div>
+    </div>
   </div>
 </ng-container>
 <app-spinner *ngIf="!loaded"></app-spinner>

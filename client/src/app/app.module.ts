@@ -77,6 +77,7 @@ import {ListService} from "./services/list/list.service";
 import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-editor/lists-editor.component';
 import { AdminUserManageComponent } from './admin-manage/admin-configuration/admin-user-manage/admin-user-manage.component';
 import { AccountPageComponent } from './account-page/account-page.component';
+import { TinyMceValueAccessorDirective } from './tiny-mce-value-accessor.directive';
 
 @NgModule({
   declarations: [
@@ -123,7 +124,8 @@ import { AccountPageComponent } from './account-page/account-page.component';
     ReportEntityTableComponent,
     ReportUsersTableComponent,
     AdminUserManageComponent,
-    AccountPageComponent
+    AccountPageComponent,
+    TinyMceValueAccessorDirective
   ],
   imports: [
     BrowserModule,
