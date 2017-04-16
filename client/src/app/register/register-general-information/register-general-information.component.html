@@ -61,7 +61,7 @@
       <div [hidden]="userRegistrationForm.controls.Birthday.valid || userRegistrationForm.controls.Birthday.pristine" class="alert alert-danger">
         Birthday required
       </div>
-      <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine || !userForm.controls.Birthday.errors.notOldEnough" class="alert alert-danger">
+      <div [hidden]="userRegistrationForm.controls.Birthday.valid || userRegistrationForm.controls.Birthday.pristine || !userRegistrationForm.controls.Birthday.errors.notOldEnough" class="alert alert-danger">
         Must be 18 or older
       </div>
     </div>
