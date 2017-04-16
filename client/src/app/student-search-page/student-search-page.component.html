@@ -26,32 +26,43 @@
     </div>
   </div>
   <div class="col-md-9">
-    <div class="col-md-12" *ngFor="let user of currentUsers">
-      <div class="well well-sm">
-        <div class="row">
-          <div class="col-sm-6 col-md-4">
-            <img alt="" class="img-responsive" [src]="user.ProfileImage">
-          </div>
-          <div class="col-sm-6 col-md-8">
-            <div class="row">
-              <div class="col-md-7">
-                <h4>{{user.Firstname}} {{user.Lastname}}</h4>
-                <p class="text-muted">{{user.Gender}}, {{today | amDifference: user.Birthday: 'years': false}}</p>
-              </div>
-              <div class="col-md-5">
-                <div class="pull-right">
-                  <a class="btn btn-primary btn-block" [routerLink]="['/user-profile',user.Id]">View Profile</a>
+    <ng-container *ngIf="!isLoading">
+      <div class="col-md-12" *ngFor="let user of currentUsers">
+        <div class="well well-sm">
+          <div class="row">
+            <div class="col-sm-6 col-md-4">
+              <img alt="" class="img-responsive" [src]="user.ProfileImage">
+            </div>
+            <div class="col-sm-6 col-md-8">
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>{{user.Firstname}} {{user.Lastname}}</h4>
+                  <p class="text-muted">{{user.Gender}}, {{today | amDifference: user.Birthday: 'years': false}}</p>
+                </div>
+                <div class="col-md-5">
+                  <div class="pull-right">
+                    <a class="btn btn-primary btn-block" [routerLink]="['/user-profile',user.Id]">View Profile</a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <p>
-                {{getUserAttributeDisplay(featuredAttribute, user)}}
-              </p>
+              <div class="row">
+                <p>
+                  {{getUserAttributeDisplay(featuredAttribute, user)}}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div *ngIf="users.length == 0" class="col-md-12 text-center text-muted">
+        <h4>There are no students for you to match with. Try again later!</h4>
+      </div>
+      <div *ngIf="currentUsers.length == 0 && users.length > 0" class="col-md-12 text-center text-muted">
+        <h4>No results for your current filter</h4>
+      </div>
+    </ng-container>
+    <div class="col-md-12" *ngIf="isLoading">
+      <app-spinner></app-spinner>
     </div>
   </div>
   <div class="row text-center">

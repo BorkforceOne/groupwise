@@ -19,7 +19,7 @@ const Config = databaseManager.context.define('config', {
   },
   Value: {
     allowNull: false,
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   }
 },{
   instanceMethods: {
