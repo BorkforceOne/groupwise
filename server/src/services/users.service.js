@@ -112,14 +112,19 @@ class UserService {
   validateUpdate(entity) {
     return new Promise((resolve, reject) => {
 
-      if (entity['Password'] === null) {
-        entity['Password'] = entity.previous('Password');
-        resolve(entity);
+      if (entity.changed('Password') === true) {
+        if (entity['Password'] === null) {
+          entity['Password'] = entity.previous('Password');
+          resolve(entity);
+        }
+        else {
+          this.changePassword(entity, entity['Password'])
+            .then(() => resolve(entity))
+            .catch((e) => reject(e))
+        }
       }
       else {
-        this.changePassword(entity, entity['Password'])
-          .then(() => resolve(entity))
-          .catch((e) => reject(e))
+        resolve(entity);
       }
     });
   }
