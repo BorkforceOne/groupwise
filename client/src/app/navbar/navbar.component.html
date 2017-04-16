@@ -14,28 +14,28 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse" [collapse]="isCollapsed">
       <ul class="nav navbar-nav navbar-right">
-        <li [class.active]="isActiveRoute('/home')">
+        <li [class.active]="router.isActive('/home')">
           <a routerLink="/home">Home</a>
         </li>
-        <li [class.active]="isActiveRoute('/faq')">
+        <li [class.active]="router.isActive('/faq')">
           <a routerLink="/faq">FAQ</a>
         </li>
-        <li [class.active]="isActiveRoute('/contact')">
+        <li [class.active]="router.isActive('/contact')">
           <a routerLink="/contact">Contact</a>
         </li>
-        <li [class.active]="isActiveRoute('/register')" *ngIf="!isLoggedIn">
+        <li [class.active]="router.isActive('/register')" *ngIf="!isLoggedIn">
           <a routerLink="/register">Register</a>
         </li>
-        <li [class.active]="isActiveRoute('/login')" *ngIf="!isLoggedIn">
+        <li [class.active]="router.isActive('/login')" *ngIf="!isLoggedIn">
           <a routerLink="/login">Login</a>
         </li>
-        <li [class.active]="isActiveRoute('/student-search')" *ngIf="isLoggedIn && type == 'HOST'">
+        <li [class.active]="router.isActive('/student-search')" *ngIf="isLoggedIn && type == 'HOST'">
           <a routerLink="/student-search">Student Search</a>
         </li>
-        <li [class.active]="isActiveRoute('/my-matches')" *ngIf="isLoggedIn && type != 'ADMINISTRATOR'">
+        <li [class.active]="router.isActive('/my-matches')" *ngIf="isLoggedIn && type != 'ADMINISTRATOR'">
           <a routerLink="/my-matches">My Matches</a>
         </li>
-        <li [class.active]="isActiveRoute('/admin-manage')" *ngIf="isLoggedIn && type == 'ADMINISTRATOR'">
+        <li [class.active]="router.isActive('/admin-manage')" *ngIf="isLoggedIn && type == 'ADMINISTRATOR'">
           <a routerLink="/admin-manage">Admin Manage</a>
         </li>
         <ng-container *ngIf="isLoggedIn">
@@ -50,8 +50,8 @@
               <img [src]="photoURL" class="img-profile img-circle"> {{displayName}} <b class="caret"></b>
             </button>
             <ul dropdownMenu role="menu" aria-labelledby="single-button">
-              <li role="menuitem"><a class="dropdown-item clickable" [routerLink]="['/user-profile', userId]" *ngIf="type !== 'ADMINISTRATOR'">View Profile</a></li>
-              <li role="menuitem"><a class="dropdown-item clickable" [routerLink]="['/account']">Account</a></li>
+              <li role="menuitem" [class.active]="router.isActive('/user-profile/' + userId)"><a class="dropdown-item clickable" [routerLink]="['/user-profile', userId]" *ngIf="type !== 'ADMINISTRATOR'">View Profile</a></li>
+              <li role="menuitem" [class.active]="router.isActive('/account')"><a class="dropdown-item clickable" [routerLink]="['/account']">Account</a></li>
               <li role="menuitem"><a class="dropdown-item clickable" (click)="logout()">Sign-out</a></li>
             </ul>
           </li>
