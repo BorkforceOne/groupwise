@@ -9,7 +9,7 @@ import {AlertService} from "../../alert/alert.service";
 import {AttributeService} from "../../attributes/attribute.service";
 import {Attribute} from "../../attributes/attribute.model";
 import {BackendCommunicatorService} from "../../backend-communicator.service";
-import {FormGroup, FormBuilder, Form, Validators, FormControl} from "@angular/forms";
+import {FormGroup, FormBuilder, Form, Validators, FormControl, AbstractControl} from "@angular/forms";
 import * as moment from "moment";
 
 @Injectable()
@@ -19,6 +19,7 @@ export class UserRegistrationService extends BackendCommunicatorService{
   public userRegistrationForm: FormGroup;
   public hostAttributeForm: FormGroup;
   public studentAttributeForm: FormGroup;
+  public tosForm: FormGroup;
 
   private attributes: Attribute[] = [];
 
@@ -39,6 +40,10 @@ export class UserRegistrationService extends BackendCommunicatorService{
       Gender: ['', [<any>Validators.required]],
       Type: ['', [<any>Validators.required]]
     }, {validator: this.matchingPasswords('Password', 'PasswordVerify')});
+
+    this.tosForm = this.formBuilder.group({
+      Agree: ['', [<any>Validators.required, <any>Validators.pattern('true')]]
+    });
 
     this.attributeService
       .getAllAttributes()

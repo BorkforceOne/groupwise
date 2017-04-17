@@ -7,6 +7,9 @@
       <li [class.active]="selectedTab == 1">
         <a class="clickable" (click)="selectTab(1)">Featured Attribute</a>
       </li>
+      <li [class.active]="selectedTab == 5">
+        <a class="clickable" (click)="selectTab(5)">White/Black Lists</a>
+      </li>
       <li [class.active]="selectedTab == 2">
         <a class="clickable" (click)="selectTab(2)">Dashboard Content</a>
       </li>
@@ -14,7 +17,10 @@
         <a class="clickable" (click)="selectTab(3)">FAQ Content</a>
       </li>
       <li [class.active]="selectedTab == 4">
-        <a class="clickable" (click)="selectTab(4)">White/Black Lists</a>
+        <a class="clickable" (click)="selectTab(4)">Terms of Service Content</a>
+      </li>
+      <li [class.active]="selectedTab == 6">
+        <a class="clickable" (click)="selectTab(6)">Registration Introduction Content</a>
       </li>
     </ul>
   </div>
@@ -50,6 +56,10 @@
           </select>
         </div>
       </ng-container>
+      <ng-container *ngSwitchCase="5">
+        <legend>Whitelist & Blacklist</legend>
+        <app-lists-editor></app-lists-editor>
+      </ng-container>
       <ng-container *ngSwitchCase="2">
         <legend>Dashboard Content</legend>
         <app-page-editor ConfigEntry="DashboardContent"></app-page-editor>
@@ -59,8 +69,12 @@
         <app-page-editor ConfigEntry="FAQContent"></app-page-editor>
       </ng-container>
       <ng-container *ngSwitchCase="4">
-        <legend>Whitelist & Blacklist</legend>
-        <app-lists-editor></app-lists-editor>
+        <legend>Terms of Service</legend>
+        <app-page-editor ConfigEntry="TOSContent"></app-page-editor>
+      </ng-container>
+      <ng-container *ngSwitchCase="6">
+        <legend>Registration Introduction Content</legend>
+        <app-page-editor ConfigEntry="RegistrationIntroductionContent"></app-page-editor>
       </ng-container>
     </ng-container>
   </div>

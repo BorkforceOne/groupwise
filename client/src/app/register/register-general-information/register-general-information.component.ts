@@ -11,16 +11,14 @@ import {FormGroup} from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class RegisterGeneralInformationComponent implements OnInit {
-  userRegistrationForm: FormGroup;
-  public phoneModel = '';
+  public userRegistrationForm: FormGroup;
   public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
   constructor(private userRegistrationService: UserRegistrationService) {
-    this.userRegistrationForm = this.userRegistrationService.userRegistrationForm;
   }
 
   ngOnInit() {
-
+    this.userRegistrationForm = this.userRegistrationService.userRegistrationForm;
   }
 
 }

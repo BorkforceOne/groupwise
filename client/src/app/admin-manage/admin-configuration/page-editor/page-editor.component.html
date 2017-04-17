@@ -9,7 +9,7 @@
       <div *ngIf="!isPreviewing">
         <textarea htmlEditor [(ngModel)]="content"></textarea>
       </div>
-      <div [innerHTML]="content" *ngIf="isPreviewing"></div>
+      <div [innerHTML]="contentHTML" *ngIf="isPreviewing"></div>
     </div>
   </div>
 </ng-container>
