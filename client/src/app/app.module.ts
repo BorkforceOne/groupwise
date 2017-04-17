@@ -75,6 +75,7 @@ import {CsvService} from "./services/report/csv.service";
 import { AdminApprovalQueueComponent } from './admin-manage/admin-approval-queue/admin-approval-queue.component';
 import {ListService} from "./services/list/list.service";
 import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-editor/lists-editor.component';
+import { TosComponent } from './register/tos/tos.component';
 import { AdminUserManageComponent } from './admin-manage/admin-configuration/admin-user-manage/admin-user-manage.component';
 import { AccountPageComponent } from './account-page/account-page.component';
 import { TinyMceValueAccessorDirective } from './tiny-mce-value-accessor.directive';
@@ -126,7 +127,8 @@ import {ContactService} from "./services/contact/contact.service";
     ReportUsersTableComponent,
     AdminUserManageComponent,
     AccountPageComponent,
-    TinyMceValueAccessorDirective
+    TinyMceValueAccessorDirective,
+    TosComponent
   ],
   imports: [
     BrowserModule,

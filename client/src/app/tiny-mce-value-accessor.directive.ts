@@ -53,7 +53,7 @@ export class TinyMceValueAccessorDirective implements OnDestroy, AfterViewInit, 
       selector: `[data-tinymce-uniqueid=${this.uniqueId}]`,
       schema: 'html5',
       skin_url: 'assets/skins/lightgray',
-      plugins: ['link', 'table'],
+      plugins: ['link', 'table', 'media', 'paste', 'hr', 'image', 'lists', 'advlist', 'textcolor', 'wordcount'],
       height: 500,
       setup: ed => {
         ed.on('init', ed2 => {

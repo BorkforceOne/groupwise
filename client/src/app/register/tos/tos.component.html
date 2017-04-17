@@ -1,0 +1,15 @@
+<legend>Terms of Service</legend>
+<form class="form-horizontal" [formGroup]="tosForm">
+  <div class="col-md-offset-2 col-md-8">
+    <app-remote-html-content ConfigEntry="TOSContent"></app-remote-html-content>
+  </div>
+
+  <div class="form-group required">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="checkbox-inline">
+        <label class="control-label"><input type="checkbox" formControlName="Agree">I agree</label>
+      </div>
+    </div>
+  </div>
+
+</form>

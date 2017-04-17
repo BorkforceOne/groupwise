@@ -17,6 +17,7 @@ import {HostGuard} from "./guards/host-guard";
 import {FaqPageComponent} from "./faq-page/faq-page.component";
 import {AdminGuard} from "./guards/admin-guard";
 import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
+import {TosComponent} from "./register/tos/tos.component";
 import {AccountPageComponent} from "./account-page/account-page.component";
 
 export const AppRoutes: Routes = [
@@ -28,7 +29,8 @@ export const AppRoutes: Routes = [
     children: [
       { path: '', component: RegisterGeneralInformationComponent},
       { path: 'prescreen', component: RegisterAddonPageComponent},
-      { path: 'attributes', component: RegisterAttributesComponent}
+      { path: 'attributes', component: RegisterAttributesComponent},
+      { path: 'tos', component: TosComponent}
     ]},
   { path: 'login', component: LoginComponent, canActivate: [NotLoggedinGuard]},
   { path: 'validate', component: ConsumeTokenPageComponent },

@@ -14,7 +14,6 @@ import {FormGroup} from "@angular/forms";
   providers: [UserRegistrationService]
 })
 export class RegisterComponent implements OnInit {
-  userRegistrationForm: FormGroup;
   registrationComplete: Boolean;
 
   constructor(private alertService: AlertService, private router: Router, private userRegistrationService: UserRegistrationService) { }
@@ -23,8 +22,7 @@ export class RegisterComponent implements OnInit {
     if (this.router.url != '/register')
       this.router.navigateByUrl('/register');
 
-    this.userRegistrationService.setSequence(['/register', '/register/prescreen', '/register/attributes']);
-    this.userRegistrationForm = this.userRegistrationService.userRegistrationForm;
+    this.userRegistrationService.setSequence(['/register', '/register/tos', '/register/prescreen', '/register/attributes']);
     this.registrationComplete = false;
   }
 
@@ -50,10 +48,12 @@ export class RegisterComponent implements OnInit {
 
   canMoveToNext() {
     if (this.getSequenceCurrent() == 1)
-      return this.userRegistrationForm.valid;
+      return this.userRegistrationService.userRegistrationForm.valid;
     if (this.getSequenceCurrent() == 2)
-      return true;
+      return this.userRegistrationService.tosForm.valid;
     if (this.getSequenceCurrent() == 3)
+      return true;
+    if (this.getSequenceCurrent() == 4)
       return this.userRegistrationService.getAttributeForm().valid;
     return false;
   }
