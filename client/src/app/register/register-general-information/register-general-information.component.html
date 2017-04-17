@@ -57,11 +57,11 @@
   <div class="form-group required">
     <label class="col-md-2 control-label">Birthday</label>
     <div class="col-md-9">
-      <app-date-select formControlName="Birthday" required></app-date-select>
+      <app-date-select formControlName="Birthday" placeholder="mm/dd/yyyy" required></app-date-select>
       <div [hidden]="userRegistrationForm.controls.Birthday.valid || userRegistrationForm.controls.Birthday.pristine" class="alert alert-danger">
         Birthday required
       </div>
-      <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine || !userForm.controls.Birthday.errors.notOldEnough" class="alert alert-danger">
+      <div [hidden]="userRegistrationForm.controls.Birthday.valid || userRegistrationForm.controls.Birthday.pristine || !userRegistrationForm.controls.Birthday.errors.notOldEnough" class="alert alert-danger">
         Must be 18 or older
       </div>
     </div>
@@ -70,7 +70,7 @@
   <div class="form-group required">
     <label class="col-md-2 control-label">Phone</label>
     <div class="col-md-9">
-      <input formControlName="Phone" class="form-control" [textMask]="{mask:mask}" required>
+      <input formControlName="Phone" class="form-control" [textMask]="{mask:mask}" placeholder="(555) 555-5555" required>
       <div [hidden]="userRegistrationForm.controls.Phone.valid || userRegistrationForm.controls.Phone.pristine" class="alert alert-danger">
         Phone number is required
       </div>

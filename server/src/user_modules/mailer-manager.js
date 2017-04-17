@@ -19,6 +19,7 @@ class MailerManager {
         .then(() => this.loadTemplate("validateEmail", "templates/validateEmail.html", "templates/validateEmail.text", "FlagFriends - Confirm Account Creation"))
         .then(() => this.loadTemplate("resetPasswordEmail", "templates/resetPasswordEmail.html", "templates/resetPasswordEmail.text", "FlagFriends - Password Reset"))
         .then(() => this.loadTemplate("proposeMatch", "templates/proposeMatch.html", "templates/proposeMatch.text", "FlagFriends - New Match"))
+        .then(() => this.loadTemplate("contact", "templates/contact.html", "templates/contact.text", "FlagFriends - Contact Inquery"))
         .then(resolve)
         .catch((err) => {
           console.error("[MAILER] Could not load template " + err);
@@ -41,6 +42,10 @@ class MailerManager {
         })
       })
     });
+  }
+
+  getContactMailAddress() {
+    return config.mailer.contact;
   }
 
   /**

@@ -78,6 +78,7 @@ import { ListsEditorComponent } from './admin-manage/admin-configuration/lists-e
 import { AdminUserManageComponent } from './admin-manage/admin-configuration/admin-user-manage/admin-user-manage.component';
 import { AccountPageComponent } from './account-page/account-page.component';
 import { TinyMceValueAccessorDirective } from './tiny-mce-value-accessor.directive';
+import {ContactService} from "./services/contact/contact.service";
 
 @NgModule({
   declarations: [
@@ -153,7 +154,7 @@ import { TinyMceValueAccessorDirective } from './tiny-mce-value-accessor.directi
     Ng2TableModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService],
+    ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService, ContactService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

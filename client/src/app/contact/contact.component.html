@@ -1,42 +1,49 @@
 <div class="container">
   <div class="row">
-      <div class="well">
-        <form class="form-horizontal">
-          <fieldset>
-            <legend class="text-center">Contact Us</legend>
+    <div class="well">
+      <form class="form-horizontal" [formGroup]="contactForm">
+        <legend class="text-center">Contact Us</legend>
 
-            <!-- Name input-->
-            <div class="form-group">
-              <label class="col-md-2 control-label" for="name">Name</label>
-              <div class="col-md-9">
-                <input id="name" name="name" type="text" placeholder="Your name" class="form-control">
-              </div>
+        <!-- Name input-->
+        <div class="form-group">
+          <label class="col-md-2 control-label">Name</label>
+          <div class="col-md-9">
+            <input formControlName="Name" class="form-control" placeholder="Name" required>
+            <div [hidden]="contactForm.controls.Name.valid || contactForm.controls.Name.pristine" class="alert alert-danger">
+              Name is required
             </div>
+          </div>
+        </div>
 
-            <!-- Email input-->
-            <div class="form-group">
-              <label class="col-md-2 control-label" for="email">E-mail</label>
-              <div class="col-md-9">
-                <input id="email" name="email" type="text" placeholder="Your email" class="form-control">
-              </div>
+        <!-- Email input-->
+        <div class="form-group">
+          <label class="col-md-2 control-label">E-mail</label>
+          <div class="col-md-9">
+            <input formControlName="From" class="form-control" placeholder="Email" required>
+            <div [hidden]="contactForm.controls.From.valid || contactForm.controls.From.pristine" class="alert alert-danger">
+              Email is required
             </div>
+          </div>
+        </div>
 
-            <!-- Message body -->
-            <div class="form-group">
-              <label class="col-md-2 control-label" for="message">Message</label>
-              <div class="col-md-9">
-                <textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>
-              </div>
+        <!-- Message body -->
+        <div class="form-group">
+          <label class="col-md-2 control-label">Message</label>
+          <div class="col-md-9">
+            <textarea formControlName="Message" class="form-control" placeholder="Please enter your message here..." rows="5" required></textarea>
+            <div [hidden]="contactForm.controls.Message.valid || contactForm.controls.Message.pristine" class="alert alert-danger">
+              Message is required
             </div>
+          </div>
+        </div>
 
-            <!-- Form actions -->
-            <div class="form-group">
-              <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-            </div>
-          </fieldset>
-        </form>
-      </div>
+        <!-- Form actions -->
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

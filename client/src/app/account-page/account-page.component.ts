@@ -22,8 +22,8 @@ export class AccountPageComponent implements OnInit {
   ngOnInit() {
     this.userForm = this.formBuilder.group({
       Email: ['', [<any>Validators.required, <any>Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$")]],
-      Password: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
-      PasswordVerify: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
+      Password: ['', [<any>Validators.minLength(4)]],
+      PasswordVerify: ['', [<any>Validators.minLength(4)]],
       Firstname: ['', [<any>Validators.required]],
       Lastname: ['', [<any>Validators.required]],
       Phone: ['', [<any>Validators.required, <any>Validators.pattern(/\([1-9]\d{2}\) \d{3}\-\d{4}/)]],
@@ -44,7 +44,7 @@ export class AccountPageComponent implements OnInit {
       let passwordInput = group.controls[passwordKey];
       let passwordConfirmationInput = group.controls[passwordConfirmKey];
       if (passwordInput.value !== passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({notEquivalent: true})
+        return passwordConfirmationInput.setErrors({notEquivalent: true});
       }
     }
   }
@@ -52,6 +52,7 @@ export class AccountPageComponent implements OnInit {
   updateUser(user: User) {
     return this.userService.updateUser(user)
       .subscribe((user) => {
+        this.userForm.reset(user);
         let alert = new Alert();
         alert.Type = "success";
         alert.Text = "Successfully updated user details";

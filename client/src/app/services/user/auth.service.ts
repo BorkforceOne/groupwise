@@ -5,6 +5,7 @@ import {AlertService} from "../alert/alert.service";
 import {User} from "./user";
 import {Observable, BehaviorSubject} from "rxjs";
 import {UserLogin} from "./user-login";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthService extends BackendCommunicatorService{
@@ -13,7 +14,7 @@ export class AuthService extends BackendCommunicatorService{
   private loggedInUser: BehaviorSubject<User> = new BehaviorSubject<User>(null);
   private triedRemote: boolean = false;
 
-  constructor(private http: Http, protected alertService: AlertService) {
+  constructor(private http: Http, protected alertService: AlertService, private router: Router) {
     super(alertService);
   }
 
@@ -55,7 +56,10 @@ export class AuthService extends BackendCommunicatorService{
     return this.http
       .post(`${this.authUrl}/logout`, null, {headers: this.headers})
       .map(this.extractData.bind(this, User))
-      .map(this._setLoggedInUser.bind(this, null))
+      .do(() => {
+        this.router.navigate(['/']);
+      })
+      .map(() => this._setLoggedInUser(null))
       .catch(this.handleError.bind(this));
   }
 

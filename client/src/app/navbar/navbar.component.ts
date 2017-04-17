@@ -32,13 +32,12 @@ export class NavbarComponent implements OnInit {
         this.displayName = this.userService.getUserDisplayName(user);
         this.userId = user.Id;
         this.userService.getUserPhotosByUserId(this.userId)
-          .toPromise()
-          .then((photos: UserPhoto[]) => {
+          .subscribe((photos: UserPhoto[]) => {
             if (photos.length > 0)
               this.photoURL = `${this.photoBaseURL}/${photos[0].Id}`;
             else
               this.photoURL = this.defaultPhotoURL;
-          })
+          });
       }
       else {
         this.isLoggedIn = false;
@@ -50,15 +49,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  isActiveRoute(route: string) {
-    return this.router.url == route;
-  }
-
   logout() {
-    this.authService.logout()
-      .toPromise()
-      .then(() => {
-        this.router.navigate(['']);
-      })
+    this.authService.logout().toPromise();
   }
 }

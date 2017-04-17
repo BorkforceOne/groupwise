@@ -3,7 +3,7 @@
     <div *ngSwitchCase="'DATE'" class="col-md-12" (click)="onEdit()">
       <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
       <div class="col-md-6">
-        <input autoFocus (blur)="onBlur()" [(ngModel)]="Attribute.Value.Value" type="date" class="form-control"/>
+        <app-date-select autoFocus [(ngModel)]="Attribute.Value.Value" (blur)="onBlur()" placeholder="mm/dd/yyyy" required></app-date-select>
       </div>
     </div>
     <div *ngSwitchCase="'ENUM'" class="col-md-12" (click)="onEdit()">
