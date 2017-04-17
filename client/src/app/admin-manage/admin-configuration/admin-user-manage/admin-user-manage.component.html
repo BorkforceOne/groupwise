@@ -1,0 +1,194 @@
+<div>
+  <h3>Users</h3>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let user of users">
+      <tr>
+        <td>
+          {{user.Firstname}}
+        </td>
+        <td>
+          {{user.Lastname}}
+        </td>
+        <td>
+          <a [href]="'mailto:'+user.Email">{{user.Email}}</a>
+        </td>
+        <td>
+          {{user.Phone}}
+        </td>
+        <td>
+          <span class="label label-default">
+            {{user.Status}}
+          </span>
+        </td>
+        <td>
+          <span class="glyphicon glyphicon-user clickable" [routerLink]="['/user-profile', user.Id]" tooltip="View Profile"></span>
+          <span class="glyphicon glyphicon-pencil clickable" tooltip="Edit" (click)="editUser(user)"></span>
+        </td>
+      </tr>
+    </ng-container>
+    <tr>
+      <td>
+        <button class="btn btn-success" (click)="editUser()">
+          <span class="glyphicon glyphicon-plus"></span>
+          Add
+        </button>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+  <ng-container *ngIf="users.length == 0">
+    <h4>There are no users</h4>
+  </ng-container>
+</div>
+
+<div bsModal #userEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add/Edit User</h4>
+        <button type="button" class="close pull-right" (click)="userEditModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form class="form-horizontal" [formGroup]="userForm">
+          <div class="form-group required">
+            <label class="col-md-2 control-label">Email</label>
+            <div class="col-md-9">
+              <input formControlName="Email" type="email" class="form-control" placeholder="Email address" required>
+              <div [hidden]="userForm.controls.Email.valid || userForm.controls.Email.pristine" class="alert alert-danger">
+                Email Address is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Password</label>
+            <div class="col-md-9">
+              <input formControlName="Password" type="password" class="form-control" placeholder="Password" required>
+              <div [hidden]="userForm.controls.Password.valid || userForm.controls.Password.pristine" class="alert alert-danger">
+                Password is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Password Verify</label>
+            <div class="col-md-9">
+              <input formControlName="PasswordVerify" type="password" class="form-control" placeholder="Password Verify" required>
+              <div [hidden]="userForm.controls.PasswordVerify.valid || userForm.controls.PasswordVerify.pristine || userForm.controls.PasswordVerify.errors.notEquivalent" class="alert alert-danger">
+                Password verify is required
+              </div>
+              <div [hidden]="userForm.controls.PasswordVerify.valid || userForm.controls.PasswordVerify.pristine || !userForm.controls.PasswordVerify.errors.notEquivalent" class="alert alert-danger">
+                Passwords do not match
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label class="col-md-2 control-label">Firstname</label>
+            <div class="col-md-9">
+              <input formControlName="Firstname" class="form-control" placeholder="Firstname" required>
+              <div [hidden]="userForm.controls.Firstname.valid || userForm.controls.Firstname.pristine" class="alert alert-danger">
+                Firstname is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label class="col-md-2 control-label">Lastname</label>
+            <div class="col-md-9">
+              <input formControlName="Lastname" class="form-control" placeholder="Lastname" required>
+              <div [hidden]="userForm.controls.Lastname.valid || userForm.controls.Lastname.pristine" class="alert alert-danger">
+                Lastname is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label class="col-md-2 control-label">Birthday</label>
+            <div class="col-md-9">
+              <app-date-select formControlName="Birthday" required></app-date-select>
+              <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine" class="alert alert-danger">
+                Birthday required
+              </div>
+              <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine || !userForm.controls.Birthday.errors.notOldEnough" class="alert alert-danger">
+                Must be 18 or older
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label class="col-md-2 control-label">Phone</label>
+            <div class="col-md-9">
+              <input formControlName="Phone" class="form-control" [textMask]="{mask:mask}" required>
+              <div [hidden]="userForm.controls.Phone.valid || userForm.controls.Phone.pristine" class="alert alert-danger">
+                Phone number is required
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group required">
+            <label class="col-md-2 control-label">Gender</label>
+            <div class="col-md-9">
+              <div class="radio-inline">
+                <label><input type="radio" formControlName="Gender" value="MALE">Male</label>
+              </div>
+              <div class="radio-inline">
+                <label><input type="radio" formControlName="Gender" value="FEMALE">Female</label>
+              </div>
+              <div class="radio-inline">
+                <label><input type="radio" formControlName="Gender" value="OTHER">Other</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label class="col-md-2 control-label">Type</label>
+            <div class="col-md-9">
+              <div class="radio-inline">
+                <label><input type="radio" formControlName="Type" value="STUDENT">Student</label>
+              </div>
+              <div class="radio-inline">
+                <label><input type="radio" formControlName="Type" value="HOST">Host</label>
+              </div>
+              <div class="radio-inline">
+                <label><input type="radio" formControlName="Type" value="ADMINISTRATOR">Admin</label>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="btn-toolbar pull-right">
+              <button class="btn btn-primary" (click)="userEditModal.hide()">Close</button>
+              <button class="btn btn-primary" (click)="submitUser()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

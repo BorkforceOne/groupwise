@@ -44,6 +44,9 @@
             <div class="col-md-12">
               <legend>About Me</legend>
             </div>
+            <div class="col-md-12" *ngIf="isLoadingAttributes">
+              <app-spinner></app-spinner>
+            </div>
             <ng-container *ngFor="let attribute of stringAttributes; let last = last;">
               <app-profile-attribute [Attribute]="attribute" [canEdit]="isLoggedInUser" [forUser]="user"></app-profile-attribute>
               <div *ngIf="!last" class="col-md-12">
@@ -63,6 +66,9 @@
             </div>
             <div class="col-md-12">
               <hr>
+            </div>
+            <div class="col-md-12" *ngIf="isLoadingAttributes">
+              <app-spinner></app-spinner>
             </div>
 
             <ng-container *ngFor="let attribute of attributes; let last = last;">

@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="row section">
+
+    <form class="form-horizontal" [formGroup]="userForm">
+      <div class="form-group required">
+        <label class="col-md-2 control-label">Email</label>
+        <div class="col-md-9">
+          <input formControlName="Email" type="email" class="form-control" placeholder="Email address" required>
+          <div [hidden]="userForm.controls.Email.valid || userForm.controls.Email.pristine" class="alert alert-danger">
+            Email Address is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">Password</label>
+        <div class="col-md-9">
+          <input formControlName="Password" type="password" class="form-control" placeholder="Password">
+          <div [hidden]="userForm.controls.Password.valid || userForm.controls.Password.pristine" class="alert alert-danger">
+            Password is not valid
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">Password Verify</label>
+        <div class="col-md-9">
+          <input formControlName="PasswordVerify" type="password" class="form-control" placeholder="Password Verify">
+          <div [hidden]="userForm.controls.PasswordVerify.valid || userForm.controls.PasswordVerify.pristine || userForm.controls.PasswordVerify.errors.notEquivalent" class="alert alert-danger">
+            Password verify is required
+          </div>
+          <div [hidden]="userForm.controls.PasswordVerify.valid || userForm.controls.PasswordVerify.pristine || !userForm.controls.PasswordVerify.errors.notEquivalent" class="alert alert-danger">
+            Passwords do not match
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-2 control-label">Firstname</label>
+        <div class="col-md-9">
+          <input formControlName="Firstname" class="form-control" placeholder="Firstname" required>
+          <div [hidden]="userForm.controls.Firstname.valid || userForm.controls.Firstname.pristine" class="alert alert-danger">
+            Firstname is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-2 control-label">Lastname</label>
+        <div class="col-md-9">
+          <input formControlName="Lastname" class="form-control" placeholder="Lastname" required>
+          <div [hidden]="userForm.controls.Lastname.valid || userForm.controls.Lastname.pristine" class="alert alert-danger">
+            Lastname is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-2 control-label">Phone</label>
+        <div class="col-md-9">
+          <input formControlName="Phone" class="form-control" [textMask]="{mask:mask}" required>
+          <div [hidden]="userForm.controls.Phone.valid || userForm.controls.Phone.pristine" class="alert alert-danger">
+            Phone number is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-2 control-label">Receive General Notifications</label>
+        <div class="col-md-9">
+          <div class="radio-inline">
+            <label><input type="radio" formControlName="ReceiveGeneralNotifications" [value]="true">Yes</label>
+          </div>
+          <div class="radio-inline">
+            <label><input type="radio" formControlName="ReceiveGeneralNotifications" [value]="false">No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-2 control-label">Receive New Match Notifications</label>
+        <div class="col-md-9">
+          <div class="radio-inline">
+            <label><input type="radio" formControlName="ReceiveNewMatchNotifications" [value]="true">Yes</label>
+          </div>
+          <div class="radio-inline">
+            <label><input type="radio" formControlName="ReceiveNewMatchNotifications" [value]="false">No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group required">
+        <label class="col-md-2 control-label">Receive Message Notifications</label>
+        <div class="col-md-9">
+          <div class="radio-inline">
+            <label><input type="radio" formControlName="ReceiveMessageNotifications" [value]="true">Yes</label>
+          </div>
+          <div class="radio-inline">
+            <label><input type="radio" formControlName="ReceiveMessageNotifications" [value]="false">No</label>
+          </div>
+        </div>
+      </div>
+
+      <button (click)="submitUserUpdate()" class="btn btn-primary">Update</button>
+
+    </form>
+
+  </div>
+</div>

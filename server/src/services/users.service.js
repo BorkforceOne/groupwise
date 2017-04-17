@@ -94,7 +94,7 @@ class UserService {
 
       this.getById(data.Id)
         .then(entity => serializer.mapDataToInstance(entity, data))
-        .then(this.validate.bind(this))
+        .then(entity => this.validateUpdate(entity))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
         .catch(reject);
@@ -106,6 +106,26 @@ class UserService {
       //TODO: Validation
 
       resolve(entity);
+    });
+  }
+
+  validateUpdate(entity) {
+    return new Promise((resolve, reject) => {
+
+      if (entity.changed('Password') === true) {
+        if (entity['Password'] === null) {
+          entity['Password'] = entity.previous('Password');
+          resolve(entity);
+        }
+        else {
+          this.changePassword(entity, entity['Password'])
+            .then(() => resolve(entity))
+            .catch((e) => reject(e))
+        }
+      }
+      else {
+        resolve(entity);
+      }
     });
   }
 
@@ -125,7 +145,7 @@ class UserService {
   }
 
   validateEmail(user) {
-    if (user == null)
+    if (user === null)
       throw "User does not exist";
 
     return new Promise((resolve, reject) => {
@@ -159,7 +179,7 @@ class UserService {
   }
 
   resetPassword(user) {
-    if (user == null)
+    if (user === null)
       throw "User does not exist";
 
     return new Promise((resolve, reject) => {

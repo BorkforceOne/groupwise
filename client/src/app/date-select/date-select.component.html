@@ -1,1 +1,1 @@
-<my-date-picker [selDate]="selDate" (dateChanged)="onDateChanged($event)"></my-date-picker>
+<my-date-picker [selDate]="selDate" [options]="options" (calendarToggle)="onCalendarToggle($event)" [placeholder]="placeholder" (dateChanged)="onDateChanged($event)" (inputFocusBlur)="onBlur($event)" (inputFieldChanged)="onInputFieldChanged($event)" ></my-date-picker>

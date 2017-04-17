@@ -1,6 +1,10 @@
-import {Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, forwardRef} from '@angular/core';
-import {IMyDateModel, IMyDate} from "mydatepicker";
+import {
+  Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, forwardRef, Input, Output,
+  EventEmitter
+} from '@angular/core';
+import {IMyDateModel, IMyDate, IMyInputFieldChanged, IMyDateRange} from "mydatepicker";
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from "@angular/forms";
+import * as moment from 'moment';
 
 const noop = () => {
 };
@@ -21,7 +25,18 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class DateSelectComponent implements OnInit, ControlValueAccessor {
   //The internal data model
+  @Input() private placeholder: string = '';
+  @Input() private disableDateRanges: Array<IMyDateRange> = [];
+  @Input() private disableDays: Array<IMyDate> = [];
+  @Output() private blur: EventEmitter<Date> = new EventEmitter<Date>();
+
   private innerValue: any = '';
+  private options: any = {
+    dateFormat: 'mm/dd/yyyy',
+    alignSelectorRight: true,
+    disableDateRanges: this.disableDateRanges,
+    disableDays: this.disableDays
+  };
 
   //Placeholders for the callbacks which are later providesd
   //by the Control Value Accessor
@@ -80,6 +95,18 @@ export class DateSelectComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
 
   }
+  
+  onBlur(event: any) {
+    if (event === 2) {
+      this.blur.emit(this.value);
+    }
+  }
+
+  onCalendarToggle(event: any) {
+    if (event === 2 || event === 3 || event === 4) {
+      this.blur.emit(this.value);
+    }
+  }
 
   onDateChanged(event: IMyDateModel) {
     if (event.jsdate != null) {
@@ -88,6 +115,13 @@ export class DateSelectComponent implements OnInit, ControlValueAccessor {
     else {
       this.value = null;
     }
+  }
+
+  onInputFieldChanged(event: IMyInputFieldChanged) {
+    let date = moment(event.value, event.dateFormat.toUpperCase(), true);
+    if (date.isValid())
+      return this.value = date.toISOString();
+    return this.value = null;
   }
 
 }

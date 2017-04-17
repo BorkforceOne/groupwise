@@ -43,6 +43,7 @@ export class UserProfilePageComponent implements OnInit {
   private querySub: Subscription = null;
   private user: User = new User();
   private match: Match;
+  private isLoadingAttributes: boolean;
   private attributes: Attribute[] = [];
   private stringAttributes: Attribute[] = [];
   private userPhotos: UserPhotoView[] = [];
@@ -62,6 +63,7 @@ export class UserProfilePageComponent implements OnInit {
       this.userPhotos = [];
       this.isLoggedInUser = false;
       this.userId = null;
+      this.isLoadingAttributes = true;
 
       this.userId = +params["id"];
 
@@ -69,7 +71,7 @@ export class UserProfilePageComponent implements OnInit {
         this.loggedInUser = user;
 
         if (user != null && user.Id == this.userId)
-            this.isLoggedInUser = true;
+          this.isLoggedInUser = true;
         else
           this.isLoggedInUser = false;
 
@@ -94,6 +96,8 @@ export class UserProfilePageComponent implements OnInit {
               this.stringAttributes = attributes.filter((entry: Attribute) => {
                 return entry.Type instanceof AttributeString
               });
+
+              this.isLoadingAttributes = false;
             });
         },
           (err: any) => {

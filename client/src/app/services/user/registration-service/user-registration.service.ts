@@ -9,7 +9,8 @@ import {AlertService} from "../../alert/alert.service";
 import {AttributeService} from "../../attributes/attribute.service";
 import {Attribute} from "../../attributes/attribute.model";
 import {BackendCommunicatorService} from "../../backend-communicator.service";
-import {FormGroup, FormBuilder, Form, Validators} from "@angular/forms";
+import {FormGroup, FormBuilder, Form, Validators, FormControl} from "@angular/forms";
+import * as moment from "moment";
 
 @Injectable()
 export class UserRegistrationService extends BackendCommunicatorService{
@@ -33,7 +34,7 @@ export class UserRegistrationService extends BackendCommunicatorService{
       PasswordVerify: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
       Firstname: ['', [<any>Validators.required]],
       Lastname: ['', [<any>Validators.required]],
-      Birthday: ['', [<any>Validators.required]],
+      Birthday: ['', [<any>Validators.required, <any>this.oldEnough]],
       Phone: ['', [<any>Validators.required, <any>Validators.pattern(/\([1-9]\d{2}\) \d{3}\-\d{4}/)]],
       Gender: ['', [<any>Validators.required]],
       Type: ['', [<any>Validators.required]]
@@ -54,6 +55,12 @@ export class UserRegistrationService extends BackendCommunicatorService{
         this.hostAttributeForm = this.formBuilder.group(hostForm);
         this.studentAttributeForm = this.formBuilder.group(studentForm);
       });
+  }
+
+  private oldEnough(birthdayInput: FormControl) {
+    if (moment().diff(moment(birthdayInput.value), 'years') < 18)
+      return {notOldEnough: true};
+    return null;
   }
 
   processAttrs(form, attrs) {
