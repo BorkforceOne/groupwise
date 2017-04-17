@@ -80,6 +80,8 @@ import { AdminUserManageComponent } from './admin-manage/admin-configuration/adm
 import { AccountPageComponent } from './account-page/account-page.component';
 import { TinyMceValueAccessorDirective } from './tiny-mce-value-accessor.directive';
 import {ContactService} from "./services/contact/contact.service";
+import { NotificationCardComponent } from './notification-card/notification-card.component';
+import {NotificationService} from "./services/notifications/notification.service";
 
 @NgModule({
   declarations: [
@@ -128,7 +130,8 @@ import {ContactService} from "./services/contact/contact.service";
     AdminUserManageComponent,
     AccountPageComponent,
     TinyMceValueAccessorDirective,
-    TosComponent
+    TosComponent,
+    NotificationCardComponent
   ],
   imports: [
     BrowserModule,
@@ -156,7 +159,8 @@ import {ContactService} from "./services/contact/contact.service";
     Ng2TableModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
-    ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService, ContactService],
+    ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService, ContactService,
+    NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

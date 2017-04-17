@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, Input} from '@angular/core';
 import {ChatMessage} from "../../services/chat/chat-message.model";
 import {UserService} from "../../services/user/user.service";
 import {AuthService} from "../../services/user/auth.service";
@@ -10,13 +10,12 @@ import {User} from "../../services/user/user";
   styleUrls: ['chat-message.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.Default,
-  inputs: ['message']
 })
 export class ChatMessageComponent implements OnInit {
+  @Input() private message: ChatMessage;
   private defaultPhotoURL: string = "/assets/profile-placeholder-default.png";
   private photoURL: string = "/api/v1/user-photos";
   private profileImage: string = this.defaultPhotoURL;
-  private message: ChatMessage;
   private loggedInUser: User;
 
   constructor(private userService: UserService, private authService: AuthService) { }

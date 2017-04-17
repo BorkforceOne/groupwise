@@ -1,0 +1,7 @@
+<div class="notification-card">
+  <span (click)="onClose()" class="clickable glyphicon glyphicon-remove remove" tooltip="Dismiss" aria-hidden="true"></span>
+  <p>{{notification.Message}}</p>
+  <small class="text-muted">
+    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;{{notification.createdAt | amTimeAgo}}
+  </small>
+</div>

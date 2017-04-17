@@ -4,7 +4,7 @@
     <div class="chat-body clearfix">
       <div class="header">
         <small class=" text-muted">
-          <span class="glyphicon glyphicon-time"></span>{{message.ReceivedAt | amTimeAgo}}
+          <span class="glyphicon glyphicon-time"></span>&nbsp;{{message.ReceivedAt | amTimeAgo}}
         </small>
       </div>
       <p class="chat-message-self">{{message.Message}}</p>
@@ -18,7 +18,7 @@
     <div class="chat-body clearfix">
       <div class="header">
         <small class="pull-right text-muted">
-          <span class="glyphicon glyphicon-time"></span>{{message.ReceivedAt | amTimeAgo}}
+          <span class="glyphicon glyphicon-time"></span>&nbsp;{{message.ReceivedAt | amTimeAgo}}
         </small>
       </div>
       <p class="chat-message-other">{{message.Message}}</p>

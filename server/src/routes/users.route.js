@@ -26,25 +26,9 @@ let filterModels = (models, req, res) => {
           resolve(models);
         break;
       case 'STUDENT':
-        matchService.getUserMatches(req.user.Id)
-          .then((matches) => {
-            let found = models.filter((model) => matches.find((match) => (match.HostUserId === req.user.Id || match.StudentUserId === req.user.Id)) || model.Id === req.user.Id);
-
-            // We only want active users
-            found = found.filter((user) => user.Status === 'ACTIVE');
-
-            if (wasArray === false)
-              resolve(found[0]);
-            else
-              resolve(found);
-          })
-          .catch(reject);
-        break;
       case 'HOST':
-        let found = models.filter((user) => user.Type === 'STUDENT' || user.Id === req.user.Id);
-
         // We only want active users
-        found = found.filter((user) => user.Status === 'ACTIVE');
+        let found = models.filter((user) => user.Status === 'ACTIVE');
 
         if (wasArray === false)
           resolve(found[0]);

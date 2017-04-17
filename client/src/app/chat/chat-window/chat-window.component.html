@@ -1,8 +1,8 @@
 <div class="chat-window">
   <div class="panel panel-primary">
-    <div class="panel-heading">
+    <div class="panel-heading" [@chatState]="chatState" (@chatState.done)="animationDone($event)">
       <span class="glyphicon glyphicon-comment"></span>
-      &nbsp;{{Displayname}}
+      &nbsp;<span class="clickable" [routerLink]="['/user-profile', chat.UserId]" >{{Displayname}}</span>
       <span class="pull-right clickable">
         <span *ngIf="!collapsed" (click)="toggleCollapse()" class="glyphicon glyphicon-chevron-down" aria-hidden="true">
 
@@ -17,7 +17,7 @@
     </div>
     <div class="panel-body" *ngIf="!collapsed" #body>
       <ul class="chat">
-        <ng-container *ngFor="let message of Chat.Messages">
+        <ng-container *ngFor="let message of messages">
           <app-chat-message [message] = "message"></app-chat-message>
         </ng-container>
       </ul>
