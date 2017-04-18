@@ -1,6 +1,6 @@
 <div class="notification-card">
   <span (click)="onClose()" class="clickable glyphicon glyphicon-remove remove" tooltip="Dismiss" aria-hidden="true"></span>
-  <p>{{notification.Message}}</p>
+  <p [routerLink]="notification.LinkTo ? notification.LinkTo : null" [class.clickable]="notification.LinkTo || notification.OnClick" (click)="notification.OnClick ? notification.OnClick() : null">{{notification.Message}}</p>
   <small class="text-muted">
     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;{{notification.createdAt | amTimeAgo}}
   </small>

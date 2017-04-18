@@ -55,8 +55,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
 
     this.notificationSub = this.notificationService.getNotifications()
-      .subscribe((notif: NotificationModel) => {
-        this.notifications.push(notif);
+      .subscribe((notifs: NotificationModel[]) => {
+        this.notifications = notifs;
       });
   }
 

@@ -92,9 +92,8 @@ export class MyMatchesPageComponent implements OnInit {
                   .subscribe(attributes => {
                     this.attributes = attributes;
                     this.onFilterChanged();
+                    this.isLoading = false;
                   });
-
-                  this.isLoading = false;
                 }
               );
           });
