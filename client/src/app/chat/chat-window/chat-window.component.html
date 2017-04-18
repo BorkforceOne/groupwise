@@ -20,6 +20,13 @@
         <ng-container *ngFor="let message of messages">
           <app-chat-message [message] = "message"></app-chat-message>
         </ng-container>
+        <ng-container *ngIf="messages.length === 0">
+          <li class="clearfix">
+            <div class="chat-body clearfix empty-chat-body">
+              <small class="text-muted">No messages yet, why not send one?</small>
+            </div>
+          </li>
+        </ng-container>
       </ul>
     </div>
     <div class="panel-footer" *ngIf="!collapsed">
