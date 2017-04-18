@@ -60,16 +60,19 @@
               <legend>Additional Details</legend>
             </div>
 
-            <div class="col-md-12">
-              <div class="col-md-6"><b>Last Online</b></div>
-              <div class="col-md-6">{{user.updatedAt | amTimeAgo}}</div>
-            </div>
-            <div class="col-md-12">
-              <hr>
-            </div>
             <div class="col-md-12" *ngIf="isLoadingAttributes">
               <app-spinner></app-spinner>
             </div>
+
+            <ng-container *ngIf="!isLoadingAttributes">
+              <div class="col-md-12">
+                <div class="col-md-6"><b>Last Online</b></div>
+                <div class="col-md-6">{{user.updatedAt | amTimeAgo}}</div>
+              </div>
+              <div class="col-md-12">
+                <hr>
+              </div>
+            </ng-container>
 
             <ng-container *ngFor="let attribute of attributes; let last = last;">
               <app-profile-attribute [Attribute]="attribute" [canEdit]="isLoggedInUser" [forUser]="user"></app-profile-attribute>
