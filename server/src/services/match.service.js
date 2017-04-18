@@ -1,5 +1,6 @@
 const serializer = require('../user_modules/serializer');
 const mailerManager = require('../user_modules/mailer-manager');
+const config = require('../config');
 
 const Match = require('../models/match.model');
 
@@ -78,14 +79,61 @@ class MatchService {
                   Firstname: studentUser.Firstname,
                   Lastname: studentUser.Lastname,
                   MatchFirstname: hostUser.Firstname,
-                  MatchLastname: hostUser.Lastname
+                  MatchLastname: hostUser.Lastname,
+                  MyMatchesURL: `${config.general.baseURL}/my-matches`
                 };
 
                 mailerManager.sendMail(mail, header, params)
-                  .then(resolve)
+                  .then(() => resolve(entity))
                   .catch(reject);
               });
               break;
+
+            case "APPROVED":
+              return new Promise((resolve, reject) => {
+                let mail = mailerManager.templates.acceptMatch;
+
+                let header = {
+                  to: hostUser.Email
+                };
+
+                let params = {
+                  Firstname: hostUser.Firstname,
+                  Lastname: hostUser.Lastname,
+                  MatchFirstname: studentUser.Firstname,
+                  MatchLastname: studentUser.Lastname,
+                  MyMatchesURL: `${config.general.baseURL}/my-matches`
+                };
+
+                mailerManager.sendMail(mail, header, params)
+                  .then(() => resolve(entity))
+                  .catch(reject);
+              });
+              break;
+
+            case "REJECTED":
+              return new Promise((resolve, reject) => {
+                let mail = mailerManager.templates.rejectMatch;
+
+                let header = {
+                  to: hostUser.Email
+                };
+
+                let params = {
+                  Firstname: hostUser.Firstname,
+                  Lastname: hostUser.Lastname,
+                  MatchFirstname: studentUser.Firstname,
+                  MatchLastname: studentUser.Lastname
+                };
+
+                mailerManager.sendMail(mail, header, params)
+                  .then(() => resolve(entity))
+                  .catch(reject);
+              });
+              break;
+            default:
+              return entity;
+
           }
         })
         .then(finalResolve)
@@ -109,6 +157,7 @@ class MatchService {
       this.getMatch(data.Id)
         .then(entity => serializer.mapDataToInstance(entity, data))
         .then(entity => this.validateMatch(entity))
+        .then(entity => this.processMatch(entity))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
         .catch(reject);

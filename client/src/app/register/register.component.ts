@@ -62,7 +62,9 @@ export class RegisterComponent implements OnInit {
     return true;
   }
 
-  onRegister(user: UserRegistrationModel) {
+  onRegister() {
+    let user = <UserRegistrationModel>this.userRegistrationService.userRegistrationForm.value;
+
     this.userRegistrationService.register(user)
       .then(user => {
         const alert = new Alert();

@@ -19,6 +19,8 @@ class MailerManager {
         .then(() => this.loadTemplate("validateEmail", "templates/validateEmail.html", "templates/validateEmail.text", "FlagFriends - Confirm Account Creation"))
         .then(() => this.loadTemplate("resetPasswordEmail", "templates/resetPasswordEmail.html", "templates/resetPasswordEmail.text", "FlagFriends - Password Reset"))
         .then(() => this.loadTemplate("proposeMatch", "templates/proposeMatch.html", "templates/proposeMatch.text", "FlagFriends - New Match"))
+        .then(() => this.loadTemplate("acceptMatch", "templates/acceptMatch.html", "templates/acceptMatch.text", "FlagFriends - Match Accepted"))
+        .then(() => this.loadTemplate("rejectMatch", "templates/rejectMatch.html", "templates/rejectMatch.text", "FlagFriends - Match Rejected"))
         .then(() => this.loadTemplate("contact", "templates/contact.html", "templates/contact.text", "FlagFriends - Contact Inquery"))
         .then(resolve)
         .catch((err) => {
