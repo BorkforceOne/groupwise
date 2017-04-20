@@ -56,7 +56,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
         this.messages = messages;
         setTimeout(() => {
           this.scrollToBottom();
-        }, 100);
+        }, 50);
       })
   }
 
@@ -69,6 +69,13 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
       this.newMessage = false;
 
     this.collapsed = !this.collapsed;
+
+    if (this.collapsed == false) {
+      setTimeout(() => {
+        this.scrollToBottom(true);
+      }, 50);
+    }
+
   }
 
   close() {
@@ -89,9 +96,9 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
       this.chatState = 'ping';
   }
 
-  scrollToBottom(): void {
+  scrollToBottom(force: boolean = false): void {
     try {
-      if (this.lastScrollHeight == this.lastPosition && this.body.nativeElement.scrollHeight != this.lastScrollHeight) {
+      if (force == true || this.lastScrollHeight == this.lastPosition && this.body.nativeElement.scrollHeight != this.lastScrollHeight) {
         this.body.nativeElement.scrollTop = this.body.nativeElement.scrollHeight;
       }
       this.lastPosition = this.body.nativeElement.scrollTop + 250;
