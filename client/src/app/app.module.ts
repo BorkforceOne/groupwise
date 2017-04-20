@@ -82,6 +82,7 @@ import { TinyMceValueAccessorDirective } from './tiny-mce-value-accessor.directi
 import {ContactService} from "./services/contact/contact.service";
 import { NotificationCardComponent } from './notification-card/notification-card.component';
 import {NotificationService} from "./services/notifications/notification.service";
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -131,7 +132,8 @@ import {NotificationService} from "./services/notifications/notification.service
     AccountPageComponent,
     TinyMceValueAccessorDirective,
     TosComponent,
-    NotificationCardComponent
+    NotificationCardComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
