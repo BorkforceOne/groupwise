@@ -35,13 +35,14 @@ const catchErrors = function(error, req, res) {
     if (error.type !== AppErrorTypes.NOT_FOUND && error.type !== AppErrorTypes.MAP_NULL_INSTANCE)
       console.error(message);
 
-    if (error.status !== undefined)
+    if (error.status !== undefined && error.status !== null)
       status = error.status;
     else
       switch (error.type) {
         case AppErrorTypes.MAP_NULL_INSTANCE:
         case AppErrorTypes.NOT_FOUND:
           status = 404;
+          message = "Object not found";
           break;
       }
 

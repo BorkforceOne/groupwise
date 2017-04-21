@@ -55,19 +55,23 @@ export class MyMatchesPageComponent implements OnInit {
             });
             this.userService.getUsers()
               .subscribe((users) => {
-                this.results = matches.map((match: Match) => {
+                this.results = [];
+                matches.forEach((match: Match) => {
                   let foundUser = null;
                   if (this.loggedInUser.Type == 'HOST')
                     foundUser = users.find((user) => match.StudentUserId == user.Id);
                   else
                     foundUser = users.find((user) => match.HostUserId == user.Id);
 
+                  if (foundUser === undefined)
+                    return;
+
                   let result: Result = new Result();
 
                   result.User = foundUser;
                   result.Match = match;
 
-                  return result;
+                  this.results.push(result);
                 });
 
                 this.results = this.results.filter((result: Result, i, ar) => {
