@@ -10,6 +10,7 @@
       <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
       <div class="col-md-6">
         <select autoFocus (blur)="onBlur()" class="form-control" [name]="Attribute.Type.Name" [(ngModel)]="Attribute.Value.Value">
+          <option *ngIf="Attribute.Value.Value === undefined" [value]="undefined">--Select One--</option>
           <ng-container *ngFor="let option of Attribute.Type.Options">
             <option [value]="option.Value">{{option.Display}}</option>
           </ng-container>

@@ -13,6 +13,7 @@ const AttributeStringValue = require('./attribute-string-value.model');
 const AttributeDateValue = require('./attribute-date-value.model');
 const UserPhoto = require('./user-photo.model');
 const Match = require('./match.model');
+const ChatMessage = require('./chat-message.model');
 
 module.exports = {};
 
@@ -146,6 +147,22 @@ User.HostMatches = User.hasMany(Match, {
     allowNull: false
   },
   as: 'HostMatches'
+});
+
+User.SentMessages = User.hasMany(ChatMessage, {
+  foreignKey: {
+    name: 'From',
+    allowNull: false
+  },
+  as: 'SentMessages'
+});
+
+User.ReceivedMessages = User.hasMany(ChatMessage, {
+  foreignKey: {
+    name: 'To',
+    allowNull: false
+  },
+  as: 'ReceivedMessages'
 });
 
 

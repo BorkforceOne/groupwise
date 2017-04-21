@@ -73,6 +73,8 @@ class ExpressManager {
         if (req.session.userId)
           usersService.getById(req.session.userId)
             .then(user => {
+                user.changed('updatedAt', true);
+                user.save();
                 req.user = user;
                 next();
               }

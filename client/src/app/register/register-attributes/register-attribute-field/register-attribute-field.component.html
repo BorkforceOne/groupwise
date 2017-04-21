@@ -34,6 +34,7 @@
       <label class="col-md-3 control-label">{{Attribute.Type.Question}}</label>
       <div class="col-md-3" *ngIf="Attribute.Type.SelectType === 'DROPDOWN'">
         <select class="form-control" [name]="Attribute.Type.Name" [formControlName]="Attribute.Type.Name">
+          <option *ngIf="attributeRegistrationForm.controls[Attribute.Type.Name].value === ''" [value]="''">--Select One--</option>
           <ng-container *ngFor="let option of Attribute.Type.Options">
             <option [value]="option.Value">{{option.Display}}</option>
           </ng-container>

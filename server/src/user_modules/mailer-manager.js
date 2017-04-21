@@ -14,11 +14,17 @@ class MailerManager {
       // Generate a nodemailer transporter object that we can use to send emails
       this.context = nodemailer.createTransport(config.mailer.accounts[config.mailer.default].connectionString);
 
+      if (config.mailer.disabled) {
+        console.warn("[MAILER] Email sending disabled, to enable set mailer.disabled = false");
+      }
+
       // pre-load all templates
       this.loadTemplate("welcome", "templates/welcome.html", "templates/welcome.text", "Welcome to FlagFriends!")
         .then(() => this.loadTemplate("validateEmail", "templates/validateEmail.html", "templates/validateEmail.text", "FlagFriends - Confirm Account Creation"))
         .then(() => this.loadTemplate("resetPasswordEmail", "templates/resetPasswordEmail.html", "templates/resetPasswordEmail.text", "FlagFriends - Password Reset"))
         .then(() => this.loadTemplate("proposeMatch", "templates/proposeMatch.html", "templates/proposeMatch.text", "FlagFriends - New Match"))
+        .then(() => this.loadTemplate("acceptMatch", "templates/acceptMatch.html", "templates/acceptMatch.text", "FlagFriends - Match Accepted"))
+        .then(() => this.loadTemplate("rejectMatch", "templates/rejectMatch.html", "templates/rejectMatch.text", "FlagFriends - Match Rejected"))
         .then(() => this.loadTemplate("contact", "templates/contact.html", "templates/contact.text", "FlagFriends - Contact Inquery"))
         .then(resolve)
         .catch((err) => {
@@ -71,16 +77,22 @@ class MailerManager {
    */
   sendMail(mail, header, params) {
     return new Promise((resolve, reject) => {
-      console.log("[MAILER] Sending email to " + header.to);
+      if (config.mailer.disabled === false) {
+        console.log("[MAILER] Sending email to " + header.to);
 
-      mail(header, params, (error) => {
-        if (error) {
-          console.error("[MAILER] Could not dispatch email message, error: " + error);
-          reject(error);
-        }
-        else
-          resolve();
-      })
+        mail(header, params, (error) => {
+          if (error) {
+            console.error("[MAILER] Could not dispatch email message, error: " + error);
+            reject(error);
+          }
+          else
+            resolve();
+        })
+      }
+      else {
+        console.warn("[MAILER] Would send email to " + header.to);
+        resolve();
+      }
     })
   }
 }

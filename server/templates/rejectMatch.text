@@ -1,0 +1,8 @@
+Hello {{Firstname}} {{Lastname}}!
+
+{{MatchFirstname}} {{MatchLastname}} has rejected your match request. Try matching with someone else
+
+If you have any questions, or suggestions, please feel free to email us at joy@flagfriends.org.
+
+  - The FlagFriends team
+FlagFriends © 2017

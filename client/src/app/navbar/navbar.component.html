@@ -39,11 +39,23 @@
           <a routerLink="/admin-manage">Admin Manage</a>
         </li>
         <ng-container *ngIf="isLoggedIn">
-          <li class="dropdown dropdown-notifications">
-            <a class="clickable">
+          <li class="dropdown" dropdown [autoClose]="false">
+            <a class="clickable" dropdownToggle>
               <span class="glyphicon glyphicon-bell notification-icon"></span>
-              <span class="badge">0</span>
+              <span class="badge">{{notifications.length}}</span>
             </a>
+            <ul dropdownMenu role="menu" class="notification-list">
+              <ng-container *ngFor="let notif of notifications">
+                <app-notification-card [notification]="notif" (close)="dismissNotification(notif)"></app-notification-card>
+              </ng-container>
+              <ng-container *ngIf="notifications.length === 0">
+                <div class="empty-card">
+                  <small class="text-muted">
+                    No notifications
+                  </small>
+                </div>
+              </ng-container>
+            </ul>
           </li>
           <li class="btn-group" dropdown>
             <button id="single-button" type="button" class="btn btn-block btn-primary btn-profile" dropdownToggle>

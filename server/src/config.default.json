@@ -1,11 +1,12 @@
 {
   "mailer": {
-      "default": "no-reply",
-      "accounts": {
-          "no-reply": {
+    "disabled": true,
+    "default": "no-reply",
+    "accounts": {
+      "no-reply": {
 
-          }
       }
+    }
   },
   "express": {
     "XSRFProtection": true,
