@@ -18,7 +18,7 @@ export class ContactComponent implements OnInit {
 
   ngOnInit() {
     this.contactForm = this.formBuilder.group({
-      From: ['', [<any>Validators.required, <any>Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$")]],
+      From: ['', [<any>Validators.required, <any>Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/)]],
       Message: ['', [<any>Validators.required]],
       Name: ['', [<any>Validators.required]]
     });
