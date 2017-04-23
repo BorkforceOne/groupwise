@@ -21,7 +21,7 @@ export class AccountPageComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
-      Email: ['', [<any>Validators.required, <any>Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$")]],
+      Email: ['', [<any>Validators.required, <any>Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/)]],
       Password: ['', [<any>Validators.minLength(4)]],
       PasswordVerify: ['', [<any>Validators.minLength(4)]],
       Firstname: ['', [<any>Validators.required]],
