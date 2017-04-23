@@ -19,6 +19,7 @@ import {AdminGuard} from "./guards/admin-guard";
 import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
 import {TosComponent} from "./register/tos/tos.component";
 import {AccountPageComponent} from "./account-page/account-page.component";
+import {LandingPageComponent} from "./landing-page/landing-page.component";
 
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -38,6 +39,7 @@ export const AppRoutes: Routes = [
   { path: 'admin-manage', component: AdminManageComponent, canActivate: [AdminGuard] },
   { path: 'my-matches', component: MyMatchesPageComponent, canActivate: [LoggedinGuard]},
   { path: 'account', component: AccountPageComponent, canActivate: [LoggedinGuard]},
+  { path: 'landing', component: LandingPageComponent, canActivate: [LoggedinGuard]},
   { path: 'home', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

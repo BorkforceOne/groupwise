@@ -29,6 +29,9 @@
         <li [class.active]="router.isActive('/login')" *ngIf="!isLoggedIn">
           <a routerLink="/login">Login</a>
         </li>
+        <li [class.active]="router.isActive('/landing')" *ngIf="isLoggedIn">
+          <a routerLink="/landing">Landing</a>
+        </li>
         <li [class.active]="router.isActive('/student-search')" *ngIf="isLoggedIn && type == 'HOST'">
           <a routerLink="/student-search">Student Search</a>
         </li>
