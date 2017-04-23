@@ -42,6 +42,11 @@ const AttributeRange = databaseManager.context.define('attributeRange', {
   isInt: {
     allowNull: false,
     type: Sequelize.BOOLEAN
+  },
+  Required: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 },{
   instanceMethods: {

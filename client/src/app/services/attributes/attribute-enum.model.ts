@@ -15,6 +15,7 @@ export class AttributeEnum extends Serializable {
   "MinSelect": number;
   "Options": Enum[];
   "SelectType": "DROPDOWN" | "RADIO";
+  "Required": boolean;
   "createdAt": string;
   "updatedAt": string;
 }

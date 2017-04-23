@@ -5,7 +5,8 @@ module.exports.inMap = {
   "ForType": "ForType",
   "Min": "Min",
   "Max": "Max",
-  "isInt": "isInt"
+  "isInt": "isInt",
+  "Required": "Required",
 };
 
 module.exports.outMap = {
@@ -17,6 +18,7 @@ module.exports.outMap = {
   "Min": "Min",
   "Max": "Max",
   "isInt": "isInt",
+  "Required": "Required",
   "createdAt": "createdAt",
   "updatedAt": "updatedAt"
 };

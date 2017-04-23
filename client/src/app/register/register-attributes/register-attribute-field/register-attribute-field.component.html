@@ -1,46 +1,47 @@
 <form [formGroup]="attributeRegistrationForm" >
   <ng-container [ngSwitch]="attributeService.getAttributeType(Attribute)">
-    <div class="form-group required" *ngSwitchCase="'STRING'">
+    <div class="form-group" [ngClass]="{'required': Attribute.Type.Required}" *ngSwitchCase="'STRING'">
       <label class="col-md-3 control-label">{{Attribute.Type.Question}}</label>
       <div class="col-md-9">
-        <textarea [formControlName]="Attribute.Type.Name" class="form-control" required></textarea>
+        <textarea [formControlName]="Attribute.Type.Name" class="form-control" [required]="Attribute.Type.Required"></textarea>
         <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
           Field is required
         </div>
       </div>
     </div>
 
-    <div class="form-group required" *ngSwitchCase="'DATE'">
+    <div class="form-group" [ngClass]="{'required': Attribute.Type.Required}" *ngSwitchCase="'DATE'">
       <label class="col-md-3 control-label">{{Attribute.Type.Question}}</label>
       <div class="col-md-3">
-        <app-date-select [formControlName]="Attribute.Type.Name"></app-date-select>
+        <app-date-select [formControlName]="Attribute.Type.Name" [required]="Attribute.Type.Required"></app-date-select>
         <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
           Field is required
         </div>
       </div>
     </div>
 
-    <div class="form-group required" *ngSwitchCase="'RANGE'">
+    <div class="form-group" [ngClass]="{'required': Attribute.Type.Required}" *ngSwitchCase="'RANGE'">
       <label class="col-md-3 control-label">{{Attribute.Type.Question}}</label>
       <div class="col-md-3">
-        <input [formControlName]="Attribute.Type.Name" [type]="Attribute.Type.isInt ? 'number' : null" [min]="Attribute.Type.Min" [max]="Attribute.Type.Max" (change)="onNumberChange($event)" class="form-control" required/>
+        <input [formControlName]="Attribute.Type.Name" [type]="Attribute.Type.isInt ? 'number' : null" [min]="Attribute.Type.Min" [max]="Attribute.Type.Max" (change)="onNumberChange($event)" class="form-control" [required]="Attribute.Type.Required"/>
         <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
           Field is required
         </div>
       </div>
     </div>
 
-    <div class="form-group required" *ngSwitchCase="'ENUM'">
+    <div class="form-group" [ngClass]="{'required': Attribute.Type.Required}" *ngSwitchCase="'ENUM'">
       <label class="col-md-3 control-label">{{Attribute.Type.Question}}</label>
       <div class="col-md-3" *ngIf="Attribute.Type.SelectType === 'DROPDOWN'">
-        <select class="form-control" [name]="Attribute.Type.Name" [formControlName]="Attribute.Type.Name">
-          <option *ngIf="attributeRegistrationForm.controls[Attribute.Type.Name].value === ''" [value]="''">--Select One--</option>
-          <ng-container *ngFor="let option of Attribute.Type.Options">
-            <option [value]="option.Value">{{option.Display}}</option>
-          </ng-container>
-        </select>
+        <ss-multiselect-dropdown [formControlName]="Attribute.Type.Name" [settings]="selectSettings" [options]="options" [required]="Attribute.Type.Required"></ss-multiselect-dropdown>
         <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine" class="alert alert-danger">
           Field is required
+        </div>
+        <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine || !attributeRegistrationForm.controls[Attribute.Type.Name].errors.minLength" class="alert alert-danger">
+          You must select at least {{Attribute.Type.MinSelect}} options
+        </div>
+        <div [hidden]="attributeRegistrationForm.controls[Attribute.Type.Name].valid || attributeRegistrationForm.controls[Attribute.Type.Name].pristine || !attributeRegistrationForm.controls[Attribute.Type.Name].errors.maxLength" class="alert alert-danger">
+          You must select at max {{Attribute.Type.MaxSelect}} options
         </div>
       </div>
 

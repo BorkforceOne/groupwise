@@ -34,6 +34,11 @@ const AttributeString = databaseManager.context.define('attributeString', {
   MaxLength: {
     allowNull: true,
     type:  Sequelize.INTEGER
+  },
+  Required: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 },{
   instanceMethods: {

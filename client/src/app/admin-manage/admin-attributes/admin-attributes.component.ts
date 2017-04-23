@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ViewChild} from '@angular/core';
 import {Attribute} from "../../services/attributes/attribute.model";
 import {AttributeService} from "../../services/attributes/attribute.service";
-import {ModalDirective} from "ng2-bootstrap";
+import {ModalDirective} from "ngx-bootstrap";
 import {AttributeString} from "../../services/attributes/attribute-string.model";
 import {AttributeDate} from "../../services/attributes/attribute-date.model";
 import {AttributeRange} from "../../services/attributes/attribute-range.model";
@@ -22,6 +22,7 @@ class AttributeView {
   RangeMin: number;
   RangeMax: number;
   isInt: boolean;
+  Required: boolean;
   ExistingAttribute: Attribute = null;
   EnumOptions: Enum[] = [];
   SelectType: "DROPDOWN" | "RADIO";
@@ -78,6 +79,7 @@ export class AdminAttributesComponent implements OnInit {
     this.editingAttribute.Question = attribute.Type.Question;
     this.editingAttribute.Description = attribute.Type.Description;
     this.editingAttribute.Type = this.attributeService.getAttributeType(attribute);
+    this.editingAttribute.Required = attribute.Type.Required;
 
     switch (this.editingAttribute.Type) {
       case 'STRING':
@@ -147,6 +149,7 @@ export class AdminAttributesComponent implements OnInit {
         attributeString.Description = this.editingAttribute.Description;
         attributeString.ForType = this.editingAttribute.ForType;
         attributeString.MaxLength = this.editingAttribute.StringMaxLen;
+        attributeString.Required = this.editingAttribute.Required;
 
         if (isNew) {
           this.attributeService.createAttributeString(attributeString)
@@ -174,6 +177,7 @@ export class AdminAttributesComponent implements OnInit {
         attributeDate.ForType = this.editingAttribute.ForType;
         attributeDate.MaxDate = this.editingAttribute.DateMax;
         attributeDate.MinDate = this.editingAttribute.DateMin;
+        attributeDate.Required = this.editingAttribute.Required;
 
         if (isNew) {
           this.attributeService.createAttributeDate(attributeDate)
@@ -203,6 +207,7 @@ export class AdminAttributesComponent implements OnInit {
         attributeEnum.SelectType = this.editingAttribute.SelectType;
         attributeEnum.MaxSelect = this.editingAttribute.SelectMax;
         attributeEnum.MinSelect = this.editingAttribute.SelectMax;
+        attributeEnum.Required = this.editingAttribute.Required;
 
 
         if (isNew) {
@@ -232,6 +237,7 @@ export class AdminAttributesComponent implements OnInit {
         attributeRange.Min = this.editingAttribute.RangeMin;
         attributeRange.Max = this.editingAttribute.RangeMax;
         attributeRange.isInt = this.editingAttribute.isInt;
+        attributeRange.Required = this.editingAttribute.Required;
 
         if (isNew) {
           this.attributeService.createAttributeRange(attributeRange)

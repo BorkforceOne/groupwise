@@ -8,7 +8,7 @@ import {Attribute} from "../services/attributes/attribute.model";
 import {AttributeString} from "../services/attributes/attribute-string.model";
 import {Subscription} from "rxjs";
 import {UserPhoto} from "../services/user/user-photo";
-import {ModalDirective, CarouselComponent} from "ng2-bootstrap";
+import {ModalDirective, CarouselComponent} from "ngx-bootstrap";
 import {FileUploader} from "ng2-file-upload";
 import {AlertService} from "../services/alert/alert.service";
 import {Alert} from "../services/alert/alert";

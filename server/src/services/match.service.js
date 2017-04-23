@@ -41,12 +41,13 @@ class MatchService {
     });
   }
 
-  getMatch(id) {
+  getMatch(id, include = []) {
     return new Promise((resolve, reject) => {
       Match.findOne({
         where: {
           Id: id
-        }
+        },
+        include: include
       })
         .then(resolve)
         .catch(reject);

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {List} from "../../../services/list/list.model";
 import {ListService} from "../../../services/list/list.service";
-import {ModalDirective} from "ng2-bootstrap";
+import {ModalDirective} from "ngx-bootstrap";
 
 @Component({
   selector: 'app-lists-editor',

@@ -9,6 +9,7 @@ export class AttributeRange extends Serializable {
   "Min": number;
   "Max": number;
   "isInt": boolean;
+  "Required": boolean;
   "createdAt": string;
   "updatedAt": string;
 }

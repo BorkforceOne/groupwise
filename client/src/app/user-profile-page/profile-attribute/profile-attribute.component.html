@@ -9,12 +9,7 @@
     <div *ngSwitchCase="'ENUM'" class="col-md-12" (click)="onEdit()">
       <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
       <div class="col-md-6">
-        <select autoFocus (blur)="onBlur()" class="form-control" [name]="Attribute.Type.Name" [(ngModel)]="Attribute.Value.Value">
-          <option *ngIf="Attribute.Value.Value === undefined" [value]="undefined">--Select One--</option>
-          <ng-container *ngFor="let option of Attribute.Type.Options">
-            <option [value]="option.Value">{{option.Display}}</option>
-          </ng-container>
-        </select>
+        <ss-multiselect-dropdown [settings]="selectSettings" (dropdownClosed)="onDropdownClosed()" [options]="options" [(ngModel)]="Attribute.Value.Value"></ss-multiselect-dropdown>
       </div>
     </div>
     <div *ngSwitchCase="'RANGE'" class="col-md-12" (click)="onEdit()">
@@ -38,7 +33,9 @@
     </div>
     <div *ngSwitchCase="'ENUM'" class="col-md-12" [ngClass]="{'editable clickable': canEdit}" (click)="onEdit()">
       <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>
-      <div class="col-md-6">{{findOption(Attribute.Type, Attribute.Value)?.Display}}</div>
+      <div class="col-md-6">
+        {{renderSelectedOptions(Attribute.Type, Attribute.Value)}}
+      </div>
     </div>
     <div *ngSwitchCase="'RANGE'" class="col-md-12" [ngClass]="{'editable clickable': canEdit}" (click)="onEdit()">
       <div class="col-md-6"><b>{{Attribute.Type.Description}}</b></div>

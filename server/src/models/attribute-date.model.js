@@ -38,6 +38,11 @@ const AttributeDate = databaseManager.context.define('attributeDate', {
   MaxDate: {
     allowNull: true,
     type:  Sequelize.DATE
+  },
+  Required: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 },{
   instanceMethods: {

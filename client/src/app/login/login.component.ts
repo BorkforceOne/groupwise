@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { UserLogin } from "../services/user/user-login";
 import { Router } from '@angular/router'
-import {ModalDirective} from "ng2-bootstrap";
+import {ModalDirective} from "ngx-bootstrap";
 import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {AuthService} from "../services/user/auth.service";
 

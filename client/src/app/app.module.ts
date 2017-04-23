@@ -4,9 +4,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule, Routes}   from '@angular/router';
 import {
-  AlertModule, DropdownModule, CollapseModule, TabsModule, ModalModule, CarouselModule,
+  AlertModule, BsDropdownModule, CollapseModule, TabsModule, ModalModule, CarouselModule,
   PaginationModule, AccordionModule
-} from 'ng2-bootstrap';
+} from 'ngx-bootstrap';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -55,12 +55,11 @@ import {AdminGuard} from "./guards/admin-guard";
 import {StudentGuard} from "./guards/student-guard";
 import {HostGuard} from "./guards/host-guard";
 import {MatchService} from "./services/match/match.service";
-import {FroalaEditorModule, FroalaViewModule} from "angular2-froala-wysiwyg";
 import { PageEditorComponent } from './admin-manage/admin-configuration/page-editor/page-editor.component';
 import { RemoteHtmlContentComponent } from './remote-html-content/remote-html-content.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { TooltipModule } from 'ng2-bootstrap/tooltip';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import {TextMaskModule} from 'angular2-text-mask';
 import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.component";
 import {ChartsModule} from "ng2-charts";
@@ -83,6 +82,7 @@ import {ContactService} from "./services/contact/contact.service";
 import { NotificationCardComponent } from './notification-card/notification-card.component';
 import {NotificationService} from "./services/notifications/notification.service";
 import { FeedbackComponent } from './feedback/feedback.component';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 @NgModule({
   declarations: [
@@ -142,7 +142,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
     HttpModule,
     RouterModule.forRoot(AppRoutes),
     AlertModule.forRoot(),
-    DropdownModule.forRoot(),
+    BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     AccordionModule.forRoot(),
@@ -153,12 +153,11 @@ import { FeedbackComponent } from './feedback/feedback.component';
     TabsModule.forRoot(),
     CarouselModule.forRoot(),
     ReactiveFormsModule,
-    FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot(),
     TooltipModule.forRoot(),
     CookieModule.forRoot(),
     ChartsModule,
-    Ng2TableModule
+    Ng2TableModule,
+    MultiselectDropdownModule
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
     ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService, ContactService,

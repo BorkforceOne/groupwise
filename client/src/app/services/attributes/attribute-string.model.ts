@@ -7,6 +7,7 @@ export class AttributeString extends Serializable {
   "Question": string;
   "ForType": "STUDENT" | "HOST" | "BOTH";
   "MaxLength": number;
+  "Required": boolean;
   "createdAt": string;
   "updatedAt": string;
 }

@@ -8,6 +8,7 @@ export class AttributeDate extends Serializable {
   "ForType": "STUDENT" | "HOST" | "BOTH";
   "MinDate": string;
   "MaxDate": string;
+  "Required": boolean;
   "createdAt": string;
   "updatedAt": string;
 }

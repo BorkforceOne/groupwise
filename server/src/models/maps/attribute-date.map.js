@@ -4,7 +4,8 @@ module.exports.inMap = {
   "Question": "Question",
   "ForType": "ForType",
   "MinDate": "MinDate",
-  "MaxDate": "MaxDate"
+  "MaxDate": "MaxDate",
+  "Required": "Required",
 };
 
 module.exports.outMap = {
@@ -15,6 +16,7 @@ module.exports.outMap = {
   "ForType": "ForType",
   "MinDate": "MinDate",
   "MaxDate": "MaxDate",
+  "Required": "Required",
   "createdAt": "createdAt",
   "updatedAt": "updatedAt"
 };

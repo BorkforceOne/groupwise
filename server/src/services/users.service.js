@@ -29,7 +29,9 @@ class UserService {
             Id: id
           }
         })
-        .then(resolve)
+        .then((user) => {
+          resolve(user)
+        })
         .catch(reject);
     });
   }

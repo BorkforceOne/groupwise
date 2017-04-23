@@ -18,6 +18,11 @@ p.chat-message {
   cursor: pointer;
 }
 
+ss-multiselect-dropdown {
+  display: inline-block !important;
+  border-radius: 4px !important;
+}
+
 form .ng-valid:not(form) {
   border-left: 5px solid #42A948; /* green */
 }

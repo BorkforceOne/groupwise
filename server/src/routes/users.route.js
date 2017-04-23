@@ -40,6 +40,10 @@ let filterModels = (models, req, res) => {
 };
 
 let stripModels = (models, req, res) => {
+  if (models === undefined) {
+    return {};
+  }
+
   let wasArray = true;
 
   if (!Array.isArray(models)) {

@@ -46,7 +46,7 @@ export class UserService extends BackendCommunicatorService{
       .catch(this.handleError.bind(this));
   }
 
-  resetPassword(email: string): Promise<{}> {
+  resetPassword(email: string): Promise<any> {
     let query = {
       Email: email
     };

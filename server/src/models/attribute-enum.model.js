@@ -46,6 +46,11 @@ const AttributeEnum = databaseManager.context.define('attributeEnum', {
   Options: {
     allowNull: false,
     type: Sequelize.TEXT
+  },
+  Required: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 },{
   instanceMethods: {

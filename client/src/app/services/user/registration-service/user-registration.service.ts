@@ -30,7 +30,7 @@ export class UserRegistrationService extends BackendCommunicatorService{
     super(alertService);
 
     this.userRegistrationForm = this.formBuilder.group({
-      Email: ['', [<any>Validators.required, <any>Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$")]],
+      Email: ['', [<any>Validators.required, <any>Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/)]],
       Password: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
       PasswordVerify: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
       Firstname: ['', [<any>Validators.required]],
@@ -71,28 +71,57 @@ export class UserRegistrationService extends BackendCommunicatorService{
   processAttrs(form, attrs) {
 
     attrs.forEach((attr) => {
+      let validators = [];
+
+      if (attr.Type.Required)
+        validators.push(<any>Validators.required);
+
       switch (this.attributeService.getAttributeType(attr)) {
         case 'STRING':
-          var validators = [];
-          validators.push(<any>Validators.required);
           form[attr.Type.Name] = ['', validators];
           break;
         case 'DATE':
-          var validators = [];
-          validators.push(<any>Validators.required);
           form[attr.Type.Name] = ['', validators];
           break;
         case 'RANGE':
-          var validators = [];
-          validators.push(<any>Validators.required);
           form[attr.Type.Name] = ['', validators];
           break;
         case 'ENUM':
-          var validators = [];
-          validators.push(<any>Validators.required);
-          form[attr.Type.Name] = ['', validators];
+          var defaultValue = null;
+
+          if (attr.Type.SelectType === 'DROPDOWN') {
+            defaultValue = [];
+            if (attr.Type.MinSelect !== 0 && attr.Type.MinSelect !== null)
+              validators.push(<any>this.minArrayLength(attr.Type.MinSelect, attr.Type.Required));
+            if (attr.Type.MaxSelect !== 0 && attr.Type.MaxSelect !== null)
+              validators.push(<any>this.maxArrayLength(attr.Type.MaxSelect, attr.Type.Required));
+          }
+
+          form[attr.Type.Name] = [defaultValue, validators];
           break;
       }
+    });
+  }
+
+  minArrayLength(minLength: number, required: boolean) {
+    return ((input: FormControl) => {
+      if (!required && input.value.length === 0)
+        return;
+      if (!Array.isArray(input.value))
+        return {minLength: true};
+      if (input.value.length < minLength)
+        return {minLength: true};
+    });
+  }
+
+  maxArrayLength(maxLength: number, required: boolean) {
+    return ((input: FormControl) => {
+      if (!required && input.value.length === 0)
+        return;
+      if (!Array.isArray(input.value))
+        return {maxLength: true};
+      if (input.value.length > maxLength)
+        return {maxLength: true};
     });
   }
 

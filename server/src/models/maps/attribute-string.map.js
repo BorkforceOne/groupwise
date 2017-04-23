@@ -3,7 +3,8 @@ module.exports.inMap = {
   "Description": "Description",
   "Question": "Question",
   "ForType": "ForType",
-  "MaxLength": "MaxLength"
+  "MaxLength": "MaxLength",
+  "Required": "Required",
 };
 
 module.exports.outMap = {
@@ -13,6 +14,7 @@ module.exports.outMap = {
   "Question": "Question",
   "ForType": "ForType",
   "MaxLength": "MaxLength",
+  "Required": "Required",
   "createdAt": "createdAt",
   "updatedAt": "updatedAt"
 };

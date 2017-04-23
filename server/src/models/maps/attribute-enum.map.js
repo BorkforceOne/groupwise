@@ -6,7 +6,8 @@ module.exports.inMap = {
   "MaxSelect": "MaxSelect",
   "MinSelect": "MinSelect",
   "Options": {Value: "Options", Type: 'JSON'},
-  "SelectType": "SelectType"
+  "SelectType": "SelectType",
+  "Required": "Required",
 };
 
 module.exports.outMap = {
@@ -19,6 +20,7 @@ module.exports.outMap = {
   "MinSelect": "MinSelect",
   "Options": {Value: "Options", Type: 'JSON'},
   "SelectType": "SelectType",
+  "Required": "Required",
   "createdAt": "createdAt",
   "updatedAt": "updatedAt"
 };
