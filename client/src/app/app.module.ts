@@ -83,6 +83,7 @@ import { NotificationCardComponent } from './notification-card/notification-card
 import {NotificationService} from "./services/notifications/notification.service";
 import { FeedbackComponent } from './feedback/feedback.component';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,8 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
     TinyMceValueAccessorDirective,
     TosComponent,
     NotificationCardComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,

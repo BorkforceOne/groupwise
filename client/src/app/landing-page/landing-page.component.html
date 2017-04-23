@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="col-md-12">
+    <h2>Getting Started</h2>
+    On this page you'll find a quick guide on using the site. You can return here anytime by clicking the "Landing"
+    tab on the navigation bar above.
+
+    <h3>Exploring the Application</h3>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Navigation bar</div>
+      <div class="panel-body">
+        Take a second to explore the navigation bar at the top of the page. You can get to any page using that navigation bar!
+        <br>
+        <br>
+        Take note of the bell icon, these are your in-app notifications. If there's anything you need to know
+        about as soon as you log in it'll be contained in those notifications! We'll still send you email notifications
+        if you don't happen to be logged on to the site when something happens.
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Notifications</div>
+      <div class="panel-body">
+        Take note of the bell icon, these are your in-app notifications. If there's anything you need to know
+        about as soon as you log in it'll be contained in those notifications! We'll still send you email notifications
+        if you don't happen to be logged on to the site when something happens.
+      </div>
+    </div>
+
+    <h3>Profile Management</h3>
+    <div class="panel panel-default">
+      <div class="panel-heading"><a [routerLink]="['/user-profile', userId]">Add profile picture and update your profile</a></div>
+      <div class="panel-body">
+        Keeping your profile up-to-date helps potential {{userType === 'HOST'? 'students' : 'hosts'}} make informed decisions!
+        Show them what you're made of!
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading"><a [routerLink]="['/account']">Update account specific information</a></div>
+      <div class="panel-body">
+        Ensure that your personal account information such as phone number and email address are up to date. You may
+        also adjust which notifications you receive via email.
+      </div>
+    </div>
+
+
+    <h3>Matching</h3>
+
+    <div class="panel panel-default" *ngIf="userType === 'HOST'">
+      <div class="panel-heading">
+        <a [routerLink]="['/student-search']">Propose a match with a student</a>
+      </div>
+      <div class="panel-body">
+        Find students in the system and propose a match to them.
+      </div>
+    </div>
+
+    <div class="panel panel-default" *ngIf="userType === 'STUDENT'">
+      <div class="panel-heading">
+        Wait for match requests from hosts
+      </div>
+      <div class="panel-body">
+        You'll receive an email if a host tries to match with you.
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <a [routerLink]="['/my-matches']">Review your matches</a>
+      </div>
+      <div class="panel-body">
+        Look over your current proposed and accepted matches here.
+      </div>
+    </div>
+
+    <h3>Questions</h3>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <a [routerLink]="['/contact']">Contact Us!</a>
+      </div>
+      <div class="panel-body">
+        We appreciate your feedback! If you have any questions about your account or the program itself please feel free
+        to use the contact form!
+      </div>
+    </div>
+
+  </div>
+</div>

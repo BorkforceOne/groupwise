@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(user)
       .toPromise()
       .then(() => {
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/landing');
       });
   }
 
