@@ -84,6 +84,7 @@ import {NotificationService} from "./services/notifications/notification.service
 import { FeedbackComponent } from './feedback/feedback.component';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -138,6 +139,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     LandingPageComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     TextMaskModule,
