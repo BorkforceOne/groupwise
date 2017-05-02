@@ -94,4 +94,14 @@ export class AdminUserManageComponent implements OnInit {
 
     this.userEditModal.show();
   }
+
+  deleteUser() {
+    if (this.editingUser !== null) {
+      this.userService.deleteUser(this.editingUser.Id)
+        .then((user) => {
+          this.users.splice(this.users.indexOf(this.editingUser), 1);
+          this.userEditModal.hide()
+        });
+    }
+  }
 }

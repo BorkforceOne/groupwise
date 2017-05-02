@@ -286,6 +286,22 @@ class UserService {
         .catch(reject);
     });
   }
+
+  deleteUser(id) {
+    return new Promise((resolve, reject) => {
+      let entity;
+
+      this.getById(id)
+        .then(_entity => {
+          entity = _entity;
+
+          return entity;
+        })
+        .then(() => entity.destroy())
+        .then(() => resolve(entity))
+        .catch(reject);
+    });
+  }
 }
 
 module.exports = new UserService();

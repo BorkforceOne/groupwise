@@ -201,6 +201,9 @@
       <div class="modal-footer">
         <div class="form-group">
           <div class="col-md-12">
+            <div class="btn-toolbar pull-left">
+              <button class="btn btn-danger" (click)="deleteUser()" [disabled]="editingUser === null">Remove User</button>
+            </div>
             <div class="btn-toolbar pull-right">
               <button class="btn btn-primary" (click)="userEditModal.hide()">Close</button>
               <button class="btn btn-primary" (click)="submitUser()">Submit</button>
