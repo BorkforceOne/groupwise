@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const config = require('../config');
 const fs = require('fs');
+const path = require('path');
 
 class MailerManager {
 
@@ -37,10 +38,10 @@ class MailerManager {
   loadTemplate(name, htmlName, textName, subject) {
     return new Promise((resolve, reject) => {
       console.log(`[MAILER] Loading template ${htmlName}, ${textName}`);
-      fs.readFile(htmlName, (err, html) => {
+      fs.readFile(path.resolve(__dirname, '..', '..', htmlName), (err, html) => {
         if (err)
           return reject(err);
-        fs.readFile(textName, (err, text) => {
+        fs.readFile(path.resolve(__dirname, '..', '..', textName), (err, text) => {
           if (err)
             return reject(err);
           this.templates[name] = this.generateTemplate(subject, text, html);
