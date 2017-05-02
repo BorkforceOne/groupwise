@@ -48,11 +48,10 @@ export class TinyMceValueAccessorDirective implements OnDestroy, AfterViewInit, 
   }
 
   ngAfterViewInit(): void {
-    console.log('tinymce');
     tinymce.init({
       selector: `[data-tinymce-uniqueid=${this.uniqueId}]`,
       schema: 'html5',
-      skin_url: 'assets/skins/lightgray',
+      skin_url: '/assets/skins/lightgray',
       plugins: ['link', 'table', 'media', 'paste', 'hr', 'image', 'lists', 'advlist', 'textcolor', 'wordcount'],
       height: 500,
       setup: ed => {

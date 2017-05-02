@@ -19,6 +19,9 @@ export class AuthService extends BackendCommunicatorService{
   }
 
   private _setLoggedInUser(user: User) {
+    if (this.loggedInUser.value && user.Id === this.loggedInUser.value.Id)
+      return user;
+
     this.loggedInUser.next(user);
     return user;
   }

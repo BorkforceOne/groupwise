@@ -44,6 +44,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
             else
               this.photoURL = this.defaultPhotoURL;
           });
+
+        if (this.notificationSub !== null)
+          this.notificationSub.unsubscribe();
+
+        this.notificationSub = this.notificationService.getNotifications()
+          .subscribe((notifs: NotificationModel[]) => {
+            this.notifications = notifs;
+          });
       }
       else {
         this.isLoggedIn = false;
@@ -53,11 +61,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.photoURL = this.defaultPhotoURL;
       }
     });
-
-    this.notificationSub = this.notificationService.getNotifications()
-      .subscribe((notifs: NotificationModel[]) => {
-        this.notifications = notifs;
-      });
   }
 
   ngOnDestroy(): void {

@@ -47,7 +47,7 @@ export class NotificationService {
             case 'PENDING_USERS':
               notification.createdAt = notif['createdAt'];
               notification.Message = `${notif['Count']} new user(s) pending approval`;
-              notification.LinkTo = `/admin-manage`;
+              notification.LinkTo = `/admin-manage/review-queue`;
               notifs.push(notification);
               break;
           }
@@ -56,17 +56,16 @@ export class NotificationService {
         this._notifications = notifs;
         this.emitChange();
       });
-
-      this._requestNotifications();
     });
   }
 
-  private _requestNotifications() {
-    this.socketService.emit('notifications', {});
+  getNotifications(): Observable<NotificationModel[]> {
+    this.requestNotifications();
+    return this._notificationsSubject.asObservable();
   }
 
-  getNotifications(): Observable<NotificationModel[]> {
-    return this._notificationsSubject.asObservable();
+  requestNotifications(): void {
+    this.socketService.emit('notifications', {});
   }
 
   private emitChange() {
