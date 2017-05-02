@@ -7,6 +7,7 @@ import {UserService} from "../services/user/user.service";
 import {AttributeService} from "../services/attributes/attribute.service";
 import {Attribute} from "../services/attributes/attribute.model";
 import {AttributeString} from "../services/attributes/attribute-string.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-manage',
@@ -15,12 +16,16 @@ import {AttributeString} from "../services/attributes/attribute-string.model";
 })
 export class AdminManageComponent implements OnInit {
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
   ngOnInit() {
 
+  }
+
+  goTo(route: string) {
+    this.router.navigateByUrl(route);
   }
 
 }

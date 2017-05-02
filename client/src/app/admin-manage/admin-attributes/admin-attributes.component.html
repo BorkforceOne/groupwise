@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!isLoading">
   <table class="table">
     <thead>
     <tr>
@@ -42,6 +42,9 @@
     </tr>
     </tbody>
   </table>
+</div>
+<div *ngIf="isLoading">
+  <app-spinner></app-spinner>
 </div>
 
 <div bsModal #attributeEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

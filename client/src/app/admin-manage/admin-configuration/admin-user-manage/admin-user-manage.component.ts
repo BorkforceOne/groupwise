@@ -15,12 +15,15 @@ export class AdminUserManageComponent implements OnInit {
   private users: User[] = [];
   private editingUser: User;
   private userForm: FormGroup;
+  private isLoading: boolean;
   public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
   constructor(private userService: UserService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
+    this.isLoading = true;
+
     this.userForm = this.formBuilder.group({
       Email: ['', [<any>Validators.required, <any>Validators.pattern(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/)]],
       Password: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
@@ -37,6 +40,7 @@ export class AdminUserManageComponent implements OnInit {
     this.userService.getUsers()
       .subscribe(users => {
         this.users = users;
+        this.isLoading = false;
       });
   }
 

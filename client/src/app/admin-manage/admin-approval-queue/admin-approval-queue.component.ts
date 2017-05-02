@@ -10,16 +10,20 @@ import {UserService} from '../../services/user/user.service';
 })
 export class AdminApprovalQueueComponent implements OnInit {
   private users: User[] = [];
-  private bannedUsers:User[] = [];
+  private bannedUsers: User[] = [];
+  private isLoading: boolean;
+
   constructor(private userService: UserService) {
 
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.userService.getUsers()
       .subscribe(users => {
         this.users = users.filter((entry) => entry.Status == "PENDING_REVIEW");
         this.bannedUsers = users.filter((entry) => entry.Status == "BANNED");
+        this.isLoading = false;
       });
   }
 
