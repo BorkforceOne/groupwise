@@ -4,6 +4,8 @@ import {User} from "../../../services/user/user";
 import {ModalDirective} from "ngx-bootstrap";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import * as moment from "moment";
+import {Token} from "../../../services/token/token";
+import {ConsumeTokenService} from "../../../services/token/consume-token.service";
 
 @Component({
   selector: 'app-admin-user-manage',
@@ -13,12 +15,13 @@ import * as moment from "moment";
 export class AdminUserManageComponent implements OnInit {
   @ViewChild('userEditModal') public userEditModal:ModalDirective;
   private users: User[] = [];
-  private editingUser: User;
+  private tokens: Token[] = [];
+  private editingUser: User = null;
   private userForm: FormGroup;
   private isLoading: boolean;
   public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder) {
+  constructor(private userService: UserService, private tokenService: ConsumeTokenService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -41,6 +44,11 @@ export class AdminUserManageComponent implements OnInit {
       .subscribe(users => {
         this.users = users;
         this.isLoading = false;
+      });
+
+    this.tokenService.getAllTokens()
+      .then(tokens => {
+        this.tokens = tokens;
       });
   }
 
@@ -103,5 +111,19 @@ export class AdminUserManageComponent implements OnInit {
           this.userEditModal.hide()
         });
     }
+  }
+
+  deleteToken(token: Token) {
+    this.tokenService.consumeToken(token)
+      .then(() => {
+        this.tokens.splice(this.tokens.indexOf(token), 1);
+      });
+  }
+
+  getTokens(user: User) {
+    if (user === null)
+      return [];
+
+    return this.tokens.filter((token) => token.UserId === user.Id);
   }
 }

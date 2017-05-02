@@ -41,6 +41,14 @@ class TokenService {
     });
   }
 
+  getAll() {
+    return new Promise((resolve, reject) => {
+      ValidationToken.findAll()
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
   getByUserId(userId) {
     return new Promise((resolve, reject) => {
       ValidationToken.findAll({
