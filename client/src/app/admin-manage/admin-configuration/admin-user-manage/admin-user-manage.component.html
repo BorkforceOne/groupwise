@@ -76,7 +76,7 @@
           <form class="form-horizontal" [formGroup]="userForm">
             <div class="form-group required">
               <label class="col-md-2 control-label">Email</label>
-              <div class="col-md-9">
+              <div class="col-md-7">
                 <input formControlName="Email" type="email" class="form-control" placeholder="Email address" required>
                 <div [hidden]="userForm.controls.Email.valid || userForm.controls.Email.pristine" class="alert alert-danger">
                   Email Address is required
@@ -86,7 +86,7 @@
 
             <div class="form-group">
               <label class="col-md-2 control-label">Password</label>
-              <div class="col-md-9">
+              <div class="col-md-7">
                 <input formControlName="Password" type="password" class="form-control" placeholder="Password" required>
                 <div [hidden]="userForm.controls.Password.valid || userForm.controls.Password.pristine" class="alert alert-danger">
                   Password is required
@@ -96,7 +96,7 @@
 
             <div class="form-group">
               <label class="col-md-2 control-label">Password Verify</label>
-              <div class="col-md-9">
+              <div class="col-md-7">
                 <input formControlName="PasswordVerify" type="password" class="form-control" placeholder="Password Verify" required>
                 <div [hidden]="userForm.controls.PasswordVerify.valid || userForm.controls.PasswordVerify.pristine || userForm.controls.PasswordVerify.errors.notEquivalent" class="alert alert-danger">
                   Password verify is required
@@ -109,7 +109,7 @@
 
             <div class="form-group required">
               <label class="col-md-2 control-label">Firstname</label>
-              <div class="col-md-9">
+              <div class="col-md-7">
                 <input formControlName="Firstname" class="form-control" placeholder="Firstname" required>
                 <div [hidden]="userForm.controls.Firstname.valid || userForm.controls.Firstname.pristine" class="alert alert-danger">
                   Firstname is required
@@ -119,7 +119,7 @@
 
             <div class="form-group required">
               <label class="col-md-2 control-label">Lastname</label>
-              <div class="col-md-9">
+              <div class="col-md-7">
                 <input formControlName="Lastname" class="form-control" placeholder="Lastname" required>
                 <div [hidden]="userForm.controls.Lastname.valid || userForm.controls.Lastname.pristine" class="alert alert-danger">
                   Lastname is required
@@ -129,7 +129,7 @@
 
             <div class="form-group required">
               <label class="col-md-2 control-label">Birthday</label>
-              <div class="col-md-9">
+              <div class="col-md-7">
                 <app-date-select formControlName="Birthday" required></app-date-select>
                 <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine" class="alert alert-danger">
                   Birthday required
@@ -142,7 +142,7 @@
 
             <div class="form-group required">
               <label class="col-md-2 control-label">Phone</label>
-              <div class="col-md-9">
+              <div class="col-md-7">
                 <input formControlName="Phone" class="form-control" [textMask]="{mask:mask}" required>
                 <div [hidden]="userForm.controls.Phone.valid || userForm.controls.Phone.pristine" class="alert alert-danger">
                   Phone number is required
@@ -154,7 +154,7 @@
             <div class="col-md-6">
               <div class="form-group required">
                 <label class="col-md-3 control-label">Gender</label>
-                <div class="col-md-9">
+                <div class="col-md-7">
                   <div class="radio-inline">
                     <label><input type="radio" formControlName="Gender" value="MALE">Male</label>
                   </div>
@@ -169,7 +169,7 @@
 
               <div class="form-group required">
                 <label class="col-md-3 control-label">Type</label>
-                <div class="col-md-9">
+                <div class="col-md-7">
                   <div class="radio-inline">
                     <label><input type="radio" formControlName="Type" value="STUDENT">Student</label>
                   </div>
@@ -184,7 +184,7 @@
 
               <div class="form-group required">
                 <label class="col-md-3 control-label">Status</label>
-                <div class="col-md-9">
+                <div class="col-md-7">
                   <div class="radio-inline">
                     <label><input type="radio" formControlName="Status" value="BANNED">Banned</label>
                   </div>
@@ -198,7 +198,7 @@
               </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-2">
               <table class="table">
                 <thead>
                 <tr>
