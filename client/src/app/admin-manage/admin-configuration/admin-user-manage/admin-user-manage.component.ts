@@ -33,7 +33,7 @@ export class AdminUserManageComponent implements OnInit {
       PasswordVerify: ['', [<any>Validators.required, <any>Validators.minLength(4)]],
       Firstname: ['', [<any>Validators.required]],
       Lastname: ['', [<any>Validators.required]],
-      Birthday: ['', [<any>Validators.required, <any>this.oldEnough]],
+      Age: ['', [<any>Validators.required, <any>this.oldEnough]],
       Phone: ['', [<any>Validators.required, <any>Validators.pattern(/\([1-9]\d{2}\) \d{3}\-\d{4}/)]],
       Gender: ['', [<any>Validators.required]],
       Type: ['', [<any>Validators.required]],
@@ -63,7 +63,7 @@ export class AdminUserManageComponent implements OnInit {
   }
 
   private oldEnough(birthdayInput: FormControl) {
-    if (moment().diff(moment(birthdayInput.value), 'years') < 18)
+    if (Number(birthdayInput.value) < 18)
       return {notOldEnough: true};
     return null;
   }

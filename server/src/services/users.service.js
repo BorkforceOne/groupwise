@@ -67,7 +67,7 @@ class UserService {
           // Check if blacklisted
           blacklists.forEach((list) => {
             if (entity.Email.indexOf(list.Email) !== -1) {
-              reject(new AppError("This email has been blacklisted", AppErrorTypes.OTHER, 400));
+              reject(new AppError("This email has been banned", AppErrorTypes.OTHER, 400));
               rejected = true;
               return;
             }

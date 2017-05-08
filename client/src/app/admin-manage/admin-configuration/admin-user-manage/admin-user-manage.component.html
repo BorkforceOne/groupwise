@@ -128,13 +128,13 @@
             </div>
 
             <div class="form-group required">
-              <label class="col-md-2 control-label">Birthday</label>
+              <label class="col-md-2 control-label">Age</label>
               <div class="col-md-7">
-                <app-date-select formControlName="Birthday" required></app-date-select>
-                <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine" class="alert alert-danger">
-                  Birthday required
+                <input formControlName="Age" type="number" min="18" placeholder="Age" class="form-control" required/>
+                <div [hidden]="userForm.controls.Age.valid || userForm.controls.Age.pristine" class="alert alert-danger">
+                  Age is required
                 </div>
-                <div [hidden]="userForm.controls.Birthday.valid || userForm.controls.Birthday.pristine || !userForm.controls.Birthday.errors.notOldEnough" class="alert alert-danger">
+                <div [hidden]="userForm.controls.Age.valid || userForm.controls.Age.pristine || !userForm.controls.Age.errors.notOldEnough" class="alert alert-danger">
                   Must be 18 or older
                 </div>
               </div>

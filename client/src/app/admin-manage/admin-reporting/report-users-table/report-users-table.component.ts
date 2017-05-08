@@ -32,7 +32,7 @@ export class ReportUsersTableComponent implements OnInit, OnChanges {
       result['Phone'] = user['Phone'];
       result['Type'] = user['Type'];
       result['Gender'] = user['Gender'];
-      result['Birthday'] = `${moment(user['Birthday']).format("MMMM Do YYYY")} (${moment().diff(moment(user['Birthday']), 'years')})`;
+      result['Age'] = user['Age'];
       result['Registered On'] = moment(user['createdAt']).format("MMMM Do YYYY");
 
       result['Matches'] = 0;

@@ -5,8 +5,7 @@
   <div class="panel-body">
     Please note, we will not sell any of your information, and any information entered here will be stored securely only
     accessible to other users of the system. Contact information such as phone numbers and email addresses will not be
-    shared with any user unless both users mutually agree to share such information. Your birthday is used to ensure that you are 18 or older
-    and to calculate your age dynamically, it is not shared with any users but the administrators of the application.
+    shared with any user unless both users mutually agree to share such information.
     <br>
     <br>
     After completing this registration form you will need to validate your email by clicking the link contained in the email.
@@ -73,13 +72,13 @@
   </div>
 
   <div class="form-group required">
-    <label class="col-md-2 control-label">Birthday</label>
+    <label class="col-md-2 control-label">Age</label>
     <div class="col-md-9">
-      <app-date-select formControlName="Birthday" placeholder="mm/dd/yyyy"  container="body" required></app-date-select>
-      <div [hidden]="userRegistrationForm.controls.Birthday.valid || userRegistrationForm.controls.Birthday.pristine" class="alert alert-danger">
-        Birthday required
+      <input formControlName="Age" type="number" min="18" placeholder="Age" class="form-control" required/>
+      <div [hidden]="userRegistrationForm.controls.Age.valid || userRegistrationForm.controls.Age.pristine" class="alert alert-danger">
+        Age is required
       </div>
-      <div [hidden]="userRegistrationForm.controls.Birthday.valid || userRegistrationForm.controls.Birthday.pristine || !userRegistrationForm.controls.Birthday.errors.notOldEnough" class="alert alert-danger">
+      <div [hidden]="userRegistrationForm.controls.Age.valid || userRegistrationForm.controls.Age.pristine || !userRegistrationForm.controls.Age.errors.notOldEnough" class="alert alert-danger">
         Must be 18 or older
       </div>
     </div>

@@ -5,7 +5,8 @@ export class UserRegistrationModel {
   "Password": string;
   "PasswordVerify": string;
   "Type": string;
-  "Birthday": string;
+  "Age": number;
   "Gender": "MALE" | "FEMALE" | "OTHER";
   "Phone": string;
 }
+
