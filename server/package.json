@@ -4,7 +4,8 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "node ./src/bootstrap.js"
+    "start": "node ./src/bootstrap.js",
+    "test": "mocha"
   },
   "private": true,
   "dependencies": {
@@ -26,5 +27,7 @@
     "winston": "^2.3.1",
     "winston-daily-rotate-file": "^1.4.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^3.3.0",
+  }
 }
