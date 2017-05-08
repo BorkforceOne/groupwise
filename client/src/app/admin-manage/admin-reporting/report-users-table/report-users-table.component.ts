@@ -36,13 +36,27 @@ export class ReportUsersTableComponent implements OnInit, OnChanges {
       result['Registered On'] = moment(user['createdAt']).format("MMMM Do YYYY");
 
       result['Matches'] = 0;
+      result['Matched With'] = [];
 
       // Count the number of matches this user has
       let foundMatches = this.matchesData.filter((match: Match) => match.StudentUserId === user.Id || match.HostUserId === user.Id);
       foundMatches.forEach((match: Match) => {
-        if (match.Status === 'APPROVED')
+        if (match.Status === 'APPROVED') {
           result['Matches'] ++;
+
+          let matchedUser = null;
+
+          if (user.Type === 'STUDENT')
+            matchedUser = this.usersData.find((matchedUser) => matchedUser.Id === match.HostUserId);
+          else
+            matchedUser = this.usersData.find((matchedUser) => matchedUser.Id === match.StudentUserId);
+
+          if (matchedUser != null)
+            result['Matched With'].push(`${matchedUser.Firstname} ${matchedUser.Lastname}`);
+        }
       });
+
+      result['Matched With'] = result['Matched With'].join(',');
 
       return result;
     });

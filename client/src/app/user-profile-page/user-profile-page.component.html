@@ -33,7 +33,7 @@
         </ng-container>
         <button class="btn btn-danger btn-block" type="button" *ngIf="match.Status == 'APPROVED'" [disabled]="isLoggedInUser" (click)="unmatchMatch()">Unmatch</button>
       </ng-container>
-      <button class="btn btn-default btn-block" type="button" *ngIf="loggedInUser.Type == 'HOST' && (match == null || match.Status == 'REJECTED' || match.Status == 'UNMATCHED')" [disabled]="isLoggedInUser" (click)="proposeMatch()">Propose Match</button>
+      <button class="btn btn-default btn-block" type="button" *ngIf="loggedInUser.Type == 'HOST' && (match == null || match.Status == 'REJECTED' || match.Status == 'UNMATCHED')" [disabled]="isLoggedInUser" (click)="proposeMatch()">Request Match</button>
     </div>
   </div>
   <div class="row clearfix">
