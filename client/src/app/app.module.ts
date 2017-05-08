@@ -86,6 +86,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ConsumeTokenService} from "./services/token/consume-token.service";
+import { MatchStatusPipe } from './match-status.pipe';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,8 @@ import {ConsumeTokenService} from "./services/token/consume-token.service";
     TosComponent,
     NotificationCardComponent,
     FeedbackComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    MatchStatusPipe
   ],
   imports: [
     BrowserAnimationsModule,
