@@ -8,7 +8,7 @@
         <a class="clickable" (click)="selectTab(1)">Featured Attribute</a>
       </li>
       <li [class.active]="selectedTab == 5">
-        <a class="clickable" (click)="selectTab(5)">White/Black Lists</a>
+        <a class="clickable" (click)="selectTab(5)">Allowed/Banned Lists</a>
       </li>
       <li [class.active]="selectedTab == 2">
         <a class="clickable" (click)="selectTab(2)">Dashboard Content</a>
@@ -57,7 +57,7 @@
         </div>
       </ng-container>
       <ng-container *ngSwitchCase="5">
-        <legend>Whitelist & Blacklist</legend>
+        <legend>Allowed/Banned Lists</legend>
         <app-lists-editor></app-lists-editor>
       </ng-container>
       <ng-container *ngSwitchCase="2">
