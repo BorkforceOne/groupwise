@@ -8,7 +8,7 @@
         <a class="clickable" (click)="selectTab(1)">Featured Attribute</a>
       </li>
       <li [class.active]="selectedTab == 5">
-        <a class="clickable" (click)="selectTab(5)">White/Black Lists</a>
+        <a class="clickable" (click)="selectTab(5)">Allowed/Banned Lists</a>
       </li>
       <li [class.active]="selectedTab == 2">
         <a class="clickable" (click)="selectTab(2)">Dashboard Content</a>
@@ -24,7 +24,7 @@
       </li>
     </ul>
   </div>
-  <div class="col-md-9">
+  <div class="col-md-9" *ngIf="!isLoading()">
     <ng-container [ngSwitch]="selectedTab">
       <ng-container *ngSwitchCase="0">
         <legend>Hero Banner</legend>
@@ -57,7 +57,7 @@
         </div>
       </ng-container>
       <ng-container *ngSwitchCase="5">
-        <legend>Whitelist & Blacklist</legend>
+        <legend>Allowed/Banned Lists</legend>
         <app-lists-editor></app-lists-editor>
       </ng-container>
       <ng-container *ngSwitchCase="2">
@@ -77,5 +77,8 @@
         <app-page-editor ConfigEntry="RegistrationIntroductionContent"></app-page-editor>
       </ng-container>
     </ng-container>
+  </div>
+  <div class="col-md-9" *ngIf="isLoading()">
+    <app-spinner></app-spinner>
   </div>
 </div>

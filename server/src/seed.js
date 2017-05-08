@@ -23,7 +23,7 @@ const attributeSeedData = [
       "Password": "1234",
       "Phone": "(555) 555-5555",
       "Gender": "FEMALE",
-      "Birthday": "1995-01-14T00:00:00Z"
+      "Age": 22
     }
   },
   {
@@ -37,7 +37,7 @@ const attributeSeedData = [
       "Password": "1234",
       "Phone": "(555) 555-5555",
       "Gender": "MALE",
-      "Birthday": "1995-01-14T00:00:00Z"
+      "Age": 22
     }
   },
   {
@@ -51,7 +51,7 @@ const attributeSeedData = [
       "Password": "1234",
       "Phone": "(555) 555-5555",
       "Gender": "FEMALE",
-      "Birthday": "1996-01-14T00:00:00Z"
+      "Age": 23
     }
   },
   {

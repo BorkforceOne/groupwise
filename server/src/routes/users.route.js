@@ -104,6 +104,13 @@ let canEdit = (req, res, next) => {
   return next();
 };
 
+let canDelete = (req, res, next) => {
+  if (req.user.Type === 'ADMINISTRATOR')
+    return next();
+
+  return restUtils.rejectRequest();
+};
+
 let canAdd = (req, res, next) => {
   return next();
 };
@@ -156,6 +163,18 @@ router.put(`${routeName}/:id`, expressManager.loggedInGuard, canEdit, function(r
     .then(payload => restUtils.sendResponse(payload, req, res))
     .catch(error => restUtils.catchErrors(error, req, res));
 });
+
+/* DELETE */
+router.delete(`${routeName}/:id`, expressManager.loggedInGuard, canDelete, function(req, res, next) {
+  let id = req.params.id;
+
+  usersService.deleteUser(id)
+    .then(serializer.serializeModel)
+    .then(restUtils.prepareResponse)
+    .then(payload => restUtils.sendResponse(payload, req, res))
+    .catch(error => restUtils.catchErrors(error, req, res));
+});
+
 
 /* POST Forgot Password */
 router.post(`${routeName}/forgot-password`, function(req, res, next) {

@@ -8,7 +8,7 @@ import {NotificationModel} from "../services/notifications/notification.model";
 })
 export class NotificationCardComponent implements OnInit {
   @Input() public notification: NotificationModel;
-  @Output() public close: EventEmitter<NotificationModel> = new EventEmitter<NotificationModel>();;
+  @Output() public close: EventEmitter<NotificationModel> = new EventEmitter<NotificationModel>();
 
   constructor() { }
 
@@ -16,6 +16,12 @@ export class NotificationCardComponent implements OnInit {
   }
 
   onClose() {
+    this.close.emit(this.notification);
+  }
+
+  onClick() {
+    if (this.notification.OnClick !== undefined)
+      this.notification.OnClick();
     this.close.emit(this.notification);
   }
 

@@ -39,6 +39,14 @@ export class UserService extends BackendCommunicatorService{
       .catch(this.handleError.bind(this));
   }
 
+  deleteUser(userId: number): Promise<User> {
+    return this.http
+      .delete(`${this.usersUrl}/${userId}`)
+      .map(this.extractData.bind(this, User))
+      .toPromise()
+      .catch(this.handleError.bind(this));
+  }
+
   addUser(user: User): Observable<User> {
     return this
       .http.post(this.usersUrl, JSON.stringify(user), {headers: this.headers})

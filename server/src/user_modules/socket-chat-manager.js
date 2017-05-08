@@ -74,11 +74,13 @@ class SocketChatManager {
                   Status: 'PENDING_REVIEW'
                 }
               }).then((users) => {
+                if (users.length === 0)
+                  return resolve(notifications);
                 var notif = {};
                 notif['Type'] = 'PENDING_USERS';
                 notif['Count'] = users.length;
                 notifications.push(notif);
-                resolve(notifications);
+                return resolve(notifications);
               });
               break;
           }

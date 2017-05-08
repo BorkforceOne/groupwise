@@ -4,5 +4,8 @@ module.exports.inMap = {
 
 module.exports.outMap = {
   "Token": "Token",
-  "Type": "Type"
+  "Type": "Type",
+  "UserId": "UserId",
+  "createdAt": "createdAt",
+  "updatedAt": "updatedAt"
 };

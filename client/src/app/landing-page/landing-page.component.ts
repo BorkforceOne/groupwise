@@ -15,8 +15,10 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
     this.authService.getLoggedInUser()
       .subscribe((user) => {
-        this.userId = user.Id;
-        this.userType = user.Type;
+        if (user != null) {
+          this.userId = user.Id;
+          this.userType = user.Type;
+        }
       })
   }
 

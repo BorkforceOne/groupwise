@@ -19,6 +19,9 @@ export class AuthService extends BackendCommunicatorService{
   }
 
   private _setLoggedInUser(user: User) {
+    if (String(this.loggedInUser.value) === String(user))
+      return user;
+
     this.loggedInUser.next(user);
     return user;
   }
@@ -55,7 +58,7 @@ export class AuthService extends BackendCommunicatorService{
   public logout(): Observable<boolean> {
     return this.http
       .post(`${this.authUrl}/logout`, null, {headers: this.headers})
-      .map(this.extractData.bind(this, User))
+      .map(this.extractData.bind(this, undefined))
       .do(() => {
         this.router.navigate(['/']);
       })

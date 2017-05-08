@@ -42,7 +42,7 @@
           <a routerLink="/admin-manage">Admin Manage</a>
         </li>
         <ng-container *ngIf="isLoggedIn">
-          <li class="dropdown" dropdown [autoClose]="false">
+          <li class="dropdown" dropdown>
             <a class="clickable" dropdownToggle>
               <span class="glyphicon glyphicon-bell notification-icon"></span>
               <span class="badge">{{notifications.length}}</span>

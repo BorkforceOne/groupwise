@@ -9,8 +9,7 @@ import {Token} from "../services/token/token";
   templateUrl: './consume-token-page.component.html',
   styleUrls: ['./consume-token-page.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.Default,
-  providers: [ConsumeTokenService]
+  changeDetection: ChangeDetectionStrategy.Default
 })
 
 export class ConsumeTokenPageComponent implements OnInit {

@@ -29,7 +29,8 @@ export class AccountPageComponent implements OnInit {
       Phone: ['', [<any>Validators.required, <any>Validators.pattern(/\([1-9]\d{2}\) \d{3}\-\d{4}/)]],
       ReceiveGeneralNotifications: ['', [<any>Validators.required]],
       ReceiveNewMatchNotifications: ['', [<any>Validators.required]],
-      ReceiveMessageNotifications: ['', [<any>Validators.required]]
+      ReceiveMessageNotifications: ['', [<any>Validators.required]],
+      Age: ['', [<any>Validators.required, <any>this.oldEnough]]
     }, {validator: this.matchingPasswords('Password', 'PasswordVerify')});
 
     this.authService.getLoggedInUser()
@@ -47,6 +48,12 @@ export class AccountPageComponent implements OnInit {
         return passwordConfirmationInput.setErrors({notEquivalent: true});
       }
     }
+  }
+
+  private oldEnough(birthdayInput: FormControl) {
+    if (Number(birthdayInput.value) < 18)
+      return {notOldEnough: true};
+    return null;
   }
 
   updateUser(user: User) {

@@ -102,7 +102,8 @@ export class ChatService {
     this.socketService.emit('message', packedMessage);
 
     this.authService.getLoggedInUser()
-      .subscribe((user) => {
+      .toPromise()
+      .then((user) => {
         let chatMessage = new ChatMessage();
 
         chatMessage.Message = message;

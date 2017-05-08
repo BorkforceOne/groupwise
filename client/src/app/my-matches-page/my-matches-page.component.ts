@@ -43,6 +43,9 @@ export class MyMatchesPageComponent implements OnInit {
 
     this.authService.getLoggedInUser()
       .subscribe((loggedInUser: User) => {
+        if (loggedInUser === null)
+          return;
+
         this.loggedInUser = loggedInUser;
 
         this.matchService.getMatches()

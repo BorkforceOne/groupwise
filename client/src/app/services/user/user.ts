@@ -6,7 +6,7 @@ export class User extends Serializable{
   "Lastname": string;
   "Email": string;
   "Type": "ADMINISTRATOR" | "HOST" | "STUDENT";
-  "Birthday": string;
+  "Age": string;
   "Gender": "MALE" | "FEMALE" | "OTHER";
   "Phone": string;
   "Status": "ACTIVE" | "BANNED" | "PENDING_REVIEW";

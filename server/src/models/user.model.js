@@ -36,9 +36,9 @@ const User = databaseManager.context.define('user', {
     allowNull: false,
     type: Sequelize.STRING
   },
-  Birthday: {
+  Age: {
     allowNull: false,
-    type:  Sequelize.DATE
+    type:  Sequelize.INTEGER
   },
   Gender: {
     allowNull: false,

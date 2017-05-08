@@ -85,6 +85,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ConsumeTokenService} from "./services/token/consume-token.service";
 
 @NgModule({
   declarations: [
@@ -165,7 +166,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   ],
   providers: [UserService, SocketService, ConfigService, AlertService, LoggedinGuard, NotLoggedinGuard, AttributeService,
     ChatService, AuthService, AdminGuard, StudentGuard, HostGuard, MatchService, ListService, CsvService, ContactService,
-    NotificationService],
+    NotificationService, ConsumeTokenService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

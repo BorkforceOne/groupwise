@@ -39,12 +39,15 @@ export class AdminAttributesComponent implements OnInit {
   @ViewChild('attributeEditModal') public attributeEditModal:ModalDirective;
   private attributes: Attribute[] = [];
   private editingAttribute: AttributeView = new AttributeView();
+  private isLoading: boolean;
 
   constructor(private attributeService: AttributeService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.attributeService.getAllAttributes()
       .subscribe(attributes => {
+        this.isLoading = false;
         this.attributes = attributes;
       });
   }

@@ -1,29 +1,17 @@
 <div class="container">
   <tabset>
-    <tab heading="Attributes">
-      <div class="row section">
-        <app-admin-attributes></app-admin-attributes>
-      </div>
+    <tab heading="Attributes" [active]="router.isActive('admin-manage/attributes')" (select)="goTo('admin-manage/attributes')">
     </tab>
-    <tab heading="Configuration">
-      <div class="row section">
-        <app-admin-configuration></app-admin-configuration>
-      </div>
+    <tab heading="Configuration" [active]="router.isActive('admin-manage/configuration')" (select)="goTo('admin-manage/configuration')">
     </tab>
-    <tab heading="Reporting">
-      <div class="row section">
-        <app-admin-reporting></app-admin-reporting>
-      </div>
+    <tab heading="Reporting" [active]="router.isActive('admin-manage/reporting')" (select)="goTo('admin-manage/reporting')">
     </tab>
-    <tab heading="Review Queue">
-      <div class="row section">
-        <app-admin-approval-queue></app-admin-approval-queue>
-      </div>
+    <tab heading="Review Queue" [active]="router.isActive('admin-manage/review-queue')" (select)="goTo('admin-manage/review-queue')">
     </tab>
-    <tab heading="User Manage">
-      <div class="row section">
-        <app-admin-user-manage></app-admin-user-manage>
-      </div>
+    <tab heading="User Manage" [active]="router.isActive('admin-manage/user-manage')" (select)="goTo('admin-manage/user-manage')">
     </tab>
   </tabset>
+  <div class="row section">
+    <router-outlet></router-outlet>
+  </div>
 </div>

@@ -24,23 +24,33 @@ export class AdminConfigurationComponent implements OnInit {
   private selectedTab: number = 0;
   private bannerURL: string;
   private defaultBannerURL = "/assets/hero-cover-default.jpg";
+  private isLoadingAttributes: boolean;
+  private isLoadingBanner: boolean;
+  private isLoadingFeaturedAttribute: boolean;
 
   constructor(private configService: ConfigService, private attributeService: AttributeService, private cookieService: CookieService,
               private alertService: AlertService) { }
 
   ngOnInit() {
+    this.isLoadingAttributes = true;
     this.attributeService.getAllAttributes()
       .subscribe(attributes => {
         this.attributes = attributes;
+        this.isLoadingAttributes = false;
+      }, () => {
+        this.isLoadingAttributes = false;
       });
 
+    this.isLoadingFeaturedAttribute = true;
     this.configService.getValue('FeaturedAttribute')
       .subscribe((value) => {
         this.featuredAttribute = value;
+        this.isLoadingFeaturedAttribute = false;
+      }, () => {
+        this.isLoadingFeaturedAttribute = false;
       });
 
-
-
+    this.isLoadingBanner = true;
     this.refreshBanner();
 
     this.uploader = new FileUploader({url: this.URL, autoUpload: true, authTokenHeader: 'X-XSRF-TOKEN', authToken: this.cookieService.get('XSRF-TOKEN')});
@@ -64,8 +74,10 @@ export class AdminConfigurationComponent implements OnInit {
     this.configService.getValue("BannerId")
       .subscribe(value => {
         this.bannerURL = `/api/v1/attachments/${value}`;
+        this.isLoadingBanner = false;
       }, () => {
         this.bannerURL = this.defaultBannerURL;
+        this.isLoadingBanner = false;
       });
   }
 
@@ -75,6 +87,10 @@ export class AdminConfigurationComponent implements OnInit {
 
   selectTab(tab) {
     this.selectedTab = tab;
+  }
+
+  isLoading(): boolean {
+    return (this.isLoadingBanner || this.isLoadingFeaturedAttribute || this.isLoadingAttributes);
   }
 
 }

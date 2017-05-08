@@ -20,6 +20,11 @@ import {MyMatchesPageComponent} from "./my-matches-page/my-matches-page.componen
 import {TosComponent} from "./register/tos/tos.component";
 import {AccountPageComponent} from "./account-page/account-page.component";
 import {LandingPageComponent} from "./landing-page/landing-page.component";
+import {AdminAttributesComponent} from "./admin-manage/admin-attributes/admin-attributes.component";
+import {AdminConfigurationComponent} from "./admin-manage/admin-configuration/admin-configuration.component";
+import {AdminReportingComponent} from "./admin-manage/admin-reporting/admin-reporting.component";
+import {AdminApprovalQueueComponent} from "./admin-manage/admin-approval-queue/admin-approval-queue.component";
+import {AdminUserManageComponent} from "./admin-manage/admin-configuration/admin-user-manage/admin-user-manage.component";
 
 export const AppRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -36,7 +41,15 @@ export const AppRoutes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotLoggedinGuard]},
   { path: 'validate', component: ConsumeTokenPageComponent },
   { path: 'student-search', component: StudentSearchPageComponent, canActivate: [HostGuard] },
-  { path: 'admin-manage', component: AdminManageComponent, canActivate: [AdminGuard] },
+  { path: 'admin-manage', component: AdminManageComponent, canActivate: [AdminGuard], canActivateChild: [AdminGuard],
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'attributes' },
+      { path: 'attributes', component: AdminAttributesComponent},
+      { path: 'configuration', component: AdminConfigurationComponent},
+      { path: 'reporting', component: AdminReportingComponent},
+      { path: 'review-queue', component: AdminApprovalQueueComponent},
+      { path: 'user-manage', component: AdminUserManageComponent}
+    ]},
   { path: 'my-matches', component: MyMatchesPageComponent, canActivate: [LoggedinGuard]},
   { path: 'account', component: AccountPageComponent, canActivate: [LoggedinGuard]},
   { path: 'landing', component: LandingPageComponent, canActivate: [LoggedinGuard]},

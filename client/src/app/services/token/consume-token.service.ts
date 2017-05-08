@@ -32,4 +32,11 @@ export class ConsumeTokenService extends BackendCommunicatorService{
       .toPromise()
       .catch(this.handleError.bind(this));
   }
+
+  getAllTokens(): Promise<Token[]> {
+    return this.http.get(this.tokenUrl)
+      .map(this.extractData.bind(this, Token))
+      .catch(this.handleError.bind(this))
+      .toPromise();
+  }
 }
