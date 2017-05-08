@@ -23,8 +23,7 @@ install:
   - cd ../server
   - npm install
 
-
-script: cd server && npm test
+script: npm test
 
 notifications:
   slack: nau-476-flagfriends:HYZ8QP4LuWCHAVkUclD3Fw5v
