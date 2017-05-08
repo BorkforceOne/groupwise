@@ -84,10 +84,52 @@ class UserService {
             this.validate(entity)
               .then(() => this.changePassword(entity, entity.Password))
               .then(() => entity.save())
+              .then(() => this.notifyAdmin(entity))
               .then(() => resolve(entity))
               .catch(reject);
         });
     });
+  }
+
+  notifyAdmin(entity) {
+    return new Promise((resolve, reject) => {
+      if (entity.Status === 'PENDING_REVIEW') {
+        User.findAll({
+          where: {
+            Type: 'ADMINISTRATOR'
+          }
+        }).then((admins) => {
+          if (admins) {
+            admins.map((admin) => {
+              let mail = mailerManager.templates.newUserPending;
+
+              let header = {
+                to: admin.Email
+              };
+
+              let params = {
+                Firstname: entity.Firstname,
+                Lastname: entity.Lastname,
+                Email: entity.Email,
+                Phone: entity.Phone,
+                UsersPendingReviewURL: config.general.baseURL + '/admin-manage/review-queue',
+                UserProfileURL: config.general.baseURL + '/user-profile/' + entity.Id
+              };
+
+              mailerManager.sendMail(mail, header, params)
+                .catch((error) => reject(error));
+            });
+
+            resolve(entity);
+          }
+        })
+      }
+      else {
+        return resolve(entity);
+      }
+
+    })
+
   }
 
   update(data) {
@@ -97,6 +139,7 @@ class UserService {
       this.getById(data.Id)
         .then(entity => serializer.mapDataToInstance(entity, data))
         .then(entity => this.validateUpdate(entity))
+        .then(entity => this.statusUpdateCheck(entity))
         .then(entity => entity.save())
         .then(entity => resolve(entity))
         .catch(reject);
@@ -108,6 +151,55 @@ class UserService {
       //TODO: Validation
 
       resolve(entity);
+    });
+  }
+
+  statusUpdateCheck(entity) {
+    return new Promise((resolve, reject) => {
+      // Send emails to users so they know their account status
+      if (entity.changed('Status') === true) {
+        if (entity['Status'] === 'ACTIVE') {
+          let mail = mailerManager.templates.userApproved;
+
+          let header = {
+            to: entity.Email
+          };
+
+          let params = {
+            Firstname: entity.Firstname,
+            Lastname: entity.Lastname,
+            SiteURL: config.general.baseURL
+          };
+
+          mailerManager.sendMail(mail, header, params)
+            .catch((error) => reject(error));
+
+          resolve(entity);
+        }
+        else if (entity['Status'] === 'BANNED') {
+          let mail = mailerManager.templates.userRejected;
+
+          let header = {
+            to: entity.Email
+          };
+
+          let params = {
+            Firstname: entity.Firstname,
+            Lastname: entity.Lastname
+          };
+
+          mailerManager.sendMail(mail, header, params)
+            .catch((error) => reject(error));
+
+          resolve(entity);
+        }
+        else {
+          resolve(entity);
+        }
+      }
+      else {
+        resolve(entity);
+      }
     });
   }
 

@@ -1,6 +1,6 @@
-Hello {{Firstname}} {{Lastname}}!
+Hello {{Firstname}} {{Lastname}},
 
-{{MatchFirstname}} {{MatchLastname}} would like to match with you! Log onto FlagFriends and navigate to the 'My Matches' panel, or click here to accept or decline the request.
+{{MatchFirstname}} {{MatchLastname}} would like to match with you. Log onto FlagFriends and navigate to the 'My Matches' panel, or click here to accept or decline the request.
 
 If you have any questions, or suggestions, please feel free to email us here at joy@flagfriends.org
 

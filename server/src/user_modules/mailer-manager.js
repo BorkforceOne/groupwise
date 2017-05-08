@@ -23,10 +23,13 @@ class MailerManager {
       this.loadTemplate("welcome", "templates/welcome.html", "templates/welcome.text", "Welcome to FlagFriends!")
         .then(() => this.loadTemplate("validateEmail", "templates/validateEmail.html", "templates/validateEmail.text", "FlagFriends - Confirm Account Creation"))
         .then(() => this.loadTemplate("resetPasswordEmail", "templates/resetPasswordEmail.html", "templates/resetPasswordEmail.text", "FlagFriends - Password Reset"))
-        .then(() => this.loadTemplate("proposeMatch", "templates/proposeMatch.html", "templates/proposeMatch.text", "FlagFriends - New Match"))
+        .then(() => this.loadTemplate("proposeMatch", "templates/proposeMatch.html", "templates/proposeMatch.text", "FlagFriends - New Match Request"))
         .then(() => this.loadTemplate("acceptMatch", "templates/acceptMatch.html", "templates/acceptMatch.text", "FlagFriends - Match Accepted"))
         .then(() => this.loadTemplate("rejectMatch", "templates/rejectMatch.html", "templates/rejectMatch.text", "FlagFriends - Match Rejected"))
         .then(() => this.loadTemplate("contact", "templates/contact.html", "templates/contact.text", "FlagFriends - Contact Inquery"))
+        .then(() => this.loadTemplate("newUserPending", "templates/newUserPending.html", "templates/newUserPending.text", "FlagFriends - New User Pending Review"))
+        .then(() => this.loadTemplate("userApproved", "templates/userApproved.html", "templates/userApproved.text", "FlagFriends - Account Activated"))
+        .then(() => this.loadTemplate("userRejected", "templates/userRejected.html", "templates/userRejected.text", "FlagFriends - Account Rejected"))
         .then(resolve)
         .catch((err) => {
           console.error("[MAILER] Could not load template " + err);

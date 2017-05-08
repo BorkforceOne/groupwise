@@ -1,0 +1,9 @@
+Hello,
+There is a new user pending review:
+
+   Firstname: {{Firstname}}
+   Lastname: {{Lastname}}
+   Email: {{Email}}
+   Phone: {{Phone}}
+
+View users pending review, or view their user profile

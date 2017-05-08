@@ -1,8 +1,8 @@
-Hello {{Firstname}} {{Lastname}}!
+Hello {{Firstname}} {{Lastname}},
 
 Congratulations!
 
-{{MatchFirstname}} {{MatchLastname}} has accepted your match request! Start planning something with them now!
+{{MatchFirstname}} {{MatchLastname}} has accepted your match request. Start planning something with them now!
 
 You can find {{MatchFirstname}}'s contact information in your 'My Matches' panel, or by clicking here
 
