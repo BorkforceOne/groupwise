@@ -31,6 +31,10 @@ export class Chat {
     return this._messagesSubject.asObservable();
   }
 
+  public getMessagesRaw(): ChatMessage[] {
+    return _.clone(this._messages);
+  }
+
   private emitChange() {
     this._messagesSubject.next(_.clone(this._messages));
   }
@@ -62,28 +66,31 @@ export class ChatService {
       });
 
       this.socketService.subscribe(socket, 'on.message.history').subscribe((messages: any[]) => {
-        this.authService.getLoggedInUser()
-          .subscribe(user => {
-            if (messages.length === 0)
-              return;
+        if (messages.length === 0)
+          return;
 
-            let chat = this._chats.find(c => c.UserId === messages[0].To || c.UserId === messages[0].From);
-            if (!chat)
-              return;
+        let chat = this._chats.find(c => c.UserId === messages[0].To || c.UserId === messages[0].From);
+        if (!chat)
+          return;
 
-            let oldMessages = messages.map((message) => {
-              let chatMessage = new ChatMessage();
+        let currentMessages = chat.getMessagesRaw();
 
-              chatMessage.Message = message.Message;
-              chatMessage.ReceivedAt = message.createdAt;
-              chatMessage.UserId = message.From;
+        let oldMessages = [];
 
-              return chatMessage;
-            });
+        messages.forEach((message, i) => {
+          if (currentMessages.findIndex((currentMessage) => currentMessage.Message === message.Message && currentMessage.UserId === message.From) !== -1)
+            return;
 
-            chat.addMessages(oldMessages);
-          });
+          let chatMessage = new ChatMessage();
 
+          chatMessage.Message = message.Message;
+          chatMessage.ReceivedAt = message.createdAt;
+          chatMessage.UserId = message.From;
+
+          oldMessages.push(chatMessage);
+        });
+
+        chat.addMessages(oldMessages);
       });
 
       // Write history retreival
@@ -102,8 +109,7 @@ export class ChatService {
     this.socketService.emit('message', packedMessage);
 
     this.authService.getLoggedInUser()
-      .toPromise()
-      .then((user) => {
+      .subscribe((user) => {
         let chatMessage = new ChatMessage();
 
         chatMessage.Message = message;
