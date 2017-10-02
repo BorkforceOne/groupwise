@@ -89,6 +89,11 @@ export class StudentSearchPageComponent implements OnInit {
     return found[0];
   }
 
+  private perPageChanged(event: any): void {
+    this.currentPage = 1;
+    this.currentUsers = this.filteredUsers.slice(0, this.itemsPerPage);
+  }
+
   private pageChanged(event: any): void {
     this.currentUsers = this.filteredUsers.slice(event.itemsPerPage * (event.page - 1), event.itemsPerPage * event.page);
   }

@@ -15,8 +15,8 @@
           <hr/>
           <div class="form-group">
             <label for="results-per-page">Results per page:</label>
-            <select [(ngModel)]="itemsPerPage" class="form-control" id="results-per-page">
               <option [value]="10">10</option>
+            <select [(ngModel)]="itemsPerPage" class="form-control" id="results-per-page" (change)="perPageChanged($event)">
               <option [value]="20">20</option>
               <option [value]="30">30</option>
             </select>
@@ -66,6 +66,6 @@
     </div>
   </div>
   <div class="row text-center">
-    <pagination [totalItems]="currentUsers.length" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+    <pagination [totalItems]="filteredUsers.length" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
   </div>
 </div>
