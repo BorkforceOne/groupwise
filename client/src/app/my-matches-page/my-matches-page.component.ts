@@ -167,6 +167,11 @@ export class MyMatchesPageComponent implements OnInit {
     this.currentResults = this.filteredResults.slice(event.itemsPerPage * (event.page - 1), event.itemsPerPage * event.page);
   }
 
+  private perPageChanged(event: any): void {
+    this.currentPage = 1;
+    this.currentResults = this.filteredResults.slice(0, this.itemsPerPage);
+  }
+
   private onFilterChanged(): void {
     if (this.filter != "") {
       let found = this.attributes.filter((entry) => {
